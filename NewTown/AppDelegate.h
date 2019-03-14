@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "ViewController.h"
+#import <YZBaseSDK/YZBaseSDK.h>
+#import "YZDUICService.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,YZSDKDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

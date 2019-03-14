@@ -1,0 +1,20 @@
+PODS:
+  - YZAppSDK (6.4.10):
+    - YZAppSDK/Base (= 6.4.10)
+  - YZAppSDK/Base (6.4.10):
+    - YZAppSDK/Core
+  - YZAppSDK/Core (6.4.10)
+
+DEPENDENCIES:
+  - YZAppSDK
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - YZAppSDK
+
+SPEC CHECKSUMS:
+  YZAppSDK: b6fa1b0db59e46c8dfd4f25d58d2de42e450a480
+
+PODFILE CHECKSUM: 1bcaf8e24b7510d48bb05f5b391647b053a306c0
+
+COCOAPODS: 1.5.3

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "WebViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +18,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    YZConfig *config = [[YZConfig alloc] initWithClientId:CLIENT_ID];
+    NSString* scheme = [[[NSBundle mainBundle].infoDictionary[@"CFBundleURLTypes"] firstObject][@"CFBundleURLSchemes"] firstObject];
+    config.scheme = scheme;
+    config.enableLog = NO; // 关闭 sdk 的 log 输出
+    [YZSDK.shared initializeSDKWithConfig:config];
+    YZSDK.shared.delegate = self; // 必须设置代理方法，保证 SDK 在需要 token 的时候可以正常运行
+    WebViewController *viewController = [[WebViewController alloc]init];
+    UINavigationController *rootNavigationController = [[UINavigationController alloc]initWithRootViewController:viewController];
+    self.window.rootViewController = rootNavigationController;
+    
     return YES;
+}
+- (void)yzsdk:(YZSDK *)sdk needInitToken:(void (^)(NSString * _Nullable))callback
+{
+    // 调用有赞云的 init Token 接口并返回 token. 见：https://www.youzanyun.com/docs/guide/3400/3466
+    // 最好由你的服务端来调用有赞的接口，客户端通过你的服务端间接调用有赞的接口获取 initToken 以保证安全性。
+    [YZDUICService fetchInitTokenWithCompletionBlock:^(NSDictionary *info) {
+        callback(info[@"access_token"]);
+    }];
 }
 
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		079F1827BD91AC71C7E50E74 /* libPods-NewTown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071BE222CF1BC00B73769 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BD222CF1BC00B73769 /* ViewController.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
@@ -16,6 +17,10 @@
 		527071CC222CF1BE00B73769 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071CB222CF1BE00B73769 /* main.m */; };
 		527071D6222CF1BE00B73769 /* NewTownTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071D5222CF1BE00B73769 /* NewTownTests.m */; };
 		527071E1222CF1BF00B73769 /* NewTownUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071E0222CF1BF00B73769 /* NewTownUITests.m */; };
+		527071F3222E76A300B73769 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071F1222E76A200B73769 /* WebViewController.m */; };
+		527071F7222E778A00B73769 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071F5222E778A00B73769 /* UserModel.m */; };
+		527071FB222E77AE00B73769 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071F9222E77AE00B73769 /* LoginViewController.m */; };
+		527071FF222E780900B73769 /* YZDUICService.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071FE222E780800B73769 /* YZDUICService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewTown.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		527071B6222CF1BC00B73769 /* NewTown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		527071B9222CF1BC00B73769 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		527071BA222CF1BC00B73769 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -53,6 +59,18 @@
 		527071DC222CF1BF00B73769 /* NewTownUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewTownUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		527071E0222CF1BF00B73769 /* NewTownUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewTownUITests.m; sourceTree = "<group>"; };
 		527071E2222CF1BF00B73769 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		527071F1222E76A200B73769 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		527071F2222E76A300B73769 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		527071F5222E778A00B73769 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		527071F6222E778A00B73769 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		527071F9222E77AE00B73769 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		527071FA222E77AE00B73769 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		527071FD222E780800B73769 /* YZDUICService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDUICService.h; sourceTree = "<group>"; };
+		527071FE222E780800B73769 /* YZDUICService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZDUICService.m; sourceTree = "<group>"; };
+		52707201222F657800B73769 /* YZDemoConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDemoConfig.h; sourceTree = "<group>"; };
+		52707202222F6B4E00B73769 /* CommonHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonHeader.h; sourceTree = "<group>"; };
+		B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.release.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.release.xcconfig"; sourceTree = "<group>"; };
+		F854899CA6E759B27AD4D6C2 /* Pods-NewTown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				079F1827BD91AC71C7E50E74 /* libPods-NewTown.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,13 +99,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0DD703DC70EB8C6A8D68DE42 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F854899CA6E759B27AD4D6C2 /* Pods-NewTown.debug.xcconfig */,
+				B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
+				52707200222F655A00B73769 /* Define */,
+				527071FC222E780800B73769 /* Service */,
+				527071F8222E77AE00B73769 /* login */,
+				527071F4222E778A00B73769 /* UserModels */,
+				527071F0222E767800B73769 /* WebView */,
 				527071B8222CF1BC00B73769 /* NewTown */,
 				527071D4222CF1BE00B73769 /* NewTownTests */,
 				527071DF222CF1BF00B73769 /* NewTownUITests */,
 				527071B7222CF1BC00B73769 /* Products */,
+				0DD703DC70EB8C6A8D68DE42 /* Pods */,
+				CC41333DD9054A9D0C4D6A27 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,6 +170,59 @@
 			path = NewTownUITests;
 			sourceTree = "<group>";
 		};
+		527071F0222E767800B73769 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				527071F2222E76A300B73769 /* WebViewController.h */,
+				527071F1222E76A200B73769 /* WebViewController.m */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
+		527071F4222E778A00B73769 /* UserModels */ = {
+			isa = PBXGroup;
+			children = (
+				527071F5222E778A00B73769 /* UserModel.m */,
+				527071F6222E778A00B73769 /* UserModel.h */,
+			);
+			path = UserModels;
+			sourceTree = "<group>";
+		};
+		527071F8222E77AE00B73769 /* login */ = {
+			isa = PBXGroup;
+			children = (
+				527071F9222E77AE00B73769 /* LoginViewController.m */,
+				527071FA222E77AE00B73769 /* LoginViewController.h */,
+			);
+			path = login;
+			sourceTree = "<group>";
+		};
+		527071FC222E780800B73769 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				527071FD222E780800B73769 /* YZDUICService.h */,
+				527071FE222E780800B73769 /* YZDUICService.m */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		52707200222F655A00B73769 /* Define */ = {
+			isa = PBXGroup;
+			children = (
+				52707202222F6B4E00B73769 /* CommonHeader.h */,
+				52707201222F657800B73769 /* YZDemoConfig.h */,
+			);
+			path = Define;
+			sourceTree = "<group>";
+		};
+		CC41333DD9054A9D0C4D6A27 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -142,9 +230,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 527071E5222CF1BF00B73769 /* Build configuration list for PBXNativeTarget "NewTown" */;
 			buildPhases = (
+				5968A90AE7F329554ED25903 /* [CP] Check Pods Manifest.lock */,
 				527071B2222CF1BC00B73769 /* Sources */,
 				527071B3222CF1BC00B73769 /* Frameworks */,
 				527071B4222CF1BC00B73769 /* Resources */,
+				D234C97C24EAE21683FCD711 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -260,13 +350,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5968A90AE7F329554ED25903 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NewTown-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D234C97C24EAE21683FCD711 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NewTown/Pods-NewTown-frameworks.sh",
+				"${PODS_ROOT}/YZAppSDK/Release/YZBaseSDK.framework",
+				"${PODS_ROOT}/YZAppSDK/Release/YZSDKCore.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YZBaseSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YZSDKCore.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NewTown/Pods-NewTown-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		527071B2222CF1BC00B73769 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				527071BE222CF1BC00B73769 /* ViewController.m in Sources */,
+				527071F3222E76A300B73769 /* WebViewController.m in Sources */,
+				527071F7222E778A00B73769 /* UserModel.m in Sources */,
+				527071FF222E780900B73769 /* YZDUICService.m in Sources */,
 				527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */,
+				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
 				527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */,
 			);
@@ -437,11 +572,13 @@
 		};
 		527071E6222CF1BF00B73769 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F854899CA6E759B27AD4D6C2 /* Pods-NewTown.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2YNXV35PZJ;
 				INFOPLIST_FILE = NewTown/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -454,11 +591,13 @@
 		};
 		527071E7222CF1BF00B73769 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2YNXV35PZJ;
 				INFOPLIST_FILE = NewTown/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
