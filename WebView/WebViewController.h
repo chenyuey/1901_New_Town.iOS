@@ -24,7 +24,10 @@ typedef NS_ENUM(NSUInteger, loginTime) {
  首次加载链接
  */
 @property (copy, nonatomic) NSString *loadUrl;
+//页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;
+//左侧返回按钮
+@property (nonatomic,strong) UIButton *backButton;
 - (id)initWithURLString:(NSString *)strURL;
 @end
 

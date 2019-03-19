@@ -25,6 +25,7 @@
     }
     return self;
 }
+#pragma mark - UI控件创建
 - (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
     UILabel *label = [[UILabel alloc]initWithFrame:frame];
     label.font = [UIFont fontWithName:fontName size:fontSize];
@@ -32,7 +33,22 @@
     label.textAlignment = alignment;
     return label;
 }
-
+- (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
+    UIButton *button = [[UIButton alloc]initWithFrame:frame];
+    [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+#pragma mark - 页面事件
+- (BOOL)navigationShouldPopOnBackButton {
+    if ([self.webView canGoBack]) {
+        [self.webView goBack];
+        return NO;
+    } else {
+        return YES;
+    }
+}
+#pragma mark - 视图加载
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -42,9 +58,13 @@
     //修改导航栏样式
     self.navTitleLabel = [self createLabelWithFrame:CGRectMake(100, SafeStatusBarHeight, SCREEN_WIDTH - 200, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
     [self.view addSubview:self.navTitleLabel];
+    self.backButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(navigationShouldPopOnBackButton)];
+    self.backButton.hidden = YES;
+    [self.view addSubview:self.backButton];
     
     
-    self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44)];
+    
+    self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight)];
     [self.view addSubview:self.webView];
     self.webView.delegate = self;
     self.webView.noticeDelegate = self;
@@ -55,16 +75,7 @@
     [self loginAndloadUrl:self.loadUrl];
 }
 
-- (BOOL)navigationShouldPopOnBackButton {
-    if ([self.webView canGoBack]) {
-        [self.webView goBack];
-        self.navigationItem.leftItemsSupplementBackButton = YES;
-//        self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
-        return NO;
-    } else {
-        return YES;
-    }
-}
+
 
 - (void)dealloc {
     //Demo中 退出当前controller就清除用户登录信息
@@ -123,18 +134,20 @@
 
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    //加载新链接时，分享按钮先置为不可用
-    self.navigationItem.rightBarButtonItem.enabled = NO;
     // 不做任何筛选
     return YES;
 }
 - (void)webViewDidFinishLoad:(id<YZWebView>)webView{
     [webView evaluateJavaScript:@"document.title"
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
-//                  self.navigationItem.title = response;
                   NSLog(@"TITLELLL: %@",response);
                   self.navTitleLabel.text = response;
-//                  self.title = response;
+                  //加载新链接时，分享按钮先置为不可用
+                  if ([self.webView canGoBack]) {
+                      self.backButton.hidden = NO;
+                  }else{
+                      self.backButton.hidden = YES;
+                  }
               }];
 }
 
