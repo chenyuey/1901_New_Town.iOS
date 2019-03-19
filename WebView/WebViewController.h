@@ -28,6 +28,9 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 @property (nonatomic,strong) UILabel *navTitleLabel;
 //左侧返回按钮
 @property (nonatomic,strong) UIButton *backButton;
+//收藏按钮
+@property (nonatomic,strong) UIButton *collectButton;
+
 - (id)initWithURLString:(NSString *)strURL;
 @end
 

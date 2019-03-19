@@ -35,7 +35,9 @@
 }
 - (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    UIImage *image = [UIImage imageNamed:imageName];
+    [image setAccessibilityIdentifier:@"uncollect"];
+    [button setImage:image forState:UIControlStateNormal];
     [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
@@ -48,6 +50,18 @@
         return YES;
     }
 }
+- (void)addItemToMyCollections:(id)sender{
+    UIImage *currentImage = [self.collectButton imageForState:UIControlStateNormal];
+    if ([currentImage.accessibilityIdentifier isEqualToString:@"uncollect"]) {
+        UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
+        [imageTmp setAccessibilityIdentifier:@"collected"];
+        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+    }else{
+        UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
+        [imageTmp setAccessibilityIdentifier:@"uncollect"];
+        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+    }
+}
 #pragma mark - 视图加载
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,13 +70,15 @@
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     
     //修改导航栏样式
-    self.navTitleLabel = [self createLabelWithFrame:CGRectMake(100, SafeStatusBarHeight, SCREEN_WIDTH - 200, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
+    self.navTitleLabel = [self createLabelWithFrame:CGRectMake(50, SafeStatusBarHeight, SCREEN_WIDTH - 100, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
     [self.view addSubview:self.navTitleLabel];
     self.backButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(navigationShouldPopOnBackButton)];
     self.backButton.hidden = YES;
     [self.view addSubview:self.backButton];
     
-    
+    self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
+    self.collectButton.hidden = YES;
+    [self.view addSubview:self.collectButton];
     
     self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight)];
     [self.view addSubview:self.webView];
@@ -134,7 +150,14 @@
 
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    // 不做任何筛选
+    if ([request.URL.path isEqualToString:@"/wscshop/showcase/feature"]) {
+        //显示收藏
+        self.collectButton.hidden = NO;
+    }
+    else{
+        //隐藏收藏
+        self.collectButton.hidden = YES;
+    }
     return YES;
 }
 - (void)webViewDidFinishLoad:(id<YZWebView>)webView{
