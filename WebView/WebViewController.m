@@ -153,6 +153,9 @@
     if ([request.URL.path isEqualToString:@"/wscshop/showcase/feature"]) {
         //显示收藏
         self.collectButton.hidden = NO;
+        UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
+        [imageTmp setAccessibilityIdentifier:@"uncollect"];
+        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
     }
     else{
         //隐藏收藏
