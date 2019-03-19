@@ -27,17 +27,21 @@
     WebViewController *indexWebVC = [[WebViewController alloc]initWithURLString:@"https://j.youzan.com/Go44-9"];
     UINavigationController *indexNavigationController = [[UINavigationController alloc]initWithRootViewController:indexWebVC];
     indexNavigationController.tabBarItem.title = @"首页";
+    indexNavigationController.tabBarItem.image = [UIImage imageNamed:@"indexBarIcon"];
 //    self.window.rootViewController = rootNavigationController;
     WebViewController *newTownWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/feature/XgA5YjWnWO"];
     UINavigationController *newTownNavigationController = [[UINavigationController alloc]initWithRootViewController:newTownWebVC];
     newTownNavigationController.tabBarItem.title =@"全部民宿";
+    newTownNavigationController.tabBarItem.image = [UIImage imageNamed:@"hotelBarIcon"];
     WebViewController *collectWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/category/bJbcln8Lnv"];
     UINavigationController *collectNavigationController = [[UINavigationController alloc]initWithRootViewController:collectWebVC];
     collectNavigationController.tabBarItem.title =@"收藏";
+    collectNavigationController.tabBarItem.image = [UIImage imageNamed:@"collectionBarIcon"];
     
     WebViewController *userCenterWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/showcase/usercenter?alias=3hgmk8rs"];
     UINavigationController *userCenterNavigationController = [[UINavigationController alloc]initWithRootViewController:userCenterWebVC];
     userCenterNavigationController.tabBarItem.title =@"个人中心";
+    userCenterNavigationController.tabBarItem.image = [UIImage imageNamed:@"userCenterBarIcon"];
     
     
     
