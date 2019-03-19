@@ -18,13 +18,33 @@
 @end
 
 @implementation WebViewController
+- (id)initWithURLString:(NSString *)strURL{
+    self = [super init];
+    if (self) {
+        self.loadUrl = strURL;
+    }
+    return self;
+}
+- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
+    UILabel *label = [[UILabel alloc]initWithFrame:frame];
+    label.font = [UIFont fontWithName:fontName size:fontSize];
+    label.textColor = fontColor;
+    label.textAlignment = alignment;
+    return label;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.loadUrl = @"https://j.youzan.com/Go44-9";
     
-    self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight)];
+    self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
+    self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
+    
+    //修改导航栏样式
+    self.navTitleLabel = [self createLabelWithFrame:CGRectMake(100, SafeStatusBarHeight, SCREEN_WIDTH - 200, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
+    [self.view addSubview:self.navTitleLabel];
+    
+    
+    self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44)];
     [self.view addSubview:self.webView];
     self.webView.delegate = self;
     self.webView.noticeDelegate = self;
@@ -113,7 +133,8 @@
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
 //                  self.navigationItem.title = response;
                   NSLog(@"TITLELLL: %@",response);
-                  self.title = response;
+                  self.navTitleLabel.text = response;
+//                  self.title = response;
               }];
 }
 

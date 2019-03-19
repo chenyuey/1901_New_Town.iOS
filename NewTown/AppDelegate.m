@@ -24,9 +24,30 @@
     config.enableLog = NO; // 关闭 sdk 的 log 输出
     [YZSDK.shared initializeSDKWithConfig:config];
     YZSDK.shared.delegate = self; // 必须设置代理方法，保证 SDK 在需要 token 的时候可以正常运行
-    WebViewController *viewController = [[WebViewController alloc]init];
-    UINavigationController *rootNavigationController = [[UINavigationController alloc]initWithRootViewController:viewController];
-    self.window.rootViewController = rootNavigationController;
+    WebViewController *indexWebVC = [[WebViewController alloc]initWithURLString:@"https://j.youzan.com/Go44-9"];
+    UINavigationController *indexNavigationController = [[UINavigationController alloc]initWithRootViewController:indexWebVC];
+    indexNavigationController.tabBarItem.title = @"首页";
+//    self.window.rootViewController = rootNavigationController;
+    WebViewController *newTownWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/feature/XgA5YjWnWO"];
+    UINavigationController *newTownNavigationController = [[UINavigationController alloc]initWithRootViewController:newTownWebVC];
+    newTownNavigationController.tabBarItem.title =@"全部民宿";
+    WebViewController *collectWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/category/bJbcln8Lnv"];
+    UINavigationController *collectNavigationController = [[UINavigationController alloc]initWithRootViewController:collectWebVC];
+    collectNavigationController.tabBarItem.title =@"收藏";
+    
+    WebViewController *userCenterWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/showcase/usercenter?alias=3hgmk8rs"];
+    UINavigationController *userCenterNavigationController = [[UINavigationController alloc]initWithRootViewController:userCenterWebVC];
+    userCenterNavigationController.tabBarItem.title =@"个人中心";
+    
+    
+    
+    NSArray *items = [NSArray arrayWithObjects:indexNavigationController,newTownNavigationController,collectNavigationController,userCenterNavigationController, nil];
+    UITabBarController *tabBarC = [[UITabBarController alloc]init];
+    [tabBarC setViewControllers:items];
+    tabBarC.tabBar.backgroundColor = [UIColor colorWithRed:43.0/255.0 green:45.0/255.0 blue:47.0/255.0 alpha:1.0];
+    
+    self.window.rootViewController = tabBarC;
+    
     
     return YES;
 }

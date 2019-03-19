@@ -33,10 +33,9 @@
     
 }
 - (void)jump:(id)sender{
-    WebViewController *vc = [[WebViewController alloc]init];
+    WebViewController *vc = [[WebViewController alloc]initWithURLString:@"https://j.youzan.com/Go44-9"];
     vc.loginTime = 0;
     //目前支持有赞的店铺主页链接、商品详情链接、商品列表链接、订单列表、会员中心等
-    vc.loadUrl = @"https://j.youzan.com/_Xu9n9";
     [self.navigationController pushViewController:vc animated:YES];
 }
 

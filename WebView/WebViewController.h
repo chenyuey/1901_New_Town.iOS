@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonHeader.h"
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录
@@ -23,5 +24,7 @@ typedef NS_ENUM(NSUInteger, loginTime) {
  首次加载链接
  */
 @property (copy, nonatomic) NSString *loadUrl;
+@property (nonatomic,strong) UILabel *navTitleLabel;
+- (id)initWithURLString:(NSString *)strURL;
 @end
 
