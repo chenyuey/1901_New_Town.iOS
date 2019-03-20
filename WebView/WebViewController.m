@@ -11,6 +11,7 @@
 #import <YZBaseSDK/YZBaseSDK.h>
 #import "YZDUICService.h"
 #import "CommonHeader.h"
+#import "MapInfoViewController.h"
 
 @interface WebViewController () <YZWebViewDelegate, YZWebViewNoticeDelegate>
 @property (strong, nonatomic) YZWebView *webView;
@@ -62,6 +63,11 @@
         [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
     }
 }
+- (void)enterMapInfo:(id)sender{
+    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
+    mapInfoVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:mapInfoVC animated:YES];
+}
 #pragma mark - 视图加载
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -75,10 +81,15 @@
     self.backButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(navigationShouldPopOnBackButton)];
     self.backButton.hidden = YES;
     [self.view addSubview:self.backButton];
-    
+    //创建收藏按钮
     self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
     self.collectButton.hidden = YES;
     [self.view addSubview:self.collectButton];
+    //创建地图按钮
+    self.mapButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20, SafeStatusBarHeight+10, 24, 24) :@"mapIcon" :@selector(enterMapInfo:)];
+    self.mapButton.hidden = YES;
+    [self.view addSubview:self.mapButton];
+    
     
     self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight)];
     [self.view addSubview:self.webView];
@@ -161,6 +172,12 @@
         //隐藏收藏
         self.collectButton.hidden = YES;
     }
+    if ([request.URL.path isEqualToString:@"/v2/showcase/category"]) {
+        //显示地图按钮
+        self.mapButton.hidden = NO;
+    }else{
+        self.mapButton.hidden = YES;
+    }
     return YES;
 }
 - (void)webViewDidFinishLoad:(id<YZWebView>)webView{
@@ -177,6 +194,10 @@
                   //全部民宿不添加 收藏按钮 功能
                   if ([response isEqualToString:@"全部民宿"]) {
                       self.collectButton.hidden = YES;
+                  }
+                  if ([response isEqualToString:@"全部小镇"]) {
+                      //不显示地图
+                      self.mapButton.hidden = YES;
                   }
               }];
 }

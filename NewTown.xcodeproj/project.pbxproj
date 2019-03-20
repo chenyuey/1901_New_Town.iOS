@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		079F1827BD91AC71C7E50E74 /* libPods-NewTown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
-		527071BE222CF1BC00B73769 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BD222CF1BC00B73769 /* ViewController.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
 		527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 527071C2222CF1BC00B73769 /* NewTown.xcdatamodeld */; };
 		527071C6222CF1BE00B73769 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 527071C5222CF1BE00B73769 /* Assets.xcassets */; };
@@ -21,6 +20,7 @@
 		527071F7222E778A00B73769 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071F5222E778A00B73769 /* UserModel.m */; };
 		527071FB222E77AE00B73769 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071F9222E77AE00B73769 /* LoginViewController.m */; };
 		527071FF222E780900B73769 /* YZDUICService.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071FE222E780800B73769 /* YZDUICService.m */; };
+		5299AFF42242407000699683 /* MapInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFF32242407000699683 /* MapInfoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,8 +45,6 @@
 		527071B6222CF1BC00B73769 /* NewTown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		527071B9222CF1BC00B73769 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		527071BA222CF1BC00B73769 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		527071BC222CF1BC00B73769 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		527071BD222CF1BC00B73769 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		527071C0222CF1BC00B73769 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		527071C3222CF1BC00B73769 /* NewTown.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NewTown.xcdatamodel; sourceTree = "<group>"; };
 		527071C5222CF1BE00B73769 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,6 +67,8 @@
 		527071FE222E780800B73769 /* YZDUICService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZDUICService.m; sourceTree = "<group>"; };
 		52707201222F657800B73769 /* YZDemoConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDemoConfig.h; sourceTree = "<group>"; };
 		52707202222F6B4E00B73769 /* CommonHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonHeader.h; sourceTree = "<group>"; };
+		5299AFF22242407000699683 /* MapInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapInfoViewController.h; sourceTree = "<group>"; };
+		5299AFF32242407000699683 /* MapInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapInfoViewController.m; sourceTree = "<group>"; };
 		B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.release.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.release.xcconfig"; sourceTree = "<group>"; };
 		F854899CA6E759B27AD4D6C2 /* Pods-NewTown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +111,7 @@
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
+				5299AFF12242404E00699683 /* mapView */,
 				52707200222F655A00B73769 /* Define */,
 				527071FC222E780800B73769 /* Service */,
 				527071F8222E77AE00B73769 /* login */,
@@ -140,8 +141,6 @@
 			children = (
 				527071B9222CF1BC00B73769 /* AppDelegate.h */,
 				527071BA222CF1BC00B73769 /* AppDelegate.m */,
-				527071BC222CF1BC00B73769 /* ViewController.h */,
-				527071BD222CF1BC00B73769 /* ViewController.m */,
 				527071BF222CF1BC00B73769 /* Main.storyboard */,
 				527071C5222CF1BE00B73769 /* Assets.xcassets */,
 				527071C7222CF1BE00B73769 /* LaunchScreen.storyboard */,
@@ -213,6 +212,15 @@
 				52707201222F657800B73769 /* YZDemoConfig.h */,
 			);
 			path = Define;
+			sourceTree = "<group>";
+		};
+		5299AFF12242404E00699683 /* mapView */ = {
+			isa = PBXGroup;
+			children = (
+				5299AFF22242407000699683 /* MapInfoViewController.h */,
+				5299AFF32242407000699683 /* MapInfoViewController.m */,
+			);
+			path = mapView;
 			sourceTree = "<group>";
 		};
 		CC41333DD9054A9D0C4D6A27 /* Frameworks */ = {
@@ -396,10 +404,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				527071BE222CF1BC00B73769 /* ViewController.m in Sources */,
 				527071F3222E76A300B73769 /* WebViewController.m in Sources */,
 				527071F7222E778A00B73769 /* UserModel.m in Sources */,
 				527071FF222E780900B73769 /* YZDUICService.m in Sources */,
+				5299AFF42242407000699683 /* MapInfoViewController.m in Sources */,
 				527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */,
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,

@@ -30,6 +30,8 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 @property (nonatomic,strong) UIButton *backButton;
 //收藏按钮
 @property (nonatomic,strong) UIButton *collectButton;
+//地图按钮
+@property (nonatomic,strong) UIButton *mapButton;
 
 - (id)initWithURLString:(NSString *)strURL;
 @end

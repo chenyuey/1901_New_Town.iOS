@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "ViewController.h"
 #import <YZBaseSDK/YZBaseSDK.h>
 #import "YZDUICService.h"
 
