@@ -65,7 +65,7 @@
 }
 - (void)enterMapInfo:(id)sender{
     MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
-    mapInfoVC.hidesBottomBarWhenPushed = YES;
+//    mapInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mapInfoVC animated:YES];
 }
 #pragma mark - 视图加载
@@ -188,8 +188,12 @@
                   //加载新链接时，分享按钮先置为不可用
                   if ([self.webView canGoBack]) {
                       self.backButton.hidden = NO;
+                      self.tabBarController.tabBar.hidden=YES;
+                      self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - SafeAreaBottomHeight);
                   }else{
                       self.backButton.hidden = YES;
+                      self.tabBarController.tabBar.hidden=NO;
+                      self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
                   }
                   //全部民宿不添加 收藏按钮 功能
                   if ([response isEqualToString:@"全部民宿"]) {
