@@ -18,12 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    YZWebView *webView = [[YZWebView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-//    [self.view addSubview:webView];
-//    NSURL *url = [NSURL URLWithString:@"https://h5.youzan.com/v2/showcase/homepage?alias=lUWblj8NNI"];
-//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-//    [webView loadRequest:urlRequest];
-    
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100, 50)];
     btn.backgroundColor = [UIColor redColor];
     btn.titleLabel.text = @"跳转";

@@ -174,6 +174,10 @@
                   }else{
                       self.backButton.hidden = YES;
                   }
+                  //全部民宿不添加 收藏按钮 功能
+                  if ([response isEqualToString:@"全部民宿"]) {
+                      self.collectButton.hidden = YES;
+                  }
               }];
 }
 
