@@ -58,8 +58,6 @@
         UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
         [imageTmp setAccessibilityIdentifier:@"collected"];
         [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-        
-        [self getHtmlUrlContent:self.webView.URL];
         [self.webView share];
         
     }else{//取消收藏
@@ -72,19 +70,6 @@
     MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
 //    mapInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mapInfoVC animated:YES];
-}
-- (void)getHtmlUrlContent:(NSURL *)currentURL{
-    NSError *err = nil;
-    NSString *str =   [NSString stringWithContentsOfURL:currentURL encoding:NSUTF8StringEncoding error:&err];
-    if (err == nil)
-    {
-        NSLog(@"%@",str);
-    }
-    else
-    {
-        NSLog(@"读取失败");
-        NSLog(@"%@",err.localizedDescription);
-    }
 }
 #pragma mark - 视图加载
 - (void)viewDidLoad {
@@ -325,7 +310,8 @@
     //收藏接口调用的数据
     NSDictionary *dicCollectInfo = @{@"title":[shareDic objectForKey:@"title"],
                                      @"imgUrl":[shareDic objectForKey:@"imgUrl"],
-                                     @"link":[shareDic objectForKey:@"link"]
+                                     @"link":[shareDic objectForKey:@"link"],
+                                     @"desc":[shareDic objectForKey:@"desc"]
                                      };
 }
 
