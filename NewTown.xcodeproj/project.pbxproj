@@ -21,6 +21,7 @@
 		527071FB222E77AE00B73769 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071F9222E77AE00B73769 /* LoginViewController.m */; };
 		527071FF222E780900B73769 /* YZDUICService.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071FE222E780800B73769 /* YZDUICService.m */; };
 		5299AFF42242407000699683 /* MapInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFF32242407000699683 /* MapInfoViewController.m */; };
+		5299AFF82243912D00699683 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFF72243912C00699683 /* CollectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		52707202222F6B4E00B73769 /* CommonHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonHeader.h; sourceTree = "<group>"; };
 		5299AFF22242407000699683 /* MapInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapInfoViewController.h; sourceTree = "<group>"; };
 		5299AFF32242407000699683 /* MapInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapInfoViewController.m; sourceTree = "<group>"; };
+		5299AFF62243912C00699683 /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		5299AFF72243912C00699683 /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.release.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.release.xcconfig"; sourceTree = "<group>"; };
 		F854899CA6E759B27AD4D6C2 /* Pods-NewTown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +114,7 @@
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
+				5299AFF52243910700699683 /* MyCollection */,
 				5299AFF12242404E00699683 /* mapView */,
 				52707200222F655A00B73769 /* Define */,
 				527071FC222E780800B73769 /* Service */,
@@ -221,6 +225,15 @@
 				5299AFF32242407000699683 /* MapInfoViewController.m */,
 			);
 			path = mapView;
+			sourceTree = "<group>";
+		};
+		5299AFF52243910700699683 /* MyCollection */ = {
+			isa = PBXGroup;
+			children = (
+				5299AFF62243912C00699683 /* CollectionViewController.h */,
+				5299AFF72243912C00699683 /* CollectionViewController.m */,
+			);
+			path = MyCollection;
 			sourceTree = "<group>";
 		};
 		CC41333DD9054A9D0C4D6A27 /* Frameworks */ = {
@@ -412,6 +425,7 @@
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
 				527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */,
+				5299AFF82243912D00699683 /* CollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

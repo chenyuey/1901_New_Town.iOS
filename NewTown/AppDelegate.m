@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "WebViewController.h"
+#import "CollectionViewController.h"
 
 @interface AppDelegate ()
 
@@ -33,7 +34,8 @@
     UINavigationController *newTownNavigationController = [[UINavigationController alloc]initWithRootViewController:newTownWebVC];
     newTownNavigationController.tabBarItem.title =@"全部民宿";
     newTownNavigationController.tabBarItem.image = [UIImage imageNamed:@"hotelBarIcon"];
-    WebViewController *collectWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/category/bJbcln8Lnv"];
+    
+    CollectionViewController *collectWebVC = [[CollectionViewController alloc]init];
     UINavigationController *collectNavigationController = [[UINavigationController alloc]initWithRootViewController:collectWebVC];
     collectNavigationController.tabBarItem.title =@"收藏";
     collectNavigationController.tabBarItem.image = [UIImage imageNamed:@"collectionBarIcon"];
