@@ -51,13 +51,18 @@
         return YES;
     }
 }
+//收藏按钮点击事件
 - (void)addItemToMyCollections:(id)sender{
     UIImage *currentImage = [self.collectButton imageForState:UIControlStateNormal];
-    if ([currentImage.accessibilityIdentifier isEqualToString:@"uncollect"]) {
+    if ([currentImage.accessibilityIdentifier isEqualToString:@"uncollect"]) {//收藏
         UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
         [imageTmp setAccessibilityIdentifier:@"collected"];
         [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-    }else{
+        
+        [self getHtmlUrlContent:self.webView.URL];
+        [self.webView share];
+        
+    }else{//取消收藏
         UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
         [imageTmp setAccessibilityIdentifier:@"uncollect"];
         [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
@@ -67,6 +72,19 @@
     MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
 //    mapInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mapInfoVC animated:YES];
+}
+- (void)getHtmlUrlContent:(NSURL *)currentURL{
+    NSError *err = nil;
+    NSString *str =   [NSString stringWithContentsOfURL:currentURL encoding:NSUTF8StringEncoding error:&err];
+    if (err == nil)
+    {
+        NSLog(@"%@",str);
+    }
+    else
+    {
+        NSLog(@"读取失败");
+        NSLog(@"%@",err.localizedDescription);
+    }
 }
 #pragma mark - 视图加载
 - (void)viewDidLoad {
@@ -131,7 +149,6 @@
         case YZNoticeTypeReady: // Web页面已准备好
         {
             // 此时可以分享，但注意此事件并不作为是否可分享的标志事件
-            self.navigationItem.rightBarButtonItem.enabled = YES;
             break;
         }
         case YZNoticeTypeAddToCart: // 加入购物车的时候调用
@@ -305,12 +322,11 @@
  */
 - (void)alertShareData:(id)data {
     NSDictionary *shareDic = (NSDictionary *)data;
-    NSString *message = [NSString stringWithFormat:@"%@\r%@" , shareDic[@"title"],shareDic[@"link"]];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"数据已经复制到黏贴版" message:message delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
-    [alertView show];
-    //复制到粘贴板
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = message;
+    //收藏接口调用的数据
+    NSDictionary *dicCollectInfo = @{@"title":[shareDic objectForKey:@"title"],
+                                     @"imgUrl":[shareDic objectForKey:@"imgUrl"],
+                                     @"link":[shareDic objectForKey:@"link"]
+                                     };
 }
 
 @end
