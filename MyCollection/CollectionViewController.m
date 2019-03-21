@@ -101,6 +101,12 @@
     NSDictionary *dictInfo = [collectionDataSource objectAtIndex:indexPath.row];
     [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:[dictInfo objectForKey:@"imgUrl"]]];
     [cell.coverImageView layoutIfNeeded];
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:cell.coverImageView.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(6, 6)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
+    maskLayer.frame = cell.coverImageView.bounds;
+    maskLayer.path = maskPath.CGPath;
+    cell.coverImageView.layer.mask = maskLayer;
+    
     cell.titleLabel.text = [dictInfo objectForKey:@"title"];
     cell.descLabel.text = [dictInfo objectForKey:@"desc"];
     return cell;
