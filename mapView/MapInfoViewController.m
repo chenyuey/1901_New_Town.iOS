@@ -37,6 +37,7 @@
     self.mapView.zoomEnabled = YES;
     self.mapView.scrollEnabled = YES;
     self.mapView.delegate = self;
+    [self locateToLatitude:23.126272 longitude:113.395568];
     [self.view addSubview:self.mapView];
     
 }
