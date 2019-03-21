@@ -3,6 +3,7 @@
 
 target 'NewTown' do
 pod 'YZAppSDK'
+pod 'SDWebImage'
 
 end
 

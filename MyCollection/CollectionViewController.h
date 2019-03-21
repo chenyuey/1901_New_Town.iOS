@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonHeader.h"
+#import "CollectTableViewCell.h"
+#import "UIImageView+WebCache.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CollectionViewController : UIViewController
+@interface CollectionViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>{
+    UITableView *mCollectTableView;
+    NSArray *collectionDataSource;
+}
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;
 @property (nonatomic,strong) UIView *slideBarView;

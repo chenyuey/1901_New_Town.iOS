@@ -22,6 +22,7 @@
 		527071FF222E780900B73769 /* YZDUICService.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071FE222E780800B73769 /* YZDUICService.m */; };
 		5299AFF42242407000699683 /* MapInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFF32242407000699683 /* MapInfoViewController.m */; };
 		5299AFF82243912D00699683 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFF72243912C00699683 /* CollectionViewController.m */; };
+		5299AFFB2243AB8900699683 /* CollectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFFA2243AB8900699683 /* CollectTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,8 @@
 		5299AFF32242407000699683 /* MapInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapInfoViewController.m; sourceTree = "<group>"; };
 		5299AFF62243912C00699683 /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
 		5299AFF72243912C00699683 /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		5299AFF92243AB8900699683 /* CollectTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectTableViewCell.h; sourceTree = "<group>"; };
+		5299AFFA2243AB8900699683 /* CollectTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectTableViewCell.m; sourceTree = "<group>"; };
 		B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.release.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.release.xcconfig"; sourceTree = "<group>"; };
 		F854899CA6E759B27AD4D6C2 /* Pods-NewTown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -232,6 +235,8 @@
 			children = (
 				5299AFF62243912C00699683 /* CollectionViewController.h */,
 				5299AFF72243912C00699683 /* CollectionViewController.m */,
+				5299AFF92243AB8900699683 /* CollectTableViewCell.h */,
+				5299AFFA2243AB8900699683 /* CollectTableViewCell.m */,
 			);
 			path = MyCollection;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
 				527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */,
+				5299AFFB2243AB8900699683 /* CollectTableViewCell.m in Sources */,
 				5299AFF82243912D00699683 /* CollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

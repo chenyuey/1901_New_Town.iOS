@@ -1,4 +1,7 @@
 PODS:
+  - SDWebImage (4.4.3):
+    - SDWebImage/Core (= 4.4.3)
+  - SDWebImage/Core (4.4.3)
   - YZAppSDK (6.4.10):
     - YZAppSDK/Base (= 6.4.10)
   - YZAppSDK/Base (6.4.10):
@@ -6,15 +9,18 @@ PODS:
   - YZAppSDK/Core (6.4.10)
 
 DEPENDENCIES:
+  - SDWebImage
   - YZAppSDK
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - SDWebImage
     - YZAppSDK
 
 SPEC CHECKSUMS:
+  SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   YZAppSDK: b6fa1b0db59e46c8dfd4f25d58d2de42e450a480
 
-PODFILE CHECKSUM: 1bcaf8e24b7510d48bb05f5b391647b053a306c0
+PODFILE CHECKSUM: add8ed8d780580c3ab9ad79ccf1e1b05b02338a6
 
 COCOAPODS: 1.5.3
