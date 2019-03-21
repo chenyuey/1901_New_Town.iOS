@@ -46,7 +46,7 @@
     UIView *navView = [self cteateNavViewWithFrame:CGRectMake(80, 0, SCREEN_WIDTH - 80*2, 48)];
     [contentView addSubview:navView];
     
-    mCollectTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 7 + 48, SCREEN_WIDTH, contentView.frame.size.height - 7 - 48) style:UITableViewStylePlain];
+    mCollectTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 17 + 48, SCREEN_WIDTH, contentView.frame.size.height - 7 - 48) style:UITableViewStylePlain];
     mCollectTableView.dataSource = self;
     mCollectTableView.delegate = self;
     mCollectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
