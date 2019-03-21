@@ -32,6 +32,12 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
 
+    self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 136 - SafeAreaBottomHeight)];
+    self.mapView.mapType = MKMapTypeStandard;
+    self.mapView.zoomEnabled = YES;
+    self.mapView.scrollEnabled = YES;
+    self.mapView.delegate = self;
+    [self.view addSubview:self.mapView];
     
 }
 #pragma mark - UI控件创建
@@ -53,6 +59,25 @@
 #pragma mark - 页面事件
 - (void)backToRegion:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude{
+    // 设置地图中心的经度、纬度
+    CLLocationCoordinate2D center = {latitude,longitude};
+    // 设置地图显示的范围，地图显示范围越小，细节越清楚
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.005,0.005);
+    // 创建MKCoordinateRegion对象，该对象代表地图的显示中心和显示范围
+    MKCoordinateRegion region =MKCoordinateRegionMake(center, span);
+    // 设置当前地图的显示中心和显示范围
+    [self.mapView setRegion:region animated:YES];
+    // 创建MKPointAnnotation对象——代表一个锚点
+    MKPointAnnotation* annotation = [[MKPointAnnotation alloc] init];
+    annotation.title = @"主标题";
+    annotation.subtitle = @"详细地址";
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(
+                                                                   latitude , longitude);
+    annotation.coordinate = coordinate;
+    // 添加锚点
+    [self.mapView addAnnotation:annotation];
 }
 
 /*
