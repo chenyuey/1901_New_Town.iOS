@@ -1,4 +1,9 @@
 PODS:
+  - Bolts/Tasks (1.9.0)
+  - Parse (1.17.2):
+    - Parse/Core (= 1.17.2)
+  - Parse/Core (1.17.2):
+    - Bolts/Tasks (~> 1.9)
   - SDWebImage (4.4.3):
     - SDWebImage/Core (= 4.4.3)
   - SDWebImage/Core (4.4.3)
@@ -9,18 +14,23 @@ PODS:
   - YZAppSDK/Core (6.4.10)
 
 DEPENDENCIES:
+  - Parse (~> 1.17.2)
   - SDWebImage
   - YZAppSDK
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Bolts
+    - Parse
     - SDWebImage
     - YZAppSDK
 
 SPEC CHECKSUMS:
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   YZAppSDK: b6fa1b0db59e46c8dfd4f25d58d2de42e450a480
 
-PODFILE CHECKSUM: add8ed8d780580c3ab9ad79ccf1e1b05b02338a6
+PODFILE CHECKSUM: 76eadc8adfd3098d03b4114e7f8e88ee8505d587
 
 COCOAPODS: 1.5.3

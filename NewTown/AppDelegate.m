@@ -54,6 +54,14 @@
     
     self.window.rootViewController = tabBarC;
     
+    //创建Parse服务链接
+    ParseClientConfiguration *parseConfig = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
+        configuration.server = @"http://10.135.9.35:1338/api/1";
+        configuration.applicationId = @"myAppId";
+        configuration.clientKey = @"myMasterKey";
+    }];
+    [Parse initializeWithConfiguration:parseConfig];
+    
     
     return YES;
 }

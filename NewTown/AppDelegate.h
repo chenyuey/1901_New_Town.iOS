@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <YZBaseSDK/YZBaseSDK.h>
 #import "YZDUICService.h"
+#import <Parse/Parse.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,YZSDKDelegate>
 

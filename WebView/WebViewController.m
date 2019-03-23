@@ -23,6 +23,7 @@
     self = [super init];
     if (self) {
         self.loadUrl = strURL;
+        self.loginTime = 2;
     }
     return self;
 }
@@ -293,11 +294,10 @@
  @param block 登录事件回调
  */
 - (void)presentNativeLoginViewWithBlock:(LoginResultBlock)block {
-    UIStoryboard *board = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *navigation = [board instantiateViewControllerWithIdentifier:@"login"];
-    LoginViewController *loginVC = [navigation.viewControllers objectAtIndex:0];
+//    UIStoryboard *board = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginVC = [[LoginViewController alloc]init];
     loginVC.loginBlock = block; //买家登录结果
-    [self presentViewController:navigation animated:YES completion:nil];
+    [self presentViewController:loginVC animated:YES completion:nil];
 }
 
 /**

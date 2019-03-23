@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "UserModel.h"
+#import "CommonHeader.h"
+#import <Parse/Parse.h>
 
 typedef void (^LoginResultBlock)(BOOL success);
 
 @interface LoginViewController : UIViewController
 
 @property (copy, nonatomic) LoginResultBlock loginBlock;
-
+//页面标题
+@property (nonatomic,strong) UILabel *navTitleLabel;
 @end
 

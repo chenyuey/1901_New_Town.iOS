@@ -197,8 +197,8 @@
 		527071F8222E77AE00B73769 /* login */ = {
 			isa = PBXGroup;
 			children = (
-				527071F9222E77AE00B73769 /* LoginViewController.m */,
 				527071FA222E77AE00B73769 /* LoginViewController.h */,
+				527071F9222E77AE00B73769 /* LoginViewController.m */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -261,6 +261,7 @@
 				527071B3222CF1BC00B73769 /* Frameworks */,
 				527071B4222CF1BC00B73769 /* Resources */,
 				D234C97C24EAE21683FCD711 /* [CP] Embed Pods Frameworks */,
+				07B8F8AACC0A410162D4DDF0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -377,6 +378,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		07B8F8AACC0A410162D4DDF0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NewTown/Pods-NewTown-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Parse/Parse.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Parse.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NewTown/Pods-NewTown-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5968A90AE7F329554ED25903 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

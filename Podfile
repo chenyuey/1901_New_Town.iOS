@@ -4,6 +4,7 @@
 target 'NewTown' do
 pod 'YZAppSDK'
 pod 'SDWebImage'
+pod 'Parse', '~> 1.17.2'
 
 end
 

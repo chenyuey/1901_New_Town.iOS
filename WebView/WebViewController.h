@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonHeader.h"
+#import "LoginViewController.h"
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录
