@@ -10,6 +10,7 @@
 #import "CommonHeader.h"
 #import "CollectTableViewCell.h"
 #import "UIImageView+WebCache.h"
+#import <Parse/Parse.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

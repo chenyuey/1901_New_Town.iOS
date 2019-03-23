@@ -51,6 +51,19 @@
     mCollectTableView.delegate = self;
     mCollectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [contentView addSubview:mCollectTableView];
+    
+    collectionDataSource = @[];
+    [self findCollectionInfosWithType:0];
+    
+}
+- (void)findCollectionInfosWithType:(int)type{
+    PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
+    [query whereKey:@"type" equalTo:[NSNumber numberWithInt:type]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        NSLog(@"查找小镇数据：%@",objects);
+        self->collectionDataSource = objects;
+        [self->mCollectTableView reloadData];
+    }];
 }
 - (UIView *)cteateNavViewWithFrame:(CGRect)frame{
     UIView *navView = [[UIView alloc]initWithFrame:frame];
@@ -80,6 +93,11 @@
     self.slideBarView.center = center;
     [UIView setAnimationDelegate:self];
     [UIView commitAnimations];
+    if ([pressButton.titleLabel.text isEqualToString:@"小镇"]) {
+        [self findCollectionInfosWithType:0];
+    }else{
+        [self findCollectionInfosWithType:1];
+    }
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -91,17 +109,16 @@
     if (cell == nil) {
         cell = [[CollectTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"identify%ld",(long)indexPath.row]];
     }
-    NSDictionary *dictInfo = [collectionDataSource objectAtIndex:indexPath.row];
-    [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:[dictInfo objectForKey:@"imgUrl"]]];
+    PFObject *dictInfo = [collectionDataSource objectAtIndex:indexPath.row];
+    [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:[dictInfo objectForKey:@"cover_link"]]];
     [cell.coverImageView layoutIfNeeded];
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:cell.coverImageView.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(6, 6)];
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
     maskLayer.frame = cell.coverImageView.bounds;
     maskLayer.path = maskPath.CGPath;
     cell.coverImageView.layer.mask = maskLayer;
-    
-    cell.titleLabel.text = [dictInfo objectForKey:@"title"];
-    cell.descLabel.text = [dictInfo objectForKey:@"desc"];
+    cell.titleLabel.text = [dictInfo objectForKey:@"name"];
+    cell.descLabel.text = [dictInfo objectForKey:@"description"];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
