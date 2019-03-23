@@ -29,6 +29,17 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    NSDictionary *dictMapInfo = @{@"name":@"黄山店村",
+//                                  @"cover_link":@"https://img.yzcdn.cn/upload_files/2019/03/14/FpDBi7GG27pJGrSxa9MgLz6TcVxQ.png?imageView2%2F2%2Fw%2F730%2Fh%2F0%2Fq%2F75%2Fformat%2Fpng",
+//                                  @"link":@"https://shop7188993.youzan.com/wscshop/showcase/feature?alias=xQT8Rjhbxw&banner_id=f.6996825~top2end~1~RTzTdR4v&reft=1553169529671&spm=f.78280629",
+//                                  @"description":@"北京 房山",
+//                                  @"region":@"华北小镇",
+////                                  @"coordinate":
+//                                      };
+    
+    
+    
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
 
@@ -37,8 +48,19 @@
     self.mapView.zoomEnabled = YES;
     self.mapView.scrollEnabled = YES;
     self.mapView.delegate = self;
-    [self locateToLatitude:23.126272 longitude:113.395568];
     [self.view addSubview:self.mapView];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"TownMap"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        NSLog(@"查找小镇数据：%@",objects);
+        PFObject *townInfo = [objects objectAtIndex:0];
+        
+        CGFloat latitude = [[townInfo objectForKey:@"coordinate"]latitude];
+        CGFloat longitude = [[townInfo objectForKey:@"coordinate"]longitude];
+        NSString *townName = [townInfo objectForKey:@"name"];
+        NSString *townDesc = [townInfo objectForKey:@"description"];
+        [self locateToLatitude:latitude longitude:longitude :townName :townDesc];
+    }];
     
 }
 #pragma mark - UI控件创建
@@ -61,7 +83,7 @@
 - (void)backToRegion:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
--(void)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude{
+-(void)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude :(NSString *)townName :(NSString*)townDesc{
     // 设置地图中心的经度、纬度
     CLLocationCoordinate2D center = {latitude,longitude};
     // 设置地图显示的范围，地图显示范围越小，细节越清楚
@@ -72,8 +94,8 @@
     [self.mapView setRegion:region animated:YES];
     // 创建MKPointAnnotation对象——代表一个锚点
     MKPointAnnotation* annotation = [[MKPointAnnotation alloc] init];
-    annotation.title = @"主标题";
-    annotation.subtitle = @"详细地址";
+    annotation.title = townName;
+    annotation.subtitle = townDesc;
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(
                                                                    latitude , longitude);
     annotation.coordinate = coordinate;

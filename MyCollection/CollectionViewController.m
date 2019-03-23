@@ -51,13 +51,6 @@
     mCollectTableView.delegate = self;
     mCollectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [contentView addSubview:mCollectTableView];
-    
-    NSDictionary *dictTmpInfo = @{@"title":@"黄山店",
-                                  @"imgUrl":@"https://img.yzcdn.cn/upload_files/2019/03/14/FpDBi7GG27pJGrSxa9MgLz6TcVxQ.png?imageView2%2F2%2Fw%2F730%2Fh%2F0%2Fq%2F75%2Fformat%2Fpng",
-                                  @"link":@"https://shop7188993.youzan.com/wscshop/showcase/feature?alias=xQT8Rjhbxw&banner_id=f.6996825~top2end~1~RTzTdR4v&reft=1553169529671&spm=f.78280629",
-                                  @"desc":@"北京 房山"
-                                  };
-    collectionDataSource = [[NSArray alloc]initWithObjects:dictTmpInfo, nil];
 }
 - (UIView *)cteateNavViewWithFrame:(CGRect)frame{
     UIView *navView = [[UIView alloc]initWithFrame:frame];
