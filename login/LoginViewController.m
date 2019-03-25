@@ -31,6 +31,39 @@
     [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
+- (void)createLoginViewWithFrame:(CGRect)frame :(UIColor *)lineColor{
+    UIView *loginView = [[UIView alloc]initWithFrame:frame];
+    [self.view addSubview:loginView];
+    self.phoneNumberTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, frame.size.width - 72, 39)];
+    [loginView addSubview:self.phoneNumberTextField];
+    [self.phoneNumberTextField setPlaceholder:@"请输入手机号"];
+    UIView *phoneNumberDownLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 39, frame.size.width, 1)];
+    phoneNumberDownLineView.backgroundColor = lineColor;
+    [loginView addSubview:phoneNumberDownLineView];
+    self.passwordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, 40+16, frame.size.width, 39)];
+    [self.passwordTextField setPlaceholder:@"请输入验证码"];
+    self.passwordTextField.secureTextEntry = YES;
+    [loginView addSubview:self.passwordTextField];
+    UIView *passwordDownLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 40+16+39, frame.size.width, 1)];
+    passwordDownLineView.backgroundColor = lineColor;
+    [loginView addSubview:passwordDownLineView];
+    
+    UIButton *getValidCodeBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 72, 0, 72, 20)];
+    [getValidCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [getValidCodeBtn setTitleColor:[UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [getValidCodeBtn addTarget:self action:@selector(getValidCodePressd:) forControlEvents:UIControlEventTouchUpInside];
+    [getValidCodeBtn setFont:[UIFont systemFontOfSize:14]];
+    [loginView addSubview:getValidCodeBtn];
+    
+    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 40+16+39+19, frame.size.width, 50)];
+    loginBtn.backgroundColor = [UIColor colorWithRed:99.0/255.0 green:190.0/255.0 blue:114.0/255.0 alpha:1.0];
+    [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
+    [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [loginBtn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+    loginBtn.layer.cornerRadius = 5;
+    [loginView addSubview:loginBtn];
+    
+}
 #pragma mark - 系统声明周期
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,14 +74,19 @@
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     //修改导航栏样式
     self.navTitleLabel = [self createLabelWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
-    self.navTitleLabel.text = @"我的收藏";
+    self.navTitleLabel.text = @"登录";
     [self.view addSubview:self.navTitleLabel];
+    UIColor *splitLineColor = [UIColor colorWithRed:213.0/255.0 green:214.0/255.0 blue:224.0/255.0 alpha:1.0];
+    UIView *spitLineView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight + 44, SCREEN_WIDTH, 1)];
+    spitLineView.backgroundColor = splitLineColor;
+    [self.view addSubview:spitLineView];
     
-    UIButton *closeButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 20, 20) :@"closePageIcon" :@selector(close:)];
+    UIButton *closeButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :@selector(close:)];
     [self.view addSubview:closeButton];
     
-    UIButton *loginButton = [self createButtonWithImage:CGRectMake(100, 200, 55.5, 24) :@"loginIcon" :@selector(login:)];
-    [self.view addSubview:loginButton];
+    [self createLoginViewWithFrame:CGRectMake(17, SafeStatusBarHeight + 44 + 96, SCREEN_WIDTH - 17 - 15, 130) :splitLineColor];
+    
+    
     
 }
 
@@ -71,19 +109,25 @@
     /**
      登录方法(在你使用时，应该换成自己服务器给的接口来获取access_token，cookie)
      */
-    NSDictionary *dicLoginInfo = @{@"username":@"chenyue",
-                                   @"password":@"123456"
-                                   };
-    [PFCloud callFunctionInBackground:@"login" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable error) {
-        if (resultInfo) {
-            [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]
-                                       cookieKey:resultInfo[@"yz_user"][@"data"][@"cookie_key"]
-                                     cookieValue:resultInfo[@"yz_user"][@"data"][@"cookie_value"]];
-            [self dismissViewControllerAnimated:YES completion:^{
-                [self callBlockWithResult:YES];
-            }];
-        }
-    }];
+    if (self.phoneNumberTextField.text != nil && self.phoneNumberTextField.text.length > 0 && self.passwordTextField.text != nil && self.passwordTextField.text.length > 0) {
+        NSDictionary *dicLoginInfo = @{@"username":self.phoneNumberTextField.text,
+                                       @"password":self.passwordTextField.text
+                                       };//chenyue 123456
+        [PFCloud callFunctionInBackground:@"login" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable error) {
+            if (resultInfo) {
+                [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]
+                                           cookieKey:resultInfo[@"yz_user"][@"data"][@"cookie_key"]
+                                         cookieValue:resultInfo[@"yz_user"][@"data"][@"cookie_value"]];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self callBlockWithResult:YES];
+                }];
+            }
+        }];
+    }
+    
+}
+- (void)getValidCodePressd:(id)sender{
+    NSLog(@"请求验证码");
 }
 
 #pragma mark - UIAlertView Delegate

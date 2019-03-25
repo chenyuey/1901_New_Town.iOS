@@ -18,5 +18,8 @@ typedef void (^LoginResultBlock)(BOOL success);
 @property (copy, nonatomic) LoginResultBlock loginBlock;
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;
+
+@property (nonatomic, strong)UITextField *phoneNumberTextField;
+@property (nonatomic, strong)UITextField *passwordTextField;
 @end
 

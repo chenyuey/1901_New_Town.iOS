@@ -99,7 +99,6 @@
     [self.view addSubview:self.webView];
     self.webView.delegate = self;
     self.webView.noticeDelegate = self;
-    [self initBarButtonItem];
     self.navigationItem.rightBarButtonItem.enabled = NO;//默认分享按钮不可用
     
     // 加载链接
@@ -164,7 +163,8 @@
 
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if ([request.URL.path isEqualToString:@"/wscshop/showcase/feature"]) {
+    NSString *strPathURL = request.URL.path;
+    if ([strPathURL containsString:@"feature"]) {
         //显示收藏
         self.collectButton.hidden = NO;
         UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
@@ -240,15 +240,6 @@
 }
 
 #pragma mark - Private
-
-- (void)initBarButtonItem {
-    //初始化关闭按钮
-//    self.closeBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:self action:@selector(closeItemBarButtonAction)];
-//    UIBarButtonItem *reloadBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStylePlain target:self action:@selector(reloadButtonAction)];
-    //初始化分享按钮
-//    UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonAction)];
-//    self.navigationItem.rightBarButtonItems = @[shareButtonItem,reloadBarButtonItem];
-}
 
 /**
  *  加载链接。
