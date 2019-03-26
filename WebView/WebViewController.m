@@ -55,17 +55,12 @@
 //收藏按钮点击事件
 - (void)addItemToMyCollections:(id)sender{
     UIImage *currentImage = [self.collectButton imageForState:UIControlStateNormal];
-    if ([currentImage.accessibilityIdentifier isEqualToString:@"uncollect"]) {//收藏
-        UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
-        [imageTmp setAccessibilityIdentifier:@"collected"];
-        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+//    if ([currentImage.accessibilityIdentifier isEqualToString:@"uncollect"]) {//收藏
         [self.webView share];
         
-    }else{//取消收藏
-        UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
-        [imageTmp setAccessibilityIdentifier:@"uncollect"];
-        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-    }
+//    }else{//取消收藏
+//
+//    }
 }
 - (void)enterMapInfo:(id)sender{
     MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
@@ -206,6 +201,7 @@
                       //不显示地图
                       self.mapButton.hidden = YES;
                   }
+                  [self showCollectionButtonStatus:response];
               }];
 }
 
@@ -237,6 +233,12 @@
 
 - (void)closeItemBarButtonAction {
     [self.navigationController popViewControllerAnimated:YES];
+}
+- (NSString *)formatTitleWithString :(NSString *)strTitle{
+    if ([strTitle containsString:@"🏠"]) {
+        strTitle = [strTitle stringByReplacingOccurrencesOfString:@"🏠" withString:@""];
+    }
+    return strTitle;
 }
 
 #pragma mark - Private
@@ -298,12 +300,59 @@
  */
 - (void)alertShareData:(id)data {
     NSDictionary *shareDic = (NSDictionary *)data;
+    NSString *title = [shareDic objectForKey:@"title"];
+    NSNumber *type = [NSNumber numberWithInt:1];
     //收藏接口调用的数据
-    NSDictionary *dicCollectInfo = @{@"title":[shareDic objectForKey:@"title"],
-                                     @"imgUrl":[shareDic objectForKey:@"imgUrl"],
-                                     @"link":[shareDic objectForKey:@"link"],
-                                     @"desc":[shareDic objectForKey:@"desc"]
-                                     };
+    if ([title containsString:@"🏠"]){
+        type = [NSNumber numberWithInt:0];
+    }
+    PFQuery *collectQuery = [PFQuery queryWithClassName:@"Collection"];
+    [collectQuery whereKey:@"name" equalTo:title];
+    [collectQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count > 0) {
+            //取消收藏
+            [PFObject deleteAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
+                    [imageTmp setAccessibilityIdentifier:@"uncollect"];
+                    [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+                }
+            }];
+        }else{
+            //添加收藏
+            PFObject *collectionObject = [PFObject objectWithClassName:@"Collection"];
+            [collectionObject setObject:title forKey:@"name"];
+            [collectionObject setObject:[shareDic objectForKey:@"imgUrl"] forKey:@"cover_link"];
+            [collectionObject setObject:[shareDic objectForKey:@"link"] forKey:@"link"];
+            [collectionObject setObject:[shareDic objectForKey:@"desc"] forKey:@"description"];
+            [collectionObject setObject:type forKey:@"type"];
+            [collectionObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
+                    [imageTmp setAccessibilityIdentifier:@"collected"];
+                    [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+                }
+            }];
+        }
+    }];
+    
+}
+- (void)showCollectionButtonStatus:(NSString *)title{
+    if (self.collectButton.hidden == NO) {
+        PFQuery *collectQuery = [PFQuery queryWithClassName:@"Collection"];
+        [collectQuery whereKey:@"name" equalTo:title];
+        [collectQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            if (objects.count > 0) {
+                UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
+                [imageTmp setAccessibilityIdentifier:@"collected"];
+                [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+            }else{
+                UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
+                [imageTmp setAccessibilityIdentifier:@"uncollect"];
+                [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+            }
+        }];
+    }
 }
 
 @end
