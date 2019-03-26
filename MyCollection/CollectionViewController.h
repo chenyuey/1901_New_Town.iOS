@@ -11,6 +11,7 @@
 #import "CollectTableViewCell.h"
 #import "UIImageView+WebCache.h"
 #import <Parse/Parse.h>
+#import "WebViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -52,9 +52,7 @@
     
     PFQuery *query = [PFQuery queryWithClassName:@"TownMap"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        NSLog(@"查找小镇数据：%@",objects);
         PFObject *townInfo = [objects objectAtIndex:0];
-        
         CGFloat latitude = [[townInfo objectForKey:@"coordinate"]latitude];
         CGFloat longitude = [[townInfo objectForKey:@"coordinate"]longitude];
         NSString *townName = [townInfo objectForKey:@"name"];

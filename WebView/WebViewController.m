@@ -48,7 +48,11 @@
     if ([self.webView canGoBack]) {
         [self.webView goBack];
         return NO;
-    } else {
+    } else if (self.navigationController.childViewControllers.count > 1){
+        [self.navigationController popViewControllerAnimated:YES];
+        return NO;
+    }
+    else{
         return YES;
     }
 }
@@ -183,8 +187,9 @@
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
                   NSLog(@"TITLELLL: %@",response);
                   self.navTitleLabel.text = response;
+                  NSLog(@"=============%d",self.navigationController.childViewControllers.count);
                   //加载新链接时，分享按钮先置为不可用
-                  if ([self.webView canGoBack]) {
+                  if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
                       self.backButton.hidden = NO;
                       self.tabBarController.tabBar.hidden=YES;
                       self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - SafeAreaBottomHeight);

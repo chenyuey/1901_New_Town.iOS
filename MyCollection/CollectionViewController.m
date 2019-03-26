@@ -29,6 +29,10 @@
     [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
+- (void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden=NO;
+    [self findCollectionInfosWithType:0];
+}
 #pragma mark - 系统声明周期
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -123,6 +127,12 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 112;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    PFObject *dictInfo = [collectionDataSource objectAtIndex:indexPath.row];
+    WebViewController *webInfo = [[WebViewController alloc]initWithURLString:[dictInfo objectForKey:@"link"]];
+    [self.navigationController pushViewController:webInfo animated:YES];
+//    webInfo.tabBarItem
 }
 /*
 #pragma mark - Navigation
