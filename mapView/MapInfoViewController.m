@@ -85,53 +85,72 @@
         townItemView.coverImageView.layer.mask = maskLayer;
         [townItemView setTitleFrameAndDescFrame:[townInfo objectForKey:@"name"] :[townInfo objectForKey:@"description"]];
         
-        townItemView.latitude = [[townInfo objectForKey:@"coordinate"]latitude];
-        townItemView.longitude = [[townInfo objectForKey:@"coordinate"]longitude];
+//        townItemView.latitude = [[townInfo objectForKey:@"coordinate"]latitude];
+//        townItemView.longitude = [[townInfo objectForKey:@"coordinate"]longitude];
         [townItemView setUserInteractionEnabled:YES];
         UITapGestureRecognizer *tapTownView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showCurrentTownInfoInMapView:)];
         [townItemView addGestureRecognizer:tapTownView];
-        
         [bottomScrollView addSubview:townItemView];
+        MKPointAnnotation *annotation = [self locateToLatitude:[[townInfo objectForKey:@"coordinate"]latitude] longitude:[[townInfo objectForKey:@"coordinate"]longitude] :townItemView.titleLabel.text :townItemView.descLabel.text];
+        townItemView.annotation = annotation;
         if (i == 0) {
-            [self locateToLatitude:townItemView.latitude longitude:townItemView.longitude :townItemView.titleLabel.text :townItemView.descLabel.text];
+            [self moveCenterLocationToLatitude:[self.mapView.annotations objectAtIndex:0]];
         }
+        
     }
 }
 - (void)showCurrentTownInfoInMapView:(UIGestureRecognizer *)gesture{
     BottomTownItemView *townView = (BottomTownItemView*)gesture.view;
-     [self locateToLatitude:townView.latitude longitude:townView.longitude :townView.titleLabel.text :townView.descLabel.text];
+    [self moveCenterLocationToLatitude:townView.annotation];
+
 }
 - (void)backToRegion:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
--(void)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude :(NSString *)townName :(NSString*)townDesc{
-    // 设置地图中心的经度、纬度
-    CLLocationCoordinate2D center = {latitude,longitude};
-    // 设置地图显示的范围，地图显示范围越小，细节越清楚
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.005,0.005);
-    // 创建MKCoordinateRegion对象，该对象代表地图的显示中心和显示范围
-    MKCoordinateRegion region =MKCoordinateRegionMake(center, span);
-    // 设置当前地图的显示中心和显示范围
-    [self.mapView setRegion:region animated:YES];
+-(MKPointAnnotation*)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude :(NSString *)townName :(NSString*)townDesc{
     // 创建MKPointAnnotation对象——代表一个锚点
     MKPointAnnotation* annotation = [[MKPointAnnotation alloc] init];
     annotation.title = townName;
     annotation.subtitle = townDesc;
-    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(
-                                                                   latitude , longitude);
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude , longitude);
     annotation.coordinate = coordinate;
     // 添加锚点
     [self.mapView addAnnotation:annotation];
+    return annotation;
+}
+- (void)moveCenterLocationToLatitude:(MKPointAnnotation*) annotation{
+    // 设置地图中心的经度、纬度
+    CLLocationCoordinate2D center = {annotation.coordinate.latitude,annotation.coordinate.longitude};
+    // 设置地图显示的范围，地图显示范围越小，细节越清楚
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.1,0.1);
+    // 创建MKCoordinateRegion对象，该对象代表地图的显示中心和显示范围
+    MKCoordinateRegion region =MKCoordinateRegionMake(center, span);
+    // 设置当前地图的显示中心和显示范围
+    [self.mapView setRegion:region animated:YES];
+    [self.mapView selectAnnotation:annotation animated:YES];
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - MKMapViewDelegate
+- (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    static NSString *pinId = @"pinID";
+    MKAnnotationView *annoView = [mapView dequeueReusableAnnotationViewWithIdentifier:pinId];
+    if (annoView == nil) {
+        annoView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pinId];
+    }
+    annoView.annotation = annotation;
+    annoView.image = [UIImage imageNamed:@"locationIcon"];
+    annoView.canShowCallout = YES;
+    return annoView;
 }
-*/
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    view.image = [UIImage imageNamed:@"locationIconHighLight"];
+}
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
+    view.image = [UIImage imageNamed:@"locationIcon"];
+}
+
 
 @end

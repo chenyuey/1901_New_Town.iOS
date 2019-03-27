@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,8 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong)UIImageView *coverImageView;
 @property (nonatomic, strong)UILabel *titleLabel;
 @property (nonatomic, strong)UILabel *descLabel;
-@property CGFloat latitude;
-@property CGFloat longitude;
+@property (nonatomic, strong)MKPointAnnotation *annotation;
 - (id)initTownInfoWithFrame:(CGRect)frame;
 - (void)setTitleFrameAndDescFrame:(NSString *)title :(NSString *)desc;
 @end
