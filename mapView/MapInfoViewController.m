@@ -148,8 +148,6 @@
 {
     view.image = [UIImage imageNamed:@"locationIconHighLight"];
     //更新底部的视图
-    CGFloat latitude = view.annotation.coordinate.latitude;
-    CGFloat longitude = view.annotation.coordinate.longitude;
     for (int i = 0; i < bottomScrollView.subviews.count; i ++) {
         BottomTownItemView *townItemView = [bottomScrollView.subviews objectAtIndex:i];
         if ([townItemView isKindOfClass:[BottomTownItemView class]]) {
