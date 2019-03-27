@@ -48,28 +48,14 @@
     passwordDownLineView.backgroundColor = lineColor;
     [loginView addSubview:passwordDownLineView];
     
-    UIButton *getValidCodeBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 72, 0, 72, 20)];
-    [getValidCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [getValidCodeBtn setTitleColor:[UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [getValidCodeBtn addTarget:self action:@selector(getValidCodePressd:) forControlEvents:UIControlEventTouchUpInside];
-    [getValidCodeBtn setFont:[UIFont systemFontOfSize:14]];
-    [loginView addSubview:getValidCodeBtn];
+    _getValidCodeBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 72, 10, 72, 20)];
+    [_getValidCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [_getValidCodeBtn setTitleColor:[UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [_getValidCodeBtn addTarget:self action:@selector(getValidCodePressd:) forControlEvents:UIControlEventTouchUpInside];
+    [_getValidCodeBtn setFont:[UIFont systemFontOfSize:14]];
+    [loginView addSubview:_getValidCodeBtn];
     
-//    UILabel *loginBtn = [[UILabel alloc]initWithFrame:CGRectMake(0, 40+16+39+19, frame.size.width, 50)];
-//    loginBtn.backgroundColor = [UIColor colorWithRed:99.0/255.0 green:190.0/255.0 blue:114.0/255.0 alpha:1.0];
-//    loginBtn.text = @"登录";
-//    loginBtn.textColor = [UIColor whiteColor] ;
-//    loginBtn.layer.cornerRadius = 5;
-//    loginBtn.textAlignment = NSTextAlignmentCenter;
-//    UITapGestureRecognizer *tapLogin = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(login:)];
-//    [loginBtn setUserInteractionEnabled:YES];
-//    [loginBtn addGestureRecognizer:tapLogin];
-//    [loginView addSubview:loginBtn];
-//
-//    [loginView setUserInteractionEnabled:YES];
-//    [loginView bringSubviewToFront:loginBtn];
-    
-    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 40+16+39+19, frame.size.width, 50)];
+    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 40+16+39+19, frame.size.width - 20, 50)];
     loginBtn.backgroundColor = [UIColor colorWithRed:99.0/255.0 green:190.0/255.0 blue:114.0/255.0 alpha:1.0];
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -97,7 +83,7 @@
     UIButton *closeButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :@selector(close:)];
     [self.view addSubview:closeButton];
     
-    [self createLoginViewWithFrame:CGRectMake(17, SafeStatusBarHeight + 44 + 96, SCREEN_WIDTH - 17 - 15, 130) :splitLineColor];
+    [self createLoginViewWithFrame:CGRectMake(17, SafeStatusBarHeight + 44 + 96, SCREEN_WIDTH - 17 - 15, 180) :splitLineColor];
     [self.view setUserInteractionEnabled:YES];
 }
 
@@ -106,6 +92,10 @@
 - (void)callBlockWithResult:(BOOL)success {
     if (self.loginBlock) {
         self.loginBlock(success);
+        if (timer != nil) {
+            [timer invalidate];
+            timer = nil;
+        }
     }
 }
 
@@ -144,6 +134,10 @@
         [PFCloud callFunctionInBackground:@"requireSmsCode" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable error) {
             if (error == nil) {
                 NSLog(@"验证码获取成功");
+                //添加倒计时功能
+                int waitFor = [[resultInfo objectForKey:@"waitFor"]intValue];
+                [self.getValidCodeBtn setTitle:[NSString stringWithFormat:@"倒计时%d",waitFor] forState:UIControlStateNormal];
+                self->timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeCountDownTime) userInfo:nil repeats:YES];
             }
         }];
     }
@@ -155,11 +149,29 @@
     [self dismissViewControllerAnimated:YES completion:^{
         if (buttonIndex == 0) {
             [self callBlockWithResult:NO];
+            if (self->timer != nil) {
+                [self->timer invalidate];
+                self->timer = nil;
+            }
             return;
         }
         //
 //        [self login:nil];
     }];
+}
+- (void)changeCountDownTime{
+    int waitFor = [[self.getValidCodeBtn.titleLabel.text stringByReplacingOccurrencesOfString:@"倒计时" withString:@""]intValue];
+    if (waitFor > 0) {
+        waitFor --;
+        [self.getValidCodeBtn setTitle:[NSString stringWithFormat:@"倒计时%dS",waitFor] forState:UIControlStateNormal];
+    }else{
+        if (timer != nil) {
+            [timer invalidate];
+            timer = nil;
+        }
+        [self.getValidCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    }
+    
 }
 
 @end

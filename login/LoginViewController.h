@@ -13,11 +13,14 @@
 
 typedef void (^LoginResultBlock)(BOOL success);
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController{
+    NSTimer *timer;
+}
 
 @property (copy, nonatomic) LoginResultBlock loginBlock;
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;
+@property (nonatomic,strong) UIButton *getValidCodeBtn;
 
 @property (nonatomic, strong)UITextField *phoneNumberTextField;
 @property (nonatomic, strong)UITextField *passwordTextField;
