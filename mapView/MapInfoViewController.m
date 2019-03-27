@@ -147,6 +147,20 @@
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     view.image = [UIImage imageNamed:@"locationIconHighLight"];
+    //更新底部的视图
+    CGFloat latitude = view.annotation.coordinate.latitude;
+    CGFloat longitude = view.annotation.coordinate.longitude;
+    for (int i = 0; i < bottomScrollView.subviews.count; i ++) {
+        BottomTownItemView *townItemView = [bottomScrollView.subviews objectAtIndex:i];
+        if ([townItemView isKindOfClass:[BottomTownItemView class]]) {
+            if ([townItemView.annotation isEqual:view.annotation]) {
+                int n = townItemView.center.x/SCREEN_WIDTH;
+                bottomScrollView.contentOffset = CGPointMake(n*SCREEN_WIDTH, 0);
+                return;
+            }
+        }
+    }
+    
 }
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
     view.image = [UIImage imageNamed:@"locationIcon"];
