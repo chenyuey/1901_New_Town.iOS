@@ -10,6 +10,8 @@
 #import "CommonHeader.h"
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
+#import "BottomTownItemView.h"
+#import "UIImageView+WebCache.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

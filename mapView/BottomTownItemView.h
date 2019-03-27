@@ -11,7 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BottomTownItemView : UIView
-
+@property (nonatomic, strong)UIImageView *coverImageView;
+@property (nonatomic, strong)UILabel *titleLabel;
+@property (nonatomic, strong)UILabel *descLabel;
+@property CGFloat latitude;
+@property CGFloat longitude;
+- (id)initTownInfoWithFrame:(CGRect)frame;
+- (void)setTitleFrameAndDescFrame:(NSString *)title :(NSString *)desc;
 @end
 
 NS_ASSUME_NONNULL_END

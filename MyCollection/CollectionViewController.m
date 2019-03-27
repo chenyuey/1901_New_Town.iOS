@@ -122,8 +122,6 @@
     maskLayer.path = maskPath.CGPath;
     cell.coverImageView.layer.mask = maskLayer;
     [cell setTitleFrameAndDescFrame:[dictInfo objectForKey:@"name"] :[dictInfo objectForKey:@"description"]];
-//    cell.titleLabel.text = [dictInfo objectForKey:@"name"];
-//    cell.descLabel.text = [dictInfo objectForKey:@"description"];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

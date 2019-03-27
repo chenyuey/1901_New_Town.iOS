@@ -55,6 +55,20 @@
     [getValidCodeBtn setFont:[UIFont systemFontOfSize:14]];
     [loginView addSubview:getValidCodeBtn];
     
+//    UILabel *loginBtn = [[UILabel alloc]initWithFrame:CGRectMake(0, 40+16+39+19, frame.size.width, 50)];
+//    loginBtn.backgroundColor = [UIColor colorWithRed:99.0/255.0 green:190.0/255.0 blue:114.0/255.0 alpha:1.0];
+//    loginBtn.text = @"登录";
+//    loginBtn.textColor = [UIColor whiteColor] ;
+//    loginBtn.layer.cornerRadius = 5;
+//    loginBtn.textAlignment = NSTextAlignmentCenter;
+//    UITapGestureRecognizer *tapLogin = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(login:)];
+//    [loginBtn setUserInteractionEnabled:YES];
+//    [loginBtn addGestureRecognizer:tapLogin];
+//    [loginView addSubview:loginBtn];
+//
+//    [loginView setUserInteractionEnabled:YES];
+//    [loginView bringSubviewToFront:loginBtn];
+    
     UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 40+16+39+19, frame.size.width, 50)];
     loginBtn.backgroundColor = [UIColor colorWithRed:99.0/255.0 green:190.0/255.0 blue:114.0/255.0 alpha:1.0];
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
@@ -62,7 +76,6 @@
     [loginBtn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     loginBtn.layer.cornerRadius = 5;
     [loginView addSubview:loginBtn];
-    
 }
 #pragma mark - 系统声明周期
 - (void)viewDidLoad {
@@ -85,9 +98,7 @@
     [self.view addSubview:closeButton];
     
     [self createLoginViewWithFrame:CGRectMake(17, SafeStatusBarHeight + 44 + 96, SCREEN_WIDTH - 17 - 15, 130) :splitLineColor];
-    
-    
-    
+    [self.view setUserInteractionEnabled:YES];
 }
 
 #pragma mark - Private Method
