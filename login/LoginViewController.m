@@ -121,8 +121,8 @@
      登录方法(在你使用时，应该换成自己服务器给的接口来获取access_token，cookie)
      */
     if (self.phoneNumberTextField.text != nil && self.phoneNumberTextField.text.length > 0 && self.passwordTextField.text != nil && self.passwordTextField.text.length > 0) {
-        NSDictionary *dicLoginInfo = @{@"username":self.phoneNumberTextField.text,
-                                       @"password":self.passwordTextField.text
+        NSDictionary *dicLoginInfo = @{@"mobile":self.phoneNumberTextField.text,
+                                       @"smsCode":self.passwordTextField.text
                                        };//chenyue 123456
         [PFCloud callFunctionInBackground:@"login" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable error) {
             if (resultInfo) {
@@ -139,6 +139,14 @@
 }
 - (void)getValidCodePressd:(id)sender{
     NSLog(@"请求验证码");
+    if (self.phoneNumberTextField.text != nil && self.phoneNumberTextField.text.length > 0) {
+        NSDictionary *dicLoginInfo = @{@"mobile":self.phoneNumberTextField.text};
+        [PFCloud callFunctionInBackground:@"requireSmsCode" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable error) {
+            if (error == nil) {
+                NSLog(@"验证码获取成功");
+            }
+        }];
+    }
 }
 
 #pragma mark - UIAlertView Delegate
