@@ -78,6 +78,7 @@
     for (int i = 0; i < towns.count; i ++) {
         BottomTownItemView *townItemView = [[BottomTownItemView alloc]initTownInfoWithFrame:CGRectMake(SCREEN_WIDTH * i, 0, SCREEN_WIDTH, bottomScrollView.bounds.size.height)];
         PFObject *townInfo = [towns objectAtIndex:i];
+        townItemView.webLinkURL = [townInfo objectForKey:@"link"];
         [townItemView.coverImageView sd_setImageWithURL:[NSURL URLWithString:[townInfo objectForKey:@"cover_link"]]];
         [townItemView.coverImageView layoutIfNeeded];
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:townItemView.coverImageView.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(6, 6)];
@@ -100,8 +101,9 @@
 }
 - (void)showCurrentTownInfoInMapView:(UIGestureRecognizer *)gesture{
     BottomTownItemView *townView = (BottomTownItemView*)gesture.view;
-    [self moveCenterLocationToLatitude:townView.annotation];
-
+    //跳转到详情页
+    WebViewController *webVC = [[WebViewController alloc]initWithURLString:townView.webLinkURL];
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 - (void)backToRegion:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
@@ -157,10 +159,23 @@
             }
         }
     }
-    
 }
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
     view.image = [UIImage imageNamed:@"locationIcon"];
+}
+
+#pragma mark - UIScrollViewDelegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    for (int i = 0; i < bottomScrollView.subviews.count; i ++) {
+        BottomTownItemView *townItemView = [bottomScrollView.subviews objectAtIndex:i];
+        if ([townItemView isKindOfClass:[BottomTownItemView class]] && townItemView.frame.origin.x == scrollView.contentOffset.x) {
+            [self moveCenterLocationToLatitude:townItemView.annotation];
+            return;
+        }
+    }
 }
 
 

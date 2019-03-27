@@ -12,6 +12,7 @@
 #import <Parse/Parse.h>
 #import "BottomTownItemView.h"
 #import "UIImageView+WebCache.h"
+#import "WebViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

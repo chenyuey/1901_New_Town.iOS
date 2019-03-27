@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong)UILabel *titleLabel;
 @property (nonatomic, strong)UILabel *descLabel;
 @property (nonatomic, strong)MKPointAnnotation *annotation;
+@property (nonatomic, strong)NSString *webLinkURL;
 - (id)initTownInfoWithFrame:(CGRect)frame;
 - (void)setTitleFrameAndDescFrame:(NSString *)title :(NSString *)desc;
 @end
