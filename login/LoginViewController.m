@@ -156,7 +156,7 @@
             return;
         }
         //
-//        [self login:nil];
+        [self login:nil];
     }];
 }
 - (void)changeCountDownTime{

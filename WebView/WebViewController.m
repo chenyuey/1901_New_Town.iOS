@@ -202,10 +202,6 @@
                   if ([response isEqualToString:@"全部民宿"]) {
                       self.collectButton.hidden = YES;
                   }
-                  if ([response isEqualToString:@"全部小镇"]) {
-                      //不显示地图
-                      self.mapButton.hidden = YES;
-                  }
                   [self showCollectionButtonStatus:response];
               }];
 }
@@ -292,7 +288,6 @@
  @param block 登录事件回调
  */
 - (void)presentNativeLoginViewWithBlock:(LoginResultBlock)block {
-//    UIStoryboard *board = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     LoginViewController *loginVC = [[LoginViewController alloc]init];
     loginVC.loginBlock = block; //买家登录结果
     [self presentViewController:loginVC animated:YES completion:nil];
@@ -304,6 +299,7 @@
  *  @param data
  */
 - (void)alertShareData:(id)data {
+    
     NSDictionary *shareDic = (NSDictionary *)data;
     NSString *title = [shareDic objectForKey:@"title"];
     NSNumber *type = [NSNumber numberWithInt:1];

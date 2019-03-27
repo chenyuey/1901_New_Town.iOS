@@ -47,7 +47,9 @@
     
     NSString *region = [strMapTitle stringByReplacingOccurrencesOfString:@"发现" withString:@""];
     PFQuery *query = [PFQuery queryWithClassName:@"TownMap"];
-    [query whereKey:@"region" equalTo:region];
+    if (![region isEqualToString:@"全部小镇"]) {
+        [query whereKey:@"region" equalTo:region];
+    }
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count>0) {
             self->bottomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * objects.count, self->bottomScrollView.bounds.size.height);
@@ -84,9 +86,6 @@
         maskLayer.path = maskPath.CGPath;
         townItemView.coverImageView.layer.mask = maskLayer;
         [townItemView setTitleFrameAndDescFrame:[townInfo objectForKey:@"name"] :[townInfo objectForKey:@"description"]];
-        
-//        townItemView.latitude = [[townInfo objectForKey:@"coordinate"]latitude];
-//        townItemView.longitude = [[townInfo objectForKey:@"coordinate"]longitude];
         [townItemView setUserInteractionEnabled:YES];
         UITapGestureRecognizer *tapTownView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showCurrentTownInfoInMapView:)];
         [townItemView addGestureRecognizer:tapTownView];
