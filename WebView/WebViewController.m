@@ -58,17 +58,10 @@
 }
 //收藏按钮点击事件
 - (void)addItemToMyCollections:(id)sender{
-    UIImage *currentImage = [self.collectButton imageForState:UIControlStateNormal];
-//    if ([currentImage.accessibilityIdentifier isEqualToString:@"uncollect"]) {//收藏
-        [self.webView share];
-        
-//    }else{//取消收藏
-//
-//    }
+    [self.webView share];
 }
 - (void)enterMapInfo:(id)sender{
     MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
-//    mapInfoVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mapInfoVC animated:YES];
 }
 #pragma mark - 视图加载
@@ -225,9 +218,6 @@
     }];
 }
 
-- (void)shareButtonAction {
-    [self.webView share];
-}
 - (void)reloadButtonAction {
     [self.webView reload];
 }
