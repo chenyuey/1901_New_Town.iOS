@@ -43,6 +43,7 @@
     bottomScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.mapView.frame.origin.y+self.mapView.frame.size.height, SCREEN_WIDTH, 136)];
     bottomScrollView.pagingEnabled = YES;
     bottomScrollView.showsHorizontalScrollIndicator = NO;
+    bottomScrollView.delegate = self;
     [self.view addSubview:bottomScrollView];
     
     NSString *region = [strMapTitle stringByReplacingOccurrencesOfString:@"发现" withString:@""];

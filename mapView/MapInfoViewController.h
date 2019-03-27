@@ -16,7 +16,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MapInfoViewController : UIViewController<MKMapViewDelegate>{
+@interface MapInfoViewController : UIViewController<MKMapViewDelegate,UIScrollViewDelegate>{
     CLLocationManager* _locationManager;
     UIScrollView *bottomScrollView;
     NSString *strMapTitle;

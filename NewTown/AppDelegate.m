@@ -56,7 +56,7 @@
     
     //创建Parse服务链接
     ParseClientConfiguration *parseConfig = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
-        configuration.server = @"http://39.106.196.116:1340/api/1";
+        configuration.server = @"http://47.95.200.31:1340/api/1";
         configuration.applicationId = @"myAppId";
         configuration.clientKey = @"myMasterKey";
     }];
