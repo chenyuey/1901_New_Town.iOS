@@ -329,7 +329,10 @@
             [collectionObject setObject:title forKey:@"name"];
             [collectionObject setObject:[shareDic objectForKey:@"imgUrl"] forKey:@"cover_link"];
             [collectionObject setObject:[shareDic objectForKey:@"link"] forKey:@"link"];
-            [collectionObject setObject:[shareDic objectForKey:@"desc"] forKey:@"description"];
+            if ([shareDic objectForKey:@"desc"] != nil) {
+                [collectionObject setObject:[shareDic objectForKey:@"desc"] forKey:@"description"];
+            }
+            
             [collectionObject setObject:type forKey:@"type"];
             [collectionObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (succeeded) {

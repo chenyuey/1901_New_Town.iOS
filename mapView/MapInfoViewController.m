@@ -16,6 +16,7 @@
 - (id)initWithTitle:(NSString *)strTitle{
     self = [super init];
     if (self) {
+        strMapTitle = strTitle;
         self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
         self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
         //修改导航栏样式
@@ -44,7 +45,9 @@
     bottomScrollView.showsHorizontalScrollIndicator = NO;
     [self.view addSubview:bottomScrollView];
     
+    NSString *region = [strMapTitle stringByReplacingOccurrencesOfString:@"发现" withString:@""];
     PFQuery *query = [PFQuery queryWithClassName:@"TownMap"];
+    [query whereKey:@"region" equalTo:region];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count>0) {
             self->bottomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * objects.count, self->bottomScrollView.bounds.size.height);

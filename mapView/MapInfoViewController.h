@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MapInfoViewController : UIViewController<MKMapViewDelegate>{
     CLLocationManager* _locationManager;
     UIScrollView *bottomScrollView;
+    NSString *strMapTitle;
 }
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;
