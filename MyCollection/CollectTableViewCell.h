@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong)UILabel *titleLabel;
 @property (nonatomic, strong)UILabel *descLabel;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+- (void)setTitleFrameAndDescFrame:(NSString *)title :(NSString *)desc;
 @end
 
 NS_ASSUME_NONNULL_END
