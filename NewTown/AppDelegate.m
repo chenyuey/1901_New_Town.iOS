@@ -51,7 +51,7 @@
     UITabBarController *tabBarC = [[UITabBarController alloc]init];
     [tabBarC setViewControllers:items];
     tabBarC.tabBar.backgroundColor = [UIColor colorWithRed:43.0/255.0 green:45.0/255.0 blue:47.0/255.0 alpha:1.0];
-    tabBarC.tabBar.tintColor = [UIColor colorWithRed:161.0/255.0 green:186.0/255.0 blue:102.0/255.0 alpha:1];
+    tabBarC.tabBar.tintColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
     self.window.rootViewController = tabBarC;
     
     //创建Parse服务链接

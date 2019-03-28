@@ -342,7 +342,7 @@
     
 }
 - (void)showCollectionButtonStatus:(NSString *)title{
-    if (self.collectButton.hidden == NO) {
+    if (self.collectButton.hidden == NO && [PFUser currentUser]) {
         PFQuery *collectQuery = [PFQuery queryWithClassName:@"Collection"];
         [collectQuery whereKey:@"name" equalTo:title];
         [collectQuery whereKey:@"user" equalTo:[PFUser currentUser]];

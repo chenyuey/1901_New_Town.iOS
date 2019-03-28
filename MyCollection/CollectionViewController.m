@@ -66,7 +66,7 @@
     [contentView addSubview:mCollectTableView];
     
     collectionDataSource = @[];
-    [self findCollectionInfosWithType:0];
+//    [self findCollectionInfosWithType:0];
     
 }
 - (void)findCollectionInfosWithType:(int)type{
