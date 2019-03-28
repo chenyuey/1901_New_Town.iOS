@@ -196,6 +196,9 @@
                       self.collectButton.hidden = YES;
                   }
                   [self showCollectionButtonStatus:response];
+                  if ([response isEqualToString:@"全部攻略"]) {
+                      self.mapButton.hidden = YES;
+                  }
               }];
 }
 

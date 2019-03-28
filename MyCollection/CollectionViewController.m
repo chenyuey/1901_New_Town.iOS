@@ -31,7 +31,12 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     self.tabBarController.tabBar.hidden=NO;
-    [self findCollectionInfosWithType:0];
+    if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
+        [self findCollectionInfosWithType:1];
+    }else{
+        [self findCollectionInfosWithType:0];
+    }
+    
 }
 #pragma mark - 系统声明周期
 - (void)viewDidLoad {
