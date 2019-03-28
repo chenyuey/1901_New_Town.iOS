@@ -21,6 +21,16 @@
     label.textAlignment = alignment;
     return label;
 }
+
+-(UIButton *)createButtonWithFrame:(CGRect)frame :(NSString *)title :(SEL)event{
+    UIButton *button = [[UIButton alloc]initWithFrame:frame];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button addTarget:self action:event forControlEvents:UIControlEventTouchUpInside];
+    //添加文字颜色
+    [button setFont:[UIFont systemFontOfSize:14.0f]];
+    return button;
+}
 - (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
     UIImage *image = [UIImage imageNamed:imageName];
@@ -36,8 +46,12 @@
         self.tabBarController.tabBar.hidden=NO;
         if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
             [self findCollectionInfosWithType:1];
+            [categoryButton setTitleColor:[UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1] forState:UIControlStateNormal];
+            [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }else{
             [self findCollectionInfosWithType:0];
+            [townButton setTitleColor:[UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1] forState:UIControlStateNormal];
+            [categoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
     }
 }
@@ -66,7 +80,6 @@
     [contentView addSubview:mCollectTableView];
     
     collectionDataSource = @[];
-//    [self findCollectionInfosWithType:0];
     
 }
 - (void)findCollectionInfosWithType:(int)type{
@@ -81,19 +94,21 @@
 }
 - (UIView *)cteateNavViewWithFrame:(CGRect)frame{
     UIView *navView = [[UIView alloc]initWithFrame:frame];
-    UIButton *townButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 45)];
-    [townButton setTitle:@"小镇" forState:UIControlStateNormal];
-    [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [townButton addTarget:self action:@selector(townButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    townButton = [self createButtonWithFrame:CGRectMake(0, 0, 60, 45) :@"小镇" :@selector(townButtonPressed:)];
+//    [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 45)];
+//    [townButton setTitle:@"小镇" forState:UIControlStateNormal];
+//    [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [townButton addTarget:self action:@selector(townButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:townButton];
-    UIButton *categoryButton = [[UIButton alloc]initWithFrame:CGRectMake(navView.frame.size.width - 60, 0, 60, 45)];
-    [categoryButton setTitle:@"攻略" forState:UIControlStateNormal];
-    [categoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [categoryButton addTarget:self action:@selector(townButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    categoryButton = [self createButtonWithFrame:CGRectMake(navView.frame.size.width - 60, 0, 60, 45) :@"攻略" :@selector(townButtonPressed:)];
+//    [[UIButton alloc]initWithFrame:CGRectMake(navView.frame.size.width - 60, 0, 60, 45)];
+//    [categoryButton setTitle:@"攻略" forState:UIControlStateNormal];
+//    [categoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [categoryButton addTarget:self action:@selector(townButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:categoryButton];
     
     self.slideBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, 60, 3)];
-    self.slideBarView.backgroundColor = [UIColor greenColor];
+    self.slideBarView.backgroundColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
     [navView addSubview:self.slideBarView];
     return navView;
 }
@@ -108,8 +123,12 @@
     [UIView setAnimationDelegate:self];
     [UIView commitAnimations];
     if ([pressButton.titleLabel.text isEqualToString:@"小镇"]) {
+        [townButton setTitleColor:[UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1] forState:UIControlStateNormal];
+        [categoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self findCollectionInfosWithType:0];
     }else{
+        [categoryButton setTitleColor:[UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1] forState:UIControlStateNormal];
+        [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self findCollectionInfosWithType:1];
     }
 }

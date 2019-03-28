@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CollectionViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>{
     UITableView *mCollectTableView;
     NSArray *collectionDataSource;
+    UIButton *categoryButton;
+    UIButton *townButton;
 }
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;
