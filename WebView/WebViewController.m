@@ -58,7 +58,12 @@
 }
 //收藏按钮点击事件
 - (void)addItemToMyCollections:(id)sender{
-    [self.webView share];
+    if ([PFUser currentUser]) {
+        [self.webView share];
+    }else{
+        [self showLoginViewControllerIfNeeded];
+    }
+    
 }
 - (void)enterMapInfo:(id)sender{
     MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
@@ -302,6 +307,7 @@
     }
     PFQuery *collectQuery = [PFQuery queryWithClassName:@"Collection"];
     [collectQuery whereKey:@"name" equalTo:title];
+    [collectQuery whereKey:@"user" equalTo:[PFUser currentUser]];
     [collectQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
             //取消收藏
@@ -316,6 +322,7 @@
             //添加收藏
             PFObject *collectionObject = [PFObject objectWithClassName:@"Collection"];
             [collectionObject setObject:title forKey:@"name"];
+            [collectionObject setObject:[PFUser currentUser] forKey:@"user"];
             [collectionObject setObject:[shareDic objectForKey:@"imgUrl"] forKey:@"cover_link"];
             [collectionObject setObject:[shareDic objectForKey:@"link"] forKey:@"link"];
             if ([shareDic objectForKey:@"desc"] != nil) {
@@ -338,6 +345,7 @@
     if (self.collectButton.hidden == NO) {
         PFQuery *collectQuery = [PFQuery queryWithClassName:@"Collection"];
         [collectQuery whereKey:@"name" equalTo:title];
+        [collectQuery whereKey:@"user" equalTo:[PFUser currentUser]];
         [collectQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             if (objects.count > 0) {
                 UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];

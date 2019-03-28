@@ -30,14 +30,18 @@
     return button;
 }
 - (void)viewWillAppear:(BOOL)animated{
-    self.tabBarController.tabBar.hidden=NO;
-    if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
-        [self findCollectionInfosWithType:1];
+    if (![PFUser currentUser]) {
+         [self showLoginViewControllerIfNeeded];
     }else{
-        [self findCollectionInfosWithType:0];
+        self.tabBarController.tabBar.hidden=NO;
+        if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
+            [self findCollectionInfosWithType:1];
+        }else{
+            [self findCollectionInfosWithType:0];
+        }
     }
-    
 }
+
 #pragma mark - 系统声明周期
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -67,6 +71,7 @@
 }
 - (void)findCollectionInfosWithType:(int)type{
     PFQuery *query = [PFQuery queryWithClassName:@"Collection"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser]];
     [query whereKey:@"type" equalTo:[NSNumber numberWithInt:type]];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         NSLog(@"查找小镇数据：%@",objects);
@@ -107,6 +112,25 @@
     }else{
         [self findCollectionInfosWithType:1];
     }
+}
+- (void)showLoginViewControllerIfNeeded
+{
+    [self presentNativeLoginView];
+//    __weak typeof(self) weakSelf = self;
+    
+//    [self presentNativeLoginViewWithBlock:^(BOOL success){
+//        if (success) {
+//            [weakSelf.webView reload];
+//        } else {
+//            if ([weakSelf.webView canGoBack]) {
+//                [weakSelf.webView goBack];
+//            }
+//        };
+//    }];
+}
+- (void)presentNativeLoginView {
+    LoginViewController *loginVC = [[LoginViewController alloc]init];
+    [self presentViewController:loginVC animated:YES completion:nil];
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

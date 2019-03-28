@@ -116,6 +116,11 @@
                                        };//chenyue 123456
         [PFCloud callFunctionInBackground:@"login" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable error) {
             if (resultInfo) {
+                [PFUser becomeInBackground:resultInfo[@"sessionToken"] block:^(PFUser * _Nullable user, NSError * _Nullable error) {
+                    if (error) {
+                        NSLog(@"parse登录失败");
+                    }
+                }];
                 [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]
                                            cookieKey:resultInfo[@"yz_user"][@"data"][@"cookie_key"]
                                          cookieValue:resultInfo[@"yz_user"][@"data"][@"cookie_value"]];
@@ -136,7 +141,7 @@
                 NSLog(@"验证码获取成功");
                 //添加倒计时功能
                 int waitFor = [[resultInfo objectForKey:@"waitFor"]intValue];
-                [self.getValidCodeBtn setTitle:[NSString stringWithFormat:@"倒计时%d",waitFor] forState:UIControlStateNormal];
+                [self.getValidCodeBtn setTitle:[NSString stringWithFormat:@"倒计时%dS",waitFor/1000] forState:UIControlStateNormal];
                 self->timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeCountDownTime) userInfo:nil repeats:YES];
             }
         }];
