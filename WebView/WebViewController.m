@@ -96,6 +96,8 @@
     [self.view addSubview:self.webView];
     self.webView.delegate = self;
     self.webView.noticeDelegate = self;
+    [self.webView setNeedsLayout];
+    [self.webView layoutIfNeeded];
     self.navigationItem.rightBarButtonItem.enabled = NO;//默认分享按钮不可用
     
     // 加载链接
@@ -157,9 +159,15 @@
             break;
     }
 }
-
+- (void) addWebKitTransform:(YZWebView *)webView{
+    NSString *const INJECT_CSS = @"var head = document.getElementsByTagName('head');var tagStyle=document.createElement(\"style\"); tagStyle.setAttribute(\"type\", \"text/css\");tagStyle.appendChild(document.createTextNode(\"iframe{-webkit-transform:translateZ(0px)}\"));head[0].appendChild(tagStyle);";
+    [webView stringByEvaluatingJavaScriptFromString:INJECT_CSS];
+    
+}
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    [self addWebKitTransform:webView];
+    
     NSString *strPathURL = request.URL.path;
     if ([strPathURL containsString:@"feature"]) {
         //显示收藏
