@@ -12,7 +12,9 @@
 #import "YZDUICService.h"
 #import <Parse/Parse.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,YZSDKDelegate>
+#import <WXApi.h>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate,YZSDKDelegate,WXApiDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

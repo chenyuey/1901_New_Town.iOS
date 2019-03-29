@@ -61,6 +61,8 @@
         configuration.clientKey = @"myMasterKey";
     }];
     [Parse initializeWithConfiguration:parseConfig];
+    //加入微信分享sdk
+    [WXApi registerApp:@"wx80bf6b294ee073ee"];
     
     
     return YES;
