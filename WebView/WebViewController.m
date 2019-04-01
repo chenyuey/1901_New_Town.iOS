@@ -435,10 +435,10 @@
     UILabel *titleTabel = [self createLabelWithFrame:CGRectMake(0, 16, SCREEN_WIDTH, 21) :15 :@"PingFangSC-Regular" :[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0] :NSTextAlignmentCenter];
     titleTabel.text = @"分享给好友";
     [shareView addSubview:titleTabel];
-    UIButton *wechat = [self createButtonWithImage:CGRectMake((SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatRound" :@selector(shareToWechat:)];
+    UIButton *wechat = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH/4+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatRound" :@selector(shareToWechat:)];
     wechat.tag = 1;
     [shareView addSubview:wechat];
-    UIButton *friends = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH/4+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatFriends" :@selector(shareToWechat:)];
+    UIButton *friends = [self createButtonWithImage:CGRectMake((SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatFriends" :@selector(shareToWechat:)];
     friends.tag = 2;
     [shareView addSubview:friends];
     UIButton *qq = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH/2+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"qq" :@selector(shareToQQ:)];
