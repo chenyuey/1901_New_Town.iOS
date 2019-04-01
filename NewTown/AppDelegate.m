@@ -64,6 +64,8 @@
     [Parse initializeWithConfiguration:parseConfig];
     //加入微信分享sdk
     [WXApi registerApp:@"wxba64cb9bbbbea771"];
+    //加入腾讯分享sdk
+    self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"101562763" andDelegate:self];
     
     
     return YES;
@@ -149,6 +151,32 @@
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
+    }
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    if ([url.scheme isEqualToString:@"101562763"]) {
+        return [QQApiInterface handleOpenURL:url delegate:self];
+    }else {
+        return YES;
+    }
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if ([url.scheme isEqualToString:@"tencent101562763"]) {
+        return [TencentOAuth HandleOpenURL:url];
+    }else{
+        return [WXApi handleOpenURL:url delegate:self];
+    }
+}
+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<NSString *,id> *)options {
+    if ([url.scheme isEqualToString:@"tencent101562763"]) {
+        return [QQApiInterface handleOpenURL:url delegate:self];
+    }else {
+        return YES;
     }
 }
 

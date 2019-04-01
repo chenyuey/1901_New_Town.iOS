@@ -6,6 +6,7 @@ pod 'YZAppSDK'
 pod 'SDWebImage'
 pod 'Parse', '~> 1.17.2'
 pod 'WechatOpenSDK'
+pod 'TencentOpenApiSDK'
 
 end
 

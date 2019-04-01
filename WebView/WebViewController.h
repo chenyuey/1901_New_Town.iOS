@@ -10,6 +10,9 @@
 #import "CommonHeader.h"
 #import "LoginViewController.h"
 #import "WXApi.h"
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <TencentOpenAPI/QQApiInterfaceObject.h>
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录
@@ -19,6 +22,8 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 
 @interface WebViewController : UIViewController{
     BOOL isCollecting;
+    NSDictionary *shareInfo;
+    UIView *shareView;
 }
 /**
  登录时机

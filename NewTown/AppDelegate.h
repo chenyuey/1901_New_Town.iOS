@@ -13,12 +13,16 @@
 #import <Parse/Parse.h>
 
 #import <WXApi.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <TencentOpenAPI/QQApiInterfaceObject.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,YZSDKDelegate,WXApiDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,YZSDKDelegate,WXApiDelegate,TencentSessionDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
+@property(nonatomic,strong) TencentOAuth *tencentOAuth;
 
 - (void)saveContext;
 

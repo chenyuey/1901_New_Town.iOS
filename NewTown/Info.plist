@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Application CategoryNSThirdPartyExceptionRequiresForwardSecrecy</key>
+	<true/>
 	<key>CFBundleDisplayName</key>
 	<string>优镇优家</string>
 	<key>CFBundleExecutable</key>
@@ -28,13 +30,38 @@
 				<string>wxba64cb9bbbbea771</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>tencent</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tencent101562763</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>mqqopensdkapiV2</string>
+		<string>mqq</string>
+		<string>wechat</string>
+		<string>mqqapi</string>
+		<string>weixin</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>允许适应相机</string>
+	<key>NSIncludesSubdomains</key>
+	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>总是开始地址定位</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -47,6 +74,8 @@
 	<string>允许使用保存图片功能</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo Library</string>
+	<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

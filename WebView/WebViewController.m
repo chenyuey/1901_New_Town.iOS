@@ -110,6 +110,10 @@
     
     // 加载链接
     [self loginAndloadUrl:self.loadUrl];
+    
+    //添加分享弹框
+    shareView = [self createShareViewWithFrame:CGRectMake(0, [[UIScreen mainScreen]bounds].size.height, [[UIScreen mainScreen]bounds].size.width, 166)];
+//    [self.view addSubview:shareView];
 }
 
 
@@ -331,11 +335,12 @@
  */
 - (void)alertShareData:(id)data {
     
-    NSDictionary *shareDic = (NSDictionary *)data;
+    shareInfo = (NSDictionary *)data;
     if (isCollecting == YES) {
-        [self collectItemInfoToServer:shareDic];
+        [self collectItemInfoToServer:shareInfo];
     }else{
-        [self shareToWechatWithLink:[shareDic objectForKey:@"link"]];
+        //弹框
+        [self shareWithFriend];
     }
 }
 - (void)collectItemInfoToServer:(NSDictionary *)shareDic{
@@ -398,33 +403,81 @@
         }];
     }
 }
-#pragma mark - 微信分享功能
-- (void)shareToWechatWithLink:(NSString *)link{
-    NSLog(@"点击分享shareToWechat");
+#pragma mark - 显示隐藏分享框
+- (void)shareWithFriend{
+    //显示分享的页面
+    self->shareView.superview.hidden = NO;
+    [UIView animateWithDuration:0.5 animations:^{
+        CGPoint point = self->shareView.center;
+        point.y -= 166+SafeAreaBottomHeight;
+        self->shareView.center = point;
+    }];
+}
+- (void)cancleShare{
+    self->shareView.superview.hidden = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        CGPoint point = self->shareView.center;
+        point.y += 166+SafeAreaBottomHeight;
+        self->shareView.center = point;
+    }];
+}
+
+
+#pragma mark - 分享到好友，朋友圈，qq，新浪
+- (UIView *)createShareViewWithFrame:(CGRect)frame{
+    UIView *shadowView = [[UIView alloc]initWithFrame:Screen_Bounds];
+    shadowView.hidden = YES;
+    shadowView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+    [self.view addSubview:shadowView];
+    UIView *shareView = [[UIView alloc]initWithFrame:frame];
+    [shadowView addSubview:shareView];
+    shareView.backgroundColor = [UIColor whiteColor];
+    UILabel *titleTabel = [self createLabelWithFrame:CGRectMake(0, 16, SCREEN_WIDTH, 21) :15 :@"PingFangSC-Regular" :[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    titleTabel.text = @"分享给好友";
+    [shareView addSubview:titleTabel];
+    UIButton *wechat = [self createButtonWithImage:CGRectMake((SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatRound" :@selector(shareToWechat:)];
+    wechat.tag = 1;
+    [shareView addSubview:wechat];
+    UIButton *friends = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH/4+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatFriends" :@selector(shareToWechat:)];
+    friends.tag = 2;
+    [shareView addSubview:friends];
+    UIButton *qq = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH/2+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"qq" :@selector(shareToQQ:)];
+    [shareView addSubview:qq];
+    UIButton *sina = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH*0.75+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"sinaIcon" :@selector(shareToSina:)];
+    [shareView addSubview:sina];
+    
+    UIView *splitLine = [[UIView alloc]initWithFrame:CGRectMake(0, 126, 375, 1)];
+    splitLine.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
+    [shareView addSubview:splitLine];
+    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 127, 375, 39)];
+    [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancleBtn setTitleColor:[UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [cancleBtn addTarget:self action:@selector(cancleShare) forControlEvents:UIControlEventTouchUpInside];
+    [shareView addSubview:cancleBtn];
+    return shareView;
+}
+- (SendMessageToWXReq *)shareToWechatWithLink:(NSString *)link :(NSString *)msgTitle :(NSString *)name :(NSString*)imageUrl{
     WXMediaMessage * message = [WXMediaMessage message];
     message.title = @"我发现了一个特色小镇，邀请你一起来观赏";
-    message.description = @"特色小镇";
-    [message setThumbImage:[UIImage imageNamed:@"AppIcon"]];
+    message.description = name;
+    [message setThumbImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]]];
     WXWebpageObject * webPageObject = [WXWebpageObject object];
     webPageObject.webpageUrl = link;
     message.mediaObject = webPageObject;
-    
     SendMessageToWXReq * req1 = [[SendMessageToWXReq alloc]init];
     req1.bText = NO;
     req1.message = message;
-    //设置分享到朋友圈(WXSceneTimeline)、好友回话(WXSceneSession)、收藏(WXSceneFavorite)
-    req1.scene = WXSceneSession;
-    [WXApi sendReq:req1];
+    return req1;
+    
 }
-- (void)shareToFriends{
-    NSLog(@"点击分享shareToFriends");
+- (void)shareToFriendsWithLink:(NSString *)link :(NSString *)msgTitle :(NSString *)name{
     WXMediaMessage * message = [WXMediaMessage message];
-    message.title = @"我发现了一个特色小镇，邀请你一起来观赏";
-    message.description = @"特色小镇";
-    [message setThumbImage:[UIImage imageNamed:@"鲸小爱logo"]];
+    message.title = msgTitle;
+    message.description = name;
+    [message setThumbImage:[UIImage imageNamed:@"AppIcon"]];
     
     WXWebpageObject * webPageObject = [WXWebpageObject object];
-    webPageObject.webpageUrl = @"http://www.jinghangapps.com/italk.html";
+    webPageObject.webpageUrl = link;
     message.mediaObject = webPageObject;
     
     SendMessageToWXReq * req1 = [[SendMessageToWXReq alloc]init];
@@ -434,6 +487,52 @@
     req1.scene = WXSceneTimeline;
     [WXApi sendReq:req1];
 }
-
+- (void)shareToWechat:(id)sender{
+    NSString *strMsgTitle = @"";
+    NSString *imageUrl = [shareInfo objectForKey:@"imgUrl"];
+    NSString *title = [shareInfo objectForKey:@"title"];
+    NSString *link = [shareInfo objectForKey:@"link"];
+    if ([link containsString:@"goods"]) {
+        strMsgTitle = @"我发现了一间特色小镇里的民宿，一起去看看吧";
+    }else if ([title containsString:@"🏠"]){
+        strMsgTitle = @"我发现了一个特色小镇，一起去看看吧";
+    }else{
+        strMsgTitle = @"我发现了一个特色小镇的玩法体验，一起去看看吧";
+    }
+    SendMessageToWXReq * req1 = [self shareToWechatWithLink:link :strMsgTitle :title :imageUrl];
+    //设置分享到朋友圈(WXSceneTimeline)、好友回话(WXSceneSession)、收藏(WXSceneFavorite)
+    req1.scene = WXSceneSession;
+    UIButton *btn = (UIButton *)sender;
+    req1.scene = WXSceneTimeline;
+    if (btn.tag == 2) {
+        req1.scene = WXSceneSession;
+    }
+    [WXApi sendReq:req1];
+}
+- (void)shareToQQ:(id)sender{
+    NSString *strMsgTitle = @"";
+    NSString *imageUrl = [shareInfo objectForKey:@"imgUrl"];
+    NSString *title = [shareInfo objectForKey:@"title"];
+    NSString *link = [shareInfo objectForKey:@"link"];
+    if ([link containsString:@"goods"]) {
+        strMsgTitle = @"我发现了一间特色小镇里的民宿，一起去看看吧";
+    }else if ([title containsString:@"🏠"]){
+        strMsgTitle = @"我发现了一个特色小镇，一起去看看吧";
+    }else{
+        strMsgTitle = @"我发现了一个特色小镇的玩法体验，一起去看看吧";
+    }
+    
+    QQApiNewsObject *newsObj = [QQApiNewsObject
+                                objectWithURL:[NSURL URLWithString:link]
+                                title:strMsgTitle
+                                description:title
+                                previewImageData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]];
+    SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
+    //将内容分享到qq
+    QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+}
+- (void)shareToSina:(id)sender{
+    
+}
 @end
 

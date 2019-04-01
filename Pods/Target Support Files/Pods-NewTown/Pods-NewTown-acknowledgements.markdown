@@ -96,6 +96,11 @@ THE SOFTWARE.
 
 
 
+## TencentOpenApiSDK
+
+Copyright (c) 2014 Tencent. All rights reserved.
+
+
 ## WechatOpenSDK
 
 Copyright 2018 tencent.com. All rights reserved.

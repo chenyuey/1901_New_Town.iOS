@@ -7,6 +7,9 @@ PODS:
   - SDWebImage (4.4.3):
     - SDWebImage/Core (= 4.4.3)
   - SDWebImage/Core (4.4.3)
+  - TencentOpenApiSDK (2.9.5):
+    - TencentOpenApiSDK/Basic (= 2.9.5)
+  - TencentOpenApiSDK/Basic (2.9.5)
   - WechatOpenSDK (1.8.3)
   - YZAppSDK (6.4.10):
     - YZAppSDK/Base (= 6.4.10)
@@ -17,6 +20,7 @@ PODS:
 DEPENDENCIES:
   - Parse (~> 1.17.2)
   - SDWebImage
+  - TencentOpenApiSDK
   - WechatOpenSDK
   - YZAppSDK
 
@@ -25,6 +29,7 @@ SPEC REPOS:
     - Bolts
     - Parse
     - SDWebImage
+    - TencentOpenApiSDK
     - WechatOpenSDK
     - YZAppSDK
 
@@ -32,9 +37,10 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
+  TencentOpenApiSDK: a0d7716edd6eb438d65828168e8e5137301b436d
   WechatOpenSDK: 3117412f8aafde4758cac1e8d20b93c67cafcfef
   YZAppSDK: b6fa1b0db59e46c8dfd4f25d58d2de42e450a480
 
-PODFILE CHECKSUM: 3082879ada9b203c0591b280b660b1adb6579fcd
+PODFILE CHECKSUM: 3e0abd5f4dae08a89b30573e768cdd036e10b1bd
 
 COCOAPODS: 1.5.3
