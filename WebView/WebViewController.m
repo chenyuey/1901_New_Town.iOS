@@ -347,7 +347,7 @@
             }];
         }
     }];
-//    [self shareToWechat];
+    [self shareToWechatWithLink:[shareDic objectForKey:@"link"]];
 }
 - (void)showCollectionButtonStatus:(NSString *)title{
     if (self.collectButton.hidden == NO && [PFUser currentUser]) {
@@ -368,14 +368,14 @@
     }
 }
 #pragma mark - 微信分享功能
-- (void)shareToWechat{
+- (void)shareToWechatWithLink:(NSString *)link{
     NSLog(@"点击分享shareToWechat");
     WXMediaMessage * message = [WXMediaMessage message];
-    message.title = @"我发现了一个配音学英语的App，邀请你一起来玩";
+    message.title = @"我发现了一个特色小镇，邀请你一起来观赏";
     message.description = @"特色小镇";
     [message setThumbImage:[UIImage imageNamed:@"AppIcon"]];
     WXWebpageObject * webPageObject = [WXWebpageObject object];
-    webPageObject.webpageUrl = @"http://www.jinghangapps.com/italk.html";
+    webPageObject.webpageUrl = link;
     message.mediaObject = webPageObject;
     
     SendMessageToWXReq * req1 = [[SendMessageToWXReq alloc]init];
@@ -388,8 +388,8 @@
 - (void)shareToFriends{
     NSLog(@"点击分享shareToFriends");
     WXMediaMessage * message = [WXMediaMessage message];
-    message.title = @"我发现了一个配音学英语的App，邀请你一起来玩";
-    message.description = @"鲸小爱英语/iTalk配音学英语";
+    message.title = @"我发现了一个特色小镇，邀请你一起来观赏";
+    message.description = @"特色小镇";
     [message setThumbImage:[UIImage imageNamed:@"鲸小爱logo"]];
     
     WXWebpageObject * webPageObject = [WXWebpageObject object];

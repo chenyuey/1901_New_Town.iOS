@@ -50,19 +50,20 @@
     NSArray *items = [NSArray arrayWithObjects:indexNavigationController,newTownNavigationController,collectNavigationController,userCenterNavigationController, nil];
     UITabBarController *tabBarC = [[UITabBarController alloc]init];
     [tabBarC setViewControllers:items];
-    tabBarC.tabBar.backgroundColor = [UIColor colorWithRed:43.0/255.0 green:45.0/255.0 blue:47.0/255.0 alpha:1.0];
+    tabBarC.tabBar.backgroundColor = [UIColor whiteColor];
     tabBarC.tabBar.tintColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
     self.window.rootViewController = tabBarC;
     
     //创建Parse服务链接
     ParseClientConfiguration *parseConfig = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
         configuration.server = @"http://47.95.200.31:1340/api/1";
+//        configuration.server = @"http://10.135.8.93:1340/api/1";
         configuration.applicationId = @"myAppId";
         configuration.clientKey = @"myMasterKey";
     }];
     [Parse initializeWithConfiguration:parseConfig];
     //加入微信分享sdk
-    [WXApi registerApp:@"wx80bf6b294ee073ee"];
+    [WXApi registerApp:@"wxba64cb9bbbbea771"];
     
     
     return YES;
