@@ -46,11 +46,9 @@
         self.tabBarController.tabBar.hidden=NO;
         if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
             [self findCollectionInfosWithType:1];
-            [categoryButton setTitleColor:[UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1] forState:UIControlStateNormal];
             [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }else{
             [self findCollectionInfosWithType:0];
-            [townButton setTitleColor:[UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1] forState:UIControlStateNormal];
             [categoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
     }
@@ -72,6 +70,10 @@
     [self.view addSubview:contentView];
     UIView *navView = [self cteateNavViewWithFrame:CGRectMake(80, 0, SCREEN_WIDTH - 80*2, 48)];
     [contentView addSubview:navView];
+    
+    UIView *splitLineView = [[UIView alloc]initWithFrame:CGRectMake(0, navView.frame.size.height, SCREEN_WIDTH, 1)];
+    splitLineView.backgroundColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0];
+    [contentView addSubview:splitLineView];
     
     mCollectTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 17 + 48, SCREEN_WIDTH, contentView.frame.size.height - 7 - 48) style:UITableViewStylePlain];
     mCollectTableView.dataSource = self;
@@ -95,20 +97,12 @@
 - (UIView *)cteateNavViewWithFrame:(CGRect)frame{
     UIView *navView = [[UIView alloc]initWithFrame:frame];
     townButton = [self createButtonWithFrame:CGRectMake(0, 0, 60, 45) :@"小镇" :@selector(townButtonPressed:)];
-//    [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 45)];
-//    [townButton setTitle:@"小镇" forState:UIControlStateNormal];
-//    [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [townButton addTarget:self action:@selector(townButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:townButton];
     categoryButton = [self createButtonWithFrame:CGRectMake(navView.frame.size.width - 60, 0, 60, 45) :@"攻略" :@selector(townButtonPressed:)];
-//    [[UIButton alloc]initWithFrame:CGRectMake(navView.frame.size.width - 60, 0, 60, 45)];
-//    [categoryButton setTitle:@"攻略" forState:UIControlStateNormal];
-//    [categoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [categoryButton addTarget:self action:@selector(townButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:categoryButton];
     
     self.slideBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, 60, 3)];
-    self.slideBarView.backgroundColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
+    self.slideBarView.backgroundColor = [UIColor colorWithRed:139.0/255.0 green:195.0/255.0 blue:74.0/255.0 alpha:1];
     [navView addSubview:self.slideBarView];
     return navView;
 }
@@ -123,11 +117,9 @@
     [UIView setAnimationDelegate:self];
     [UIView commitAnimations];
     if ([pressButton.titleLabel.text isEqualToString:@"小镇"]) {
-        [townButton setTitleColor:[UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1] forState:UIControlStateNormal];
         [categoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self findCollectionInfosWithType:0];
     }else{
-        [categoryButton setTitleColor:[UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1] forState:UIControlStateNormal];
         [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self findCollectionInfosWithType:1];
     }
@@ -135,17 +127,6 @@
 - (void)showLoginViewControllerIfNeeded
 {
     [self presentNativeLoginView];
-//    __weak typeof(self) weakSelf = self;
-    
-//    [self presentNativeLoginViewWithBlock:^(BOOL success){
-//        if (success) {
-//            [weakSelf.webView reload];
-//        } else {
-//            if ([weakSelf.webView canGoBack]) {
-//                [weakSelf.webView goBack];
-//            }
-//        };
-//    }];
 }
 - (void)presentNativeLoginView {
     LoginViewController *loginVC = [[LoginViewController alloc]init];

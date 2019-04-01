@@ -17,7 +17,9 @@ typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeWhenNeed = 2,  //演示后登录
 };
 
-@interface WebViewController : UIViewController
+@interface WebViewController : UIViewController{
+    BOOL isCollecting;
+}
 /**
  登录时机
  */
@@ -34,6 +36,9 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 @property (nonatomic,strong) UIButton *collectButton;
 //地图按钮
 @property (nonatomic,strong) UIButton *mapButton;
+//分享按钮
+@property (nonatomic,strong) UIButton *shareButton;
+
 
 - (id)initWithURLString:(NSString *)strURL;
 @end

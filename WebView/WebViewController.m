@@ -58,12 +58,17 @@
 }
 //收藏按钮点击事件
 - (void)addItemToMyCollections:(id)sender{
+    isCollecting = YES;
     if ([PFUser currentUser]) {
         [self.webView share];
     }else{
         [self showLoginViewControllerIfNeeded];
     }
     
+}
+- (void)shareToYourFriend:(id)sender{
+    isCollecting = NO;
+    [self.webView share];
 }
 - (void)enterMapInfo:(id)sender{
     MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
@@ -86,6 +91,9 @@
     self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
     self.collectButton.hidden = YES;
     [self.view addSubview:self.collectButton];
+    self.shareButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20 - 28, SafeStatusBarHeight+10, 24, 24) :@"shareIcon" :@selector(shareToYourFriend:)];
+    self.shareButton.hidden = YES;
+    [self.view addSubview:self.shareButton];
     //创建地图按钮
     self.mapButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20, SafeStatusBarHeight+10, 24, 24) :@"mapIcon" :@selector(enterMapInfo:)];
     self.mapButton.hidden = YES;
@@ -167,8 +175,9 @@
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     [self addWebKitTransform:webView];
-    
+    NSLog(@"request.URL.path: %@",request.URL.path);
     NSString *strPathURL = request.URL.path;
+    //收藏按钮
     if ([strPathURL containsString:@"feature"]) {
         //显示收藏
         self.collectButton.hidden = NO;
@@ -180,11 +189,22 @@
         //隐藏收藏
         self.collectButton.hidden = YES;
     }
+    //分享按钮显示和隐藏
+    if ([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) {
+        self.shareButton.hidden = NO;
+    }else{
+        self.shareButton.hidden = YES;
+    }
+    //地图按钮的显示和隐藏
     if ([request.URL.path isEqualToString:@"/v2/showcase/category"]) {
         //显示地图按钮
         self.mapButton.hidden = NO;
     }else{
         self.mapButton.hidden = YES;
+    }
+    self.navTitleLabel.hidden = NO;
+    if ([request.URL.path containsString:@"goods"] || [request.URL.path isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"] || [request.URL.path containsString:@"homepage"]) {
+        self.navTitleLabel.hidden = YES;
     }
     return YES;
 }
@@ -192,8 +212,6 @@
     [webView evaluateJavaScript:@"document.title"
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
                   NSLog(@"TITLELLL: %@",response);
-                  self.navTitleLabel.text = response;
-                  NSLog(@"=============%d",self.navigationController.childViewControllers.count);
                   //加载新链接时，分享按钮先置为不可用
                   if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
                       self.backButton.hidden = NO;
@@ -203,10 +221,17 @@
                       self.backButton.hidden = YES;
                       self.tabBarController.tabBar.hidden=NO;
                       self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
+                      if ([response isEqualToString:@"首页"]) {
+                          self.webView.frame = CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - SafeAreaBottomHeight);
+                          return ;
+                      }
                   }
+                  self.navTitleLabel.text = response;
                   //全部民宿不添加 收藏按钮 功能
                   if ([response isEqualToString:@"全部民宿"]) {
                       self.collectButton.hidden = YES;
+                      self.shareButton.hidden = YES;
+                      self.navTitleLabel.hidden = NO;
                   }
                   [self showCollectionButtonStatus:response];
                   if ([response isEqualToString:@"全部攻略"]) {
@@ -307,6 +332,13 @@
 - (void)alertShareData:(id)data {
     
     NSDictionary *shareDic = (NSDictionary *)data;
+    if (isCollecting == YES) {
+        [self collectItemInfoToServer:shareDic];
+    }else{
+        [self shareToWechatWithLink:[shareDic objectForKey:@"link"]];
+    }
+}
+- (void)collectItemInfoToServer:(NSDictionary *)shareDic{
     NSString *title = [shareDic objectForKey:@"title"];
     NSNumber *type = [NSNumber numberWithInt:1];
     //收藏接口调用的数据
@@ -347,7 +379,6 @@
             }];
         }
     }];
-    [self shareToWechatWithLink:[shareDic objectForKey:@"link"]];
 }
 - (void)showCollectionButtonStatus:(NSString *)title{
     if (self.collectButton.hidden == NO && [PFUser currentUser]) {
