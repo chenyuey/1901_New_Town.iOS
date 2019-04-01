@@ -15,6 +15,8 @@ typedef void (^LoginResultBlock)(BOOL success);
 
 @interface LoginViewController : UIViewController{
     NSTimer *timer;
+    UIButton *closeButton;
+    int currentType;
 }
 
 @property (copy, nonatomic) LoginResultBlock loginBlock;
@@ -24,5 +26,6 @@ typedef void (^LoginResultBlock)(BOOL success);
 
 @property (nonatomic, strong)UITextField *phoneNumberTextField;
 @property (nonatomic, strong)UITextField *passwordTextField;
+- (id)initWithTag:(int)type;
 @end
 

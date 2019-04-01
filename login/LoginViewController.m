@@ -15,6 +15,13 @@
 @end
 
 @implementation LoginViewController
+- (id)initWithTag:(int)type{
+    self = [super init];
+    if (self) {
+        currentType = type;
+    }
+    return self;
+}
 #pragma mark - UI控件创建
 - (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
     UILabel *label = [[UILabel alloc]initWithFrame:frame];
@@ -80,11 +87,25 @@
     spitLineView.backgroundColor = splitLineColor;
     [self.view addSubview:spitLineView];
     
-    UIButton *closeButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :@selector(close:)];
+    closeButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :@selector(close:)];
     [self.view addSubview:closeButton];
     
     [self createLoginViewWithFrame:CGRectMake(17, SafeStatusBarHeight + 44 + 96, SCREEN_WIDTH - 17 - 15, 180) :splitLineColor];
     [self.view setUserInteractionEnabled:YES];
+    
+    if (currentType == 0) {
+        closeButton.hidden = YES;
+    }else{
+        closeButton.hidden = NO;
+    }
+    
+}
+- (void)viewWillAppear:(BOOL)animated{
+//    if (self.view.tabBar.hidden == NO) {
+//        closeButton.hidden = YES;
+//    }else{
+//        closeButton.hidden = NO;
+//    }
 }
 
 #pragma mark - Private Method
@@ -102,8 +123,13 @@
 #pragma mark - Action
 
 - (void)close:(id)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"不登录不能打开商品详情" delegate:self cancelButtonTitle:@"不登录" otherButtonTitles:@"登录",nil];
-    [alertView show];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self callBlockWithResult:NO];
+        if (self->timer != nil) {
+            [self->timer invalidate];
+            self->timer = nil;
+        }
+    }];
 }
 
 - (void)login:(id)sender {
@@ -118,9 +144,16 @@
             if (resultInfo) {
                 [PFUser becomeInBackground:resultInfo[@"sessionToken"] block:^(PFUser * _Nullable user, NSError * _Nullable error) {
                     if (!error) {
-                        [self dismissViewControllerAnimated:YES completion:^{
-                            [self callBlockWithResult:YES];
-                        }];
+                        if (self->currentType == 0) {
+                            [self willMoveToParentViewController:nil];
+                            [self.view removeFromSuperview];
+                            [self removeFromParentViewController];
+                        }else{
+                            [self dismissViewControllerAnimated:YES completion:^{
+                                [self callBlockWithResult:YES];
+                            }];
+                        }
+                        
                     }
                 }];
                 [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]

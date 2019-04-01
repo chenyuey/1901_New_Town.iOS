@@ -323,7 +323,7 @@
  @param block 登录事件回调
  */
 - (void)presentNativeLoginViewWithBlock:(LoginResultBlock)block {
-    LoginViewController *loginVC = [[LoginViewController alloc]init];
+    LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:1];
     loginVC.loginBlock = block; //买家登录结果
     [self presentViewController:loginVC animated:YES completion:nil];
 }
