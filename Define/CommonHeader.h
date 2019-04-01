@@ -205,6 +205,7 @@ _Pragma("clang diagnostic pop") \
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 #define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 #define Screen_Bounds [UIScreen mainScreen].bounds
+#define SCROLLVIEW_WIDTH ([[UIScreen mainScreen] bounds].size.width - 44)
 
 ////适配iphone X
 #define ISIPHONEX  (SCREEN_HEIGHT == 812.0 ? YES : NO)

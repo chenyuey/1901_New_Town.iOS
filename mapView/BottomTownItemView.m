@@ -14,14 +14,14 @@
     self = [super initWithFrame:frame];
     if (self) {
         float scale = SCREEN_WIDTH/375;
-        self.coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 166*scale, 83*scale)];
+        self.coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 83*scale, 83*scale)];
         self.coverImageView.layer.cornerRadius = 6;
         [self addSubview:self.coverImageView];
         float titleOriginX = self.coverImageView.frame.size.width + 20 + 16;
-        self.titleLabel = [self createLabelWithFrame:CGRectMake(titleOriginX, 20+18, SCREEN_WIDTH - titleOriginX - 20, 22) :16 :@"PingFangSC-bold" :[UIColor colorWithRed:17.0/255.0 green:17.0/255.0 blue:17.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        self.titleLabel = [self createLabelWithFrame:CGRectMake(titleOriginX, 20+18, frame.size.width - titleOriginX - 20, 22) :16 :@"PingFangSC-bold" :[UIColor colorWithRed:17.0/255.0 green:17.0/255.0 blue:17.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         [self addSubview:self.titleLabel];
         
-        self.descLabel = [self createLabelWithFrame:CGRectMake(titleOriginX, 20+18 + 24, SCREEN_WIDTH - titleOriginX - 20, 22) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:17.0/255.0 green:17.0/255.0 blue:17.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        self.descLabel = [self createLabelWithFrame:CGRectMake(titleOriginX, 20+18 + 24, frame.size.width - titleOriginX - 20, 22) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         [self addSubview:self.descLabel];
     }
     return self;

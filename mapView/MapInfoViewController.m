@@ -7,7 +7,6 @@
 //
 
 #import "MapInfoViewController.h"
-
 @interface MapInfoViewController ()
 
 @end
@@ -40,8 +39,9 @@
     self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
     
-    bottomScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.mapView.frame.origin.y+self.mapView.frame.size.height, SCREEN_WIDTH, 136)];
+    bottomScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.mapView.frame.origin.y+self.mapView.frame.size.height, SCROLLVIEW_WIDTH, 136)];
     bottomScrollView.pagingEnabled = YES;
+    bottomScrollView.clipsToBounds = NO;
     bottomScrollView.showsHorizontalScrollIndicator = NO;
     bottomScrollView.delegate = self;
     [self.view addSubview:bottomScrollView];
@@ -53,7 +53,7 @@
     }
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count>0) {
-            self->bottomScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * objects.count, self->bottomScrollView.bounds.size.height);
+            self->bottomScrollView.contentSize = CGSizeMake(SCROLLVIEW_WIDTH * objects.count, self->bottomScrollView.bounds.size.height);
             [self showAllTownInfoWithTowns:objects];
         }
     }];
@@ -77,7 +77,7 @@
 #pragma mark - 页面事件
 - (void)showAllTownInfoWithTowns:(NSArray *)towns{
     for (int i = 0; i < towns.count; i ++) {
-        BottomTownItemView *townItemView = [[BottomTownItemView alloc]initTownInfoWithFrame:CGRectMake(SCREEN_WIDTH * i, 0, SCREEN_WIDTH, bottomScrollView.bounds.size.height)];
+        BottomTownItemView *townItemView = [[BottomTownItemView alloc]initTownInfoWithFrame:CGRectMake(SCROLLVIEW_WIDTH * i, 0, SCROLLVIEW_WIDTH, bottomScrollView.bounds.size.height)];
         PFObject *townInfo = [towns objectAtIndex:i];
         townItemView.webLinkURL = [townInfo objectForKey:@"link"];
         [townItemView.coverImageView sd_setImageWithURL:[NSURL URLWithString:[townInfo objectForKey:@"cover_link"]]];
@@ -154,8 +154,8 @@
         BottomTownItemView *townItemView = [bottomScrollView.subviews objectAtIndex:i];
         if ([townItemView isKindOfClass:[BottomTownItemView class]]) {
             if ([townItemView.annotation isEqual:view.annotation]) {
-                int n = townItemView.center.x/SCREEN_WIDTH;
-                bottomScrollView.contentOffset = CGPointMake(n*SCREEN_WIDTH, 0);
+                int n = townItemView.center.x/SCROLLVIEW_WIDTH;
+                bottomScrollView.contentOffset = CGPointMake(n*SCROLLVIEW_WIDTH, 0);
                 return;
             }
         }

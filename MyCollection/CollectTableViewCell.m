@@ -21,7 +21,7 @@
         self.titleLabel = [self createLabelWithFrame:CGRectMake(titleOriginX, 22, SCREEN_WIDTH - titleOriginX - 20, 22) :16 :@"PingFangSC-bold" :[UIColor colorWithRed:17.0/255.0 green:17.0/255.0 blue:17.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         [self addSubview:self.titleLabel];
         
-        self.descLabel = [self createLabelWithFrame:CGRectMake(titleOriginX, 22 + 22 + 2, SCREEN_WIDTH - titleOriginX - 20, 22) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:17.0/255.0 green:17.0/255.0 blue:17.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        self.descLabel = [self createLabelWithFrame:CGRectMake(titleOriginX, 22 + 22 + 2, SCREEN_WIDTH - titleOriginX - 20, 22) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         [self addSubview:self.descLabel];
     }
     return self;
