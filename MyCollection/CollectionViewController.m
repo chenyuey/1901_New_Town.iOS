@@ -78,10 +78,11 @@
     mCollectTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 17 + 48, SCREEN_WIDTH, contentView.frame.size.height - 7 - 48) style:UITableViewStylePlain];
     mCollectTableView.dataSource = self;
     mCollectTableView.delegate = self;
-    mCollectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [contentView addSubview:mCollectTableView];
     
     collectionDataSource = @[];
+    mCollectTableView.tableFooterView = [[UIView alloc]init];
+
     
 }
 - (void)findCollectionInfosWithType:(int)type{
@@ -161,6 +162,10 @@
     WebViewController *webInfo = [[WebViewController alloc]initWithURLString:[dictInfo objectForKey:@"link"]];
     [self.navigationController pushViewController:webInfo animated:YES];
 //    webInfo.tabBarItem
+}
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    //    [cell setSeparatorInset:UIEdgeInsetsZero];
+    [cell setSeparatorInset:UIEdgeInsetsMake(0, 10, 0, 10)];
 }
 /*
 #pragma mark - Navigation

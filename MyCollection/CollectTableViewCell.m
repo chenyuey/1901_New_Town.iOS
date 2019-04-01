@@ -14,7 +14,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self){
         float scale = SCREEN_WIDTH/375;
-        self.coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 166*scale, 83*scale)];
+        self.coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 83*scale, 83*scale)];
         self.coverImageView.layer.cornerRadius = 6;
         [self addSubview:self.coverImageView];
         float titleOriginX = self.coverImageView.frame.size.width + 20 + 16;
