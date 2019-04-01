@@ -88,10 +88,10 @@
     self.backButton.hidden = YES;
     [self.view addSubview:self.backButton];
     //创建收藏按钮
-    self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
+    self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20 - 24 -24, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
     self.collectButton.hidden = YES;
     [self.view addSubview:self.collectButton];
-    self.shareButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20 - 28, SafeStatusBarHeight+10, 24, 24) :@"shareIcon" :@selector(shareToYourFriend:)];
+    self.shareButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20, SafeStatusBarHeight+10, 24, 24) :@"shareIcon" :@selector(shareToYourFriend:)];
     self.shareButton.hidden = YES;
     [self.view addSubview:self.shareButton];
     //创建地图按钮
@@ -112,7 +112,7 @@
     [self loginAndloadUrl:self.loadUrl];
     
     //添加分享弹框
-    shareView = [self createShareViewWithFrame:CGRectMake(0, [[UIScreen mainScreen]bounds].size.height, [[UIScreen mainScreen]bounds].size.width, 166)];
+    shareView = [self createShareViewWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 166)];
 //    [self.view addSubview:shareView];
 }
 
@@ -446,10 +446,10 @@
     UIButton *sina = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH*0.75+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"sinaIcon" :@selector(shareToSina:)];
     [shareView addSubview:sina];
     
-    UIView *splitLine = [[UIView alloc]initWithFrame:CGRectMake(0, 126, 375, 1)];
+    UIView *splitLine = [[UIView alloc]initWithFrame:CGRectMake(0, 126, SCREEN_WIDTH, 1)];
     splitLine.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
     [shareView addSubview:splitLine];
-    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 127, 375, 39)];
+    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 122, SCREEN_WIDTH, 44)];
     [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancleBtn setTitleColor:[UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0] forState:UIControlStateNormal];
     [cancleBtn addTarget:self action:@selector(cancleShare) forControlEvents:UIControlEventTouchUpInside];
