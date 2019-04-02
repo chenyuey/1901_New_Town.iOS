@@ -43,7 +43,9 @@
     if (![PFUser currentUser]) {
          [self showLoginViewControllerIfNeeded];
     }else{
-//        self.tabBarController.tabBar.hidden=NO;
+        if (self.childViewControllers.count > 0) {
+            [self removeLoginViewController];
+        }
         if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
             [self findCollectionInfosWithType:1];
             [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -53,11 +55,11 @@
         }
     }
 }
+
 #pragma mark -  登录页面的控制
 //children 添加到/移除 parent
 - (void)updateLoginInfo {
     if ([PFUser currentUser]) {
-//        self.tabBarController.tabBar.hidden=NO;
         if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
             [self findCollectionInfosWithType:1];
             [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -140,16 +142,25 @@
 }
 - (void)showLoginViewControllerIfNeeded
 {
-    LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:0];
-    loginVC.loginBlock = ^(BOOL success){
-        if (success) {
-            [self updateLoginInfo];
-        } 
-    };
-    loginVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight - 44);
-    [self addChildViewController:loginVC];
-    [self.view addSubview:loginVC.view];
-    [loginVC didMoveToParentViewController:self];
+    if (self.childViewControllers.count == 0) {
+        LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:0];
+        loginVC.loginBlock = ^(BOOL success){
+            if (success) {
+                [self updateLoginInfo];
+            }
+        };
+        loginVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight - 44);
+        [self addChildViewController:loginVC];
+        [self.view addSubview:loginVC.view];
+        [loginVC didMoveToParentViewController:self];
+    }
+    
+}
+- (void)removeLoginViewController{
+    LoginViewController *loginVC = self.childViewControllers[0];
+    [loginVC willMoveToParentViewController:nil];
+    [loginVC.view removeFromSuperview];
+    [loginVC removeFromParentViewController];
 }
 
 #pragma mark - UITableViewDataSource

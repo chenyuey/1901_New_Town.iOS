@@ -107,11 +107,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-//    if (self.view.tabBar.hidden == NO) {
-//        closeButton.hidden = YES;
-//    }else{
-//        closeButton.hidden = NO;
-//    }
+   if ([PFUser currentUser]){
+       [self willMoveToParentViewController:nil];
+       [self.view removeFromSuperview];
+       [self removeFromParentViewController];
+       [self callBlockWithResult:YES];
+    }
 }
 
 #pragma mark - Private Method

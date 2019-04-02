@@ -324,16 +324,19 @@
  */
 - (void)presentNativeLoginViewWithBlock:(LoginResultBlock)block {
     if ([[self.webView.URL absoluteString] containsString:@"usercenter"]) {
-        LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:0];
-        loginVC.loginBlock = ^(BOOL success){
-            if (success) {
-                [self.webView reload];
-            }
-        };
-        loginVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight - 44);
-        [self addChildViewController:loginVC];
-        [self.view addSubview:loginVC.view];
-        [loginVC didMoveToParentViewController:self];
+        if (self.childViewControllers.count == 0) {
+            LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:0];
+            loginVC.loginBlock = ^(BOOL success){
+                if (success) {
+                    [self.webView reload];
+                }
+            };
+            loginVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight - 44);
+            [self addChildViewController:loginVC];
+            [self.view addSubview:loginVC.view];
+            [loginVC didMoveToParentViewController:self];
+        }
+        
         
     }else{
         LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:1];
@@ -341,6 +344,17 @@
         [self presentViewController:loginVC animated:YES completion:nil];
     }
 }
+//-(void)viewWillDisappear:(BOOL)animated{
+//    if (self.childViewControllers.count > 0) {
+//        [self removeLoginViewController];
+//    }
+//}
+//- (void)removeLoginViewController{
+//    LoginViewController *loginVC = self.childViewControllers[0];
+//    [loginVC willMoveToParentViewController:nil];
+//    [loginVC.view removeFromSuperview];
+//    [loginVC removeFromParentViewController];
+//}
 
 /**
  *  显示分享数据
