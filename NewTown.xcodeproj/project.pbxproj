@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		079F1827BD91AC71C7E50E74 /* libPods-NewTown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */; };
+		5229691F2253549F00BA72A8 /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5229691E2253549F00BA72A8 /* CustomLabel.m */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
 		527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 527071C2222CF1BC00B73769 /* NewTown.xcdatamodeld */; };
@@ -45,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewTown.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5229691D2253549F00BA72A8 /* CustomLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomLabel.h; sourceTree = "<group>"; };
+		5229691E2253549F00BA72A8 /* CustomLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomLabel.m; sourceTree = "<group>"; };
 		527071B6222CF1BC00B73769 /* NewTown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		527071B9222CF1BC00B73769 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		527071BA222CF1BC00B73769 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 			children = (
 				527071FA222E77AE00B73769 /* LoginViewController.h */,
 				527071F9222E77AE00B73769 /* LoginViewController.m */,
+				5229691D2253549F00BA72A8 /* CustomLabel.h */,
+				5229691E2253549F00BA72A8 /* CustomLabel.m */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -457,6 +462,7 @@
 				527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */,
 				5299AFFB2243AB8900699683 /* CollectTableViewCell.m in Sources */,
 				5299AFF82243912D00699683 /* CollectionViewController.m in Sources */,
+				5229691F2253549F00BA72A8 /* CustomLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

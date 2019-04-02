@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import <YZBaseSDK/YZBaseSDK.h>
 #import "YZDUICService.h"
+#import "CustomLabel.h"
 
 @interface LoginViewController ()
 
@@ -23,8 +24,8 @@
     return self;
 }
 #pragma mark - UI控件创建
-- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    UILabel *label = [[UILabel alloc]initWithFrame:frame];
+- (CustomLabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
+    CustomLabel *label = [[CustomLabel alloc]initWithFrame:frame];
     label.font = [UIFont fontWithName:fontName size:fontSize];
     label.textColor = fontColor;
     label.textAlignment = alignment;
@@ -98,6 +99,8 @@
     }else{
         closeButton.hidden = NO;
     }
+    
+    errLabel = [self createErrorToastViewWithFrame:CGRectMake((SCREEN_WIDTH-150)/2, SafeStatusBarHeight + 44 + 96 + 180, 150, 60)];
 }
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES]; //实现该方法是需要注意view需要是继承UIControl而来的
@@ -157,12 +160,17 @@
                                 [self callBlockWithResult:YES];
                             }];
                         }
-                        
                     }
                 }];
                 [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]
                                            cookieKey:resultInfo[@"yz_user"][@"data"][@"cookie_key"]
                                          cookieValue:resultInfo[@"yz_user"][@"data"][@"cookie_value"]];
+            }else{
+                if (err.code == 141) {
+                    self->errLabel.text = @"验证码错误/超时";
+                    self->errLabel.hidden = NO;
+                    [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
+                }
             }
         }];
     }
@@ -178,6 +186,10 @@
                 int waitFor = [[resultInfo objectForKey:@"waitFor"]intValue];
                 [self.getValidCodeBtn setTitle:[NSString stringWithFormat:@"倒计时%dS",waitFor/1000] forState:UIControlStateNormal];
                 self->timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeCountDownTime) userInfo:nil repeats:YES];
+            }else{
+                self->errLabel.text = [[error.userInfo objectForKey:@"error"]objectForKey:@"statusMsg"];
+                self->errLabel.hidden = NO;
+                [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
             }
         }];
     }
@@ -212,6 +224,25 @@
         [self.getValidCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     }
     
+}
+
+#pragma mark - 创建登录失败弹框
+-(UILabel *)createErrorToastViewWithFrame:(CGRect)frame{
+    CustomLabel *subscribeSuccessView = [self createLabelWithFrame:frame :14 :@"Arial" :[UIColor whiteColor] :NSTextAlignmentCenter];
+    subscribeSuccessView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
+    subscribeSuccessView.layer.borderWidth = 1;
+    subscribeSuccessView.layer.borderColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8].CGColor;
+    subscribeSuccessView.clipsToBounds = YES;
+    subscribeSuccessView.layer.cornerRadius = 12;
+    subscribeSuccessView.numberOfLines = 0;
+    subscribeSuccessView.textInsets = UIEdgeInsetsMake(10, 0, 10, 0);
+    
+    subscribeSuccessView.hidden = YES;
+    [self.view addSubview:subscribeSuccessView];
+    return subscribeSuccessView;
+}
+- (void)hideErrorLabel{
+    errLabel.hidden = YES;
 }
 
 @end

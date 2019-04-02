@@ -17,6 +17,7 @@ typedef void (^LoginResultBlock)(BOOL success);
     NSTimer *timer;
     UIButton *closeButton;
     int currentType;
+    UILabel *errLabel;
 }
 
 @property (copy, nonatomic) LoginResultBlock loginBlock;
