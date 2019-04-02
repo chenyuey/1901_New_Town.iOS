@@ -140,7 +140,7 @@
         NSDictionary *dicLoginInfo = @{@"mobile":self.phoneNumberTextField.text,
                                        @"smsCode":self.passwordTextField.text
                                        };//chenyue 123456
-        [PFCloud callFunctionInBackground:@"login" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable error) {
+        [PFCloud callFunctionInBackground:@"login" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable err) {
             if (resultInfo) {
                 [PFUser becomeInBackground:resultInfo[@"sessionToken"] block:^(PFUser * _Nullable user, NSError * _Nullable error) {
                     if (!error) {
@@ -166,7 +166,6 @@
     
 }
 - (void)getValidCodePressd:(id)sender{
-    NSLog(@"请求验证码");
     if (self.phoneNumberTextField.text != nil && self.phoneNumberTextField.text.length > 0) {
         NSDictionary *dicLoginInfo = @{@"mobile":self.phoneNumberTextField.text};
         [PFCloud callFunctionInBackground:@"requireSmsCode" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable error) {

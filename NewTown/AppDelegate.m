@@ -51,6 +51,7 @@
     UITabBarController *tabBarC = [[UITabBarController alloc]init];
     [tabBarC setViewControllers:items];
     tabBarC.tabBar.backgroundColor = [UIColor whiteColor];
+    tabBarC.tabBar.unselectedItemTintColor = [UIColor redColor];
     tabBarC.tabBar.tintColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
     self.window.rootViewController = tabBarC;
     

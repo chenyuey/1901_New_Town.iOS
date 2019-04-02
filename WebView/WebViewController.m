@@ -472,7 +472,7 @@
 }
 - (SendMessageToWXReq *)shareToWechatWithLink:(NSString *)link :(NSString *)msgTitle :(NSString *)name :(NSString*)imageUrl{
     WXMediaMessage * message = [WXMediaMessage message];
-    message.title = @"我发现了一个特色小镇，邀请你一起来观赏";
+    message.title = msgTitle;
     message.description = name;
     [message setThumbImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]]];
     WXWebpageObject * webPageObject = [WXWebpageObject object];
@@ -483,23 +483,6 @@
     req1.message = message;
     return req1;
     
-}
-- (void)shareToFriendsWithLink:(NSString *)link :(NSString *)msgTitle :(NSString *)name{
-    WXMediaMessage * message = [WXMediaMessage message];
-    message.title = msgTitle;
-    message.description = name;
-    [message setThumbImage:[UIImage imageNamed:@"AppIcon"]];
-    
-    WXWebpageObject * webPageObject = [WXWebpageObject object];
-    webPageObject.webpageUrl = link;
-    message.mediaObject = webPageObject;
-    
-    SendMessageToWXReq * req1 = [[SendMessageToWXReq alloc]init];
-    req1.bText = NO;
-    req1.message = message;
-    //设置分享到朋友圈(WXSceneTimeline)、好友回话(WXSceneSession)、收藏(WXSceneFavorite)
-    req1.scene = WXSceneTimeline;
-    [WXApi sendReq:req1];
 }
 - (void)shareToWechat:(id)sender{
     NSString *strMsgTitle = @"";
@@ -515,13 +498,14 @@
     }
     SendMessageToWXReq * req1 = [self shareToWechatWithLink:link :strMsgTitle :title :imageUrl];
     //设置分享到朋友圈(WXSceneTimeline)、好友回话(WXSceneSession)、收藏(WXSceneFavorite)
-    req1.scene = WXSceneSession;
     UIButton *btn = (UIButton *)sender;
-    req1.scene = WXSceneTimeline;
     if (btn.tag == 2) {
         req1.scene = WXSceneSession;
+    }else{
+        req1.scene = WXSceneTimeline;
     }
     [WXApi sendReq:req1];
+    [self cancleShare];
 }
 - (void)shareToQQ:(id)sender{
     NSString *strMsgTitle = @"";
@@ -544,19 +528,10 @@
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
     //将内容分享到qq
     QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+    [self cancleShare];
 }
 - (void)shareToSina:(id)sender{
-    
-}
-
-
-#pragma mark -  登录页面的控制
-//children 添加到/移除 parent
-- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
-    if ([PFUser currentUser]) {
-        self.tabBarController.tabBar.hidden=NO;
-    }
-    return NO;
+    [self cancleShare];
 }
 @end
 

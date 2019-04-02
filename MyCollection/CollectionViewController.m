@@ -43,7 +43,7 @@
     if (![PFUser currentUser]) {
          [self showLoginViewControllerIfNeeded];
     }else{
-        self.tabBarController.tabBar.hidden=NO;
+//        self.tabBarController.tabBar.hidden=NO;
         if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
             [self findCollectionInfosWithType:1];
             [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -57,7 +57,7 @@
 //children 添加到/移除 parent
 - (void)updateLoginInfo {
     if ([PFUser currentUser]) {
-        self.tabBarController.tabBar.hidden=NO;
+//        self.tabBarController.tabBar.hidden=NO;
         if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
             [self findCollectionInfosWithType:1];
             [townButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
