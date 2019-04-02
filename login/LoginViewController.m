@@ -98,8 +98,11 @@
     }else{
         closeButton.hidden = NO;
     }
-    
 }
+- (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES]; //实现该方法是需要注意view需要是继承UIControl而来的
+}
+
 - (void)viewWillAppear:(BOOL)animated{
 //    if (self.view.tabBar.hidden == NO) {
 //        closeButton.hidden = YES;
