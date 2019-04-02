@@ -53,7 +53,9 @@
         }
     }
 }
-- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
+#pragma mark -  登录页面的控制
+//children 添加到/移除 parent
+- (void)updateLoginInfo {
     if ([PFUser currentUser]) {
         self.tabBarController.tabBar.hidden=NO;
         if (self.slideBarView.center.x > (SCREEN_WIDTH - 80*2)/2){
@@ -64,7 +66,6 @@
             [categoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
     }
-    return NO;
 }
 #pragma mark - 系统声明周期
 - (void)viewDidLoad {
@@ -139,33 +140,17 @@
 }
 - (void)showLoginViewControllerIfNeeded
 {
-//    AppDelegate *appdelegate=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-//
-//    appdelegate.window.rootViewController.definesPresentationContext = YES;
-//
-//
     LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:0];
+    loginVC.loginBlock = ^(BOOL success){
+        if (success) {
+            [self updateLoginInfo];
+        } 
+    };
     loginVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight - 44);
-//    [loginVC beginAppearanceTransition:YES animated:YES];
     [self addChildViewController:loginVC];
     [self.view addSubview:loginVC.view];
     [loginVC didMoveToParentViewController:self];
-//    loginVC.view.frame = self.view.frame;
-//    [self.view addSubview:loginVC.view];
-    
-//    [appdelegate.window.rootViewController presentViewController:loginVC  animated:YES completion:nil];
-//    [self presentViewController:loginVC animated:YES completion:^{
-//        self.tabBarController.tabBar.hidden=NO;
-//
-//    }];
-//    [self.navigationController pushViewController:loginVC animated:YES];
 }
-//- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated completion: (void (^)(void))completion {
-//    [CATransaction setCompletionBlock:completion];
-//    [CATransaction begin];
-//    [self pushViewController:viewController animated:animated];
-//    [CATransaction commit];
-//}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

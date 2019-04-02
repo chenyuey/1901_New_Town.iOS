@@ -148,6 +148,7 @@
                             [self willMoveToParentViewController:nil];
                             [self.view removeFromSuperview];
                             [self removeFromParentViewController];
+                            [self callBlockWithResult:YES];
                         }else{
                             [self dismissViewControllerAnimated:YES completion:^{
                                 [self callBlockWithResult:YES];

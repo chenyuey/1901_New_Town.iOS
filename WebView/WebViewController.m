@@ -323,9 +323,23 @@
  @param block 登录事件回调
  */
 - (void)presentNativeLoginViewWithBlock:(LoginResultBlock)block {
-    LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:1];
-    loginVC.loginBlock = block; //买家登录结果
-    [self presentViewController:loginVC animated:YES completion:nil];
+    if ([[self.webView.URL absoluteString] containsString:@"usercenter"]) {
+        LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:0];
+        loginVC.loginBlock = ^(BOOL success){
+            if (success) {
+                [self.webView reload];
+            }
+        };
+        loginVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight - 44);
+        [self addChildViewController:loginVC];
+        [self.view addSubview:loginVC.view];
+        [loginVC didMoveToParentViewController:self];
+        
+    }else{
+        LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:1];
+        loginVC.loginBlock = block; //买家登录结果
+        [self presentViewController:loginVC animated:YES completion:nil];
+    }
 }
 
 /**
@@ -533,6 +547,16 @@
 }
 - (void)shareToSina:(id)sender{
     
+}
+
+
+#pragma mark -  登录页面的控制
+//children 添加到/移除 parent
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
+    if ([PFUser currentUser]) {
+        self.tabBarController.tabBar.hidden=NO;
+    }
+    return NO;
 }
 @end
 
