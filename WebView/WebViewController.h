@@ -24,7 +24,6 @@ typedef NS_ENUM(NSUInteger, loginTime) {
     BOOL isCollecting;
     NSDictionary *shareInfo;
     UIView *shareView;
-    BOOL isShowLoginView;
 }
 /**
  登录时机
@@ -45,6 +44,7 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 //分享按钮
 @property (nonatomic,strong) UIButton *shareButton;
 
+@property BOOL isLoginYouZan;
 
 - (id)initWithURLString:(NSString *)strURL;
 @end

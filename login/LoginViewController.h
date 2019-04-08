@@ -10,6 +10,7 @@
 #import "UserModel.h"
 #import "CommonHeader.h"
 #import <Parse/Parse.h>
+#import "WebViewController.h"
 
 typedef void (^LoginResultBlock)(BOOL success);
 

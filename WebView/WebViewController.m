@@ -134,7 +134,8 @@
     switch (notice.type) {
         case YZNoticeTypeLogin: // 收到登陆请求
         {
-            [self showLoginViewControllerIfNeeded];
+            self.isLoginYouZan = YES;
+           [self showLoginViewControllerIfNeeded];
             break;
         }
         case YZNoticeTypeShare: // 收到分享的回调数据
@@ -274,21 +275,31 @@
     if (self.loginTime == kLoginTimeNever) {
         return;
     }
-    if (isShowLoginView == false) {
-        __weak typeof(self) weakSelf = self;
-        isShowLoginView = true;
-        [self presentNativeLoginViewWithBlock:^(BOOL success){
-            self->isShowLoginView = false;
-            if (success) {
-                [weakSelf.webView reload];
-            } else {
-                if ([weakSelf.webView canGoBack]) {
-                    [weakSelf.webView goBack];
-                }
-            };
-        }];
-    }
+    __weak typeof(self) weakSelf = self;
+    [self presentNativeLoginViewWithBlock:^(BOOL success){
+        if (success) {
+            self.isLoginYouZan = YES;
+            [weakSelf.webView reload];
+        } else {
+            if ([weakSelf.webView canGoBack]) {
+                [weakSelf.webView goBack];
+            }
+        };
+    }];
     
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [self reloadButtonAction];
+    self.isLoginYouZan = YES;
+    if (self.childViewControllers.count > 0) {
+        [self removeLoginViewController];
+    }
+}
+- (void)removeLoginViewController{
+    LoginViewController *loginVC = self.childViewControllers[0];
+    [loginVC willMoveToParentViewController:nil];
+    [loginVC.view removeFromSuperview];
+    [loginVC removeFromParentViewController];
 }
 
 - (void)reloadButtonAction {
@@ -364,8 +375,6 @@
             [self.view addSubview:loginVC.view];
             [loginVC didMoveToParentViewController:self];
         }
-        
-        
     }else{
         LoginViewController *loginVC = [[LoginViewController alloc]initWithTag:1];
         loginVC.loginBlock = block; //买家登录结果

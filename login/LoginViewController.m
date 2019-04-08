@@ -106,13 +106,14 @@
     [self.view endEditing:YES]; //实现该方法是需要注意view需要是继承UIControl而来的
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-   if ([PFUser currentUser]){
-       [self willMoveToParentViewController:nil];
-       [self.view removeFromSuperview];
-       [self removeFromParentViewController];
-       [self callBlockWithResult:YES];
-    }
+- (void)viewDidAppear:(BOOL)animated{
+//    WebViewController *parent = (WebViewController *)self.parentViewController;
+//   if ([PFUser currentUser]){
+//       [self willMoveToParentViewController:nil];
+//       [self.view removeFromSuperview];
+//       [self removeFromParentViewController];
+//       [self callBlockWithResult:YES];
+//    }
 }
 
 #pragma mark - Private Method
