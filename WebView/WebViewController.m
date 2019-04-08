@@ -181,24 +181,24 @@
     [self addWebKitTransform:webView];
     NSLog(@"request.URL.path: %@",request.URL.path);
     NSString *strPathURL = request.URL.path;
-    //收藏按钮
-    if ([strPathURL containsString:@"feature"]) {
-        //显示收藏
-        self.collectButton.hidden = NO;
-        UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
-        [imageTmp setAccessibilityIdentifier:@"uncollect"];
-        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-    }
-    else{
-        //隐藏收藏
-        self.collectButton.hidden = YES;
-    }
-    //分享按钮显示和隐藏
-    if ([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) {
-        self.shareButton.hidden = NO;
-    }else{
-        self.shareButton.hidden = YES;
-    }
+//    //收藏按钮
+//    if ([strPathURL containsString:@"feature"]) {
+//        //显示收藏
+//        self.collectButton.hidden = NO;
+//        UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
+//        [imageTmp setAccessibilityIdentifier:@"uncollect"];
+//        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+//    }
+//    else{
+//        //隐藏收藏
+//        self.collectButton.hidden = YES;
+//    }
+//    //分享按钮显示和隐藏
+//    if ([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) {
+//        self.shareButton.hidden = NO;
+//    }else{
+//        self.shareButton.hidden = YES;
+//    }
     //地图按钮的显示和隐藏
     if ([request.URL.path isEqualToString:@"/v2/showcase/category"]) {
         //显示地图按钮
@@ -216,6 +216,29 @@
     [webView evaluateJavaScript:@"document.title"
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
                   NSLog(@"TITLELLL: %@",response);
+                  if (![self.navTitleLabel.text isEqualToString:response]) {
+                      NSString *strPathURL = self.webView.URL.path;
+                      //收藏按钮
+                      if ([strPathURL containsString:@"feature"]) {
+                          //显示收藏
+                          self.collectButton.hidden = NO;
+                          UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
+                          [imageTmp setAccessibilityIdentifier:@"uncollect"];
+                          [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+                      }
+                      else{
+                          //隐藏收藏
+                          self.collectButton.hidden = YES;
+                      }
+                      //分享按钮显示和隐藏
+                      if ([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) {
+                          self.shareButton.hidden = NO;
+                      }else{
+                          self.shareButton.hidden = YES;
+                      }
+                  }
+                  
+                  
                   //加载新链接时，分享按钮先置为不可用
                   if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
                       self.backButton.hidden = NO;
