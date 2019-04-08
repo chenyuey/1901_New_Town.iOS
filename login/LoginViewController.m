@@ -163,9 +163,12 @@
                         }
                     }
                 }];
-                [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]
-                                           cookieKey:resultInfo[@"yz_user"][@"data"][@"cookie_key"]
-                                         cookieValue:resultInfo[@"yz_user"][@"data"][@"cookie_value"]];
+                if (resultInfo[@"yz_user"][@"data"] != [NSNull null]) {
+                    [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]
+                                               cookieKey:resultInfo[@"yz_user"][@"data"][@"cookie_key"]
+                                             cookieValue:resultInfo[@"yz_user"][@"data"][@"cookie_value"]];
+                }
+                
             }else{
                 if (err.code == 141) {
                     self->errLabel.text = @"验证码错误/超时";

@@ -251,16 +251,21 @@
     if (self.loginTime == kLoginTimeNever) {
         return;
     }
-    __weak typeof(self) weakSelf = self;
-    [self presentNativeLoginViewWithBlock:^(BOOL success){
-        if (success) {
-            [weakSelf.webView reload];
-        } else {
-            if ([weakSelf.webView canGoBack]) {
-                [weakSelf.webView goBack];
-            }
-        };
-    }];
+    if (isShowLoginView == false) {
+        __weak typeof(self) weakSelf = self;
+        isShowLoginView = true;
+        [self presentNativeLoginViewWithBlock:^(BOOL success){
+            self->isShowLoginView = false;
+            if (success) {
+                [weakSelf.webView reload];
+            } else {
+                if ([weakSelf.webView canGoBack]) {
+                    [weakSelf.webView goBack];
+                }
+            };
+        }];
+    }
+    
 }
 
 - (void)reloadButtonAction {

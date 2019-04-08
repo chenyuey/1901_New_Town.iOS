@@ -40,6 +40,7 @@
     return button;
 }
 - (void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden=NO;
     if (![PFUser currentUser]) {
          [self showLoginViewControllerIfNeeded];
     }else{
