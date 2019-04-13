@@ -40,6 +40,16 @@
 				<string>tencent101562763</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.weibo</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wb1555205002</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
@@ -51,6 +61,10 @@
 		<string>wechat</string>
 		<string>mqqapi</string>
 		<string>weixin</string>
+		<string>sinaweibohd</string>
+		<string>sinaweibo</string>
+		<string>weibosdk</string>
+		<string>weibosdk2.5</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

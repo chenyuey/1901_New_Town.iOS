@@ -7,6 +7,7 @@ pod 'SDWebImage'
 pod 'Parse', '~> 1.17.2'
 pod 'WechatOpenSDK'
 pod 'TencentOpenApiSDK'
+pod "Weibo_SDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git" 
 
 end
 

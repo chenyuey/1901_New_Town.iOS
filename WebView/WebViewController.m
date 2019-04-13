@@ -583,6 +583,34 @@
 }
 - (void)shareToSina:(id)sender{
     [self cancleShare];
+    
+    WBMessageObject *wbmsg = [WBMessageObject message];
+    
+    NSString *strMsgTitle = @"";
+    NSString *imageUrl = [shareInfo objectForKey:@"imgUrl"];
+    NSString *title = [shareInfo objectForKey:@"title"];
+    NSString *link = [shareInfo objectForKey:@"link"];
+    if ([link containsString:@"goods"]) {
+        strMsgTitle = @"我发现了一间特色小镇里的民宿，一起去看看吧";
+    }else if ([title containsString:@"🏠"]){
+        strMsgTitle = @"我发现了一个特色小镇，一起去看看吧";
+    }else{
+        strMsgTitle = @"我发现了一个特色小镇的玩法体验，一起去看看吧";
+    }
+    
+    wbmsg.text = [NSString stringWithFormat:@"%@%@",strMsgTitle,link];
+    WBImageObject *wbImg = [[WBImageObject alloc] init];
+    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+    
+    wbImg.imageData = imageData;
+    wbmsg.imageObject = wbImg;
+    
+    WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
+    authRequest.redirectURI = link;
+    authRequest.scope = @"all";
+    
+    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:wbmsg authInfo:authRequest access_token:nil];
+    [WeiboSDK sendRequest:request];
 }
 @end
 

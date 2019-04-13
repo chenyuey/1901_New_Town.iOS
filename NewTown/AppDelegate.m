@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "WebViewController.h"
 #import "CollectionViewController.h"
+#import "WeiboSDK.h"
 
 @interface AppDelegate ()
 
@@ -67,6 +68,10 @@
     [WXApi registerApp:@"wxba64cb9bbbbea771"];
     //加入腾讯分享sdk
     self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"101562763" andDelegate:self];
+    
+    [WeiboSDK registerApp:@"1555205002"];
+    //设置WeiboSDK的调试模式
+    [WeiboSDK enableDebugMode:YES];
     
     
     return YES;
@@ -166,8 +171,10 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     if ([url.scheme isEqualToString:@"tencent101562763"]) {
         return [TencentOAuth HandleOpenURL:url];
-    }else{
+    }else if([url.scheme isEqualToString:@"wxba64cb9bbbbea771"]){
         return [WXApi handleOpenURL:url delegate:self];
+    }else{
+        return [WeiboSDK handleOpenURL:url delegate:self];
     }
 }
 
@@ -176,9 +183,29 @@
             options:(NSDictionary<NSString *,id> *)options {
     if ([url.scheme isEqualToString:@"tencent101562763"]) {
         return [QQApiInterface handleOpenURL:url delegate:self];
-    }else {
-        return YES;
+    }else if([url.scheme isEqualToString:@"wxba64cb9bbbbea771"]){
+        return [WXApi handleOpenURL:url delegate:self];
+    }else{
+        return [WeiboSDK handleOpenURL:url delegate:self];
     }
 }
+#pragma mark -- WeiboSDKDelegate微博分享结果回调
+- (void)didReceiveWeiboResponse:(WBBaseResponse *)response {
+    if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
+    {
+        NSString *title = NSLocalizedString(@"发送结果", nil);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:@"分享成功"
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                                              otherButtonTitles:nil];
+        WBSendMessageToWeiboResponse* sendMessageToWeiboResponse = (WBSendMessageToWeiboResponse*)response;
+        [alert show];
+    }
+    
+}
 
+- (void)didReceiveWeiboRequest:(WBBaseRequest *)request {
+    
+}
 @end

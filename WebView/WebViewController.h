@@ -13,6 +13,8 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/QQApiInterfaceObject.h>
+//#import "WBMessageObject.h"
+#import "WeiboSDK.h"
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录
