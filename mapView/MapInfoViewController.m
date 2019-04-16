@@ -27,6 +27,23 @@
     }
     return self;
 }
+- (id)initWithTitle:(NSString *)strTitle andType:(BOOL)isHome{
+    self = [super init];
+    if (self) {
+        isHomeType = isHome;
+        strMapTitle = strTitle;
+        self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
+        self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
+        //修改导航栏样式
+        self.navTitleLabel = [self createLabelWithFrame:CGRectMake(50, SafeStatusBarHeight, SCREEN_WIDTH - 100, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
+        self.navTitleLabel.text = strTitle;
+        [self.view addSubview:self.navTitleLabel];
+        self.backButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(backToRegion:)];
+        [self.view addSubview:self.backButton];
+        
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -46,17 +63,37 @@
     bottomScrollView.delegate = self;
     [self.view addSubview:bottomScrollView];
     
-    NSString *region = [strMapTitle stringByReplacingOccurrencesOfString:@"发现" withString:@""];
-    PFQuery *query = [PFQuery queryWithClassName:@"TownMap"];
-    if (![region isEqualToString:@"全部小镇"]) {
-        [query whereKey:@"region" equalTo:region];
-    }
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (objects.count>0) {
-            self->bottomScrollView.contentSize = CGSizeMake(SCROLLVIEW_WIDTH * objects.count, self->bottomScrollView.bounds.size.height);
-            [self showAllTownInfoWithTowns:objects];
+    if (isHomeType == NO) {
+        NSString *region = [strMapTitle stringByReplacingOccurrencesOfString:@"发现" withString:@""];
+        PFQuery *query = [PFQuery queryWithClassName:@"TownMap"];
+        if (![region isEqualToString:@"全部小镇"]) {
+            [query whereKey:@"region" equalTo:region];
         }
-    }];
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            if (objects.count>0) {
+                self->bottomScrollView.contentSize = CGSizeMake(SCROLLVIEW_WIDTH * objects.count, self->bottomScrollView.bounds.size.height);
+                [self showAllTownInfoWithTowns:objects];
+            }
+        }];
+    }else{
+        PFQuery *query = [PFQuery queryWithClassName:@"HomeMap"];
+        PFQuery *currentTownQuery = [PFQuery queryWithClassName:@"TownMap"];
+        [currentTownQuery whereKey:@"name" equalTo:strMapTitle];
+        [currentTownQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable results, NSError * _Nullable error) {
+            if (results.count > 0) {
+                PFGeoPoint *currentGeoPoint = [[results objectAtIndex:0]objectForKey:@"coordinate"];
+                [query whereKey:@"coordinate" nearGeoPoint:currentGeoPoint withinMiles:5];
+                [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                    if (objects.count>0) {
+                        self->bottomScrollView.contentSize = CGSizeMake(SCROLLVIEW_WIDTH * objects.count, self->bottomScrollView.bounds.size.height);
+                        [self showAllTownInfoWithTowns:objects];
+                    }
+                }];
+            }
+           
+        }];
+    }
+    
 }
 #pragma mark - UI控件创建
 - (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{

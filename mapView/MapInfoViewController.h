@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     CLLocationManager* _locationManager;
     UIScrollView *bottomScrollView;
     NSString *strMapTitle;
+    BOOL isHomeType;
 }
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;
@@ -27,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UIButton *backButton;
 @property (nonatomic,strong) MKMapView *mapView;
 - (id)initWithTitle:(NSString *)strTitle;
+- (id)initWithTitle:(NSString *)strTitle andType:(BOOL)isHome;
 @end
 
 NS_ASSUME_NONNULL_END
