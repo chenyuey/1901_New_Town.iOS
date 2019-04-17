@@ -71,10 +71,7 @@
     [self.webView share];
 }
 - (void)enterMapInfo:(id)sender{
-//    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
-//    [self.navigationController pushViewController:mapInfoVC animated:YES];
-    
-    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:@"🏠 黄山店村" andType:YES];
+    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
     [self.navigationController pushViewController:mapInfoVC animated:YES];
 }
 #pragma mark - 视图加载
@@ -182,38 +179,25 @@
 }
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    if ([request.URL.absoluteString containsString:@"www.bing.com"]) {
+        MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:@"🏠 黄山店村" andType:YES];
+        [self.navigationController pushViewController:mapInfoVC animated:YES];
+        return NO;
+    }
     [self addWebKitTransform:webView];
     NSLog(@"request.URL.path: %@",request.URL.path);
     NSString *strPathURL = request.URL.path;
-//    //收藏按钮
-//    if ([strPathURL containsString:@"feature"]) {
-//        //显示收藏
-//        self.collectButton.hidden = NO;
-//        UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
-//        [imageTmp setAccessibilityIdentifier:@"uncollect"];
-//        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-//    }
-//    else{
-//        //隐藏收藏
-//        self.collectButton.hidden = YES;
-//    }
-//    //分享按钮显示和隐藏
-//    if ([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) {
-//        self.shareButton.hidden = NO;
-//    }else{
-//        self.shareButton.hidden = YES;
-//    }
     //地图按钮的显示和隐藏
-    if ([request.URL.path isEqualToString:@"/v2/showcase/category"]) {
+    if ([strPathURL isEqualToString:@"/v2/showcase/category"]) {
         //显示地图按钮
         self.mapButton.hidden = NO;
     }else{
         self.mapButton.hidden = YES;
     }
-    self.navTitleLabel.hidden = NO;
-    if ([request.URL.path containsString:@"goods"] || [request.URL.path isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"] || [request.URL.path containsString:@"homepage"]) {
-        self.navTitleLabel.hidden = YES;
-    }
+//    self.navTitleLabel.hidden = NO;
+//    if ([request.URL.path containsString:@"goods"] || [request.URL.path isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"] || [request.URL.path containsString:@"homepage"]) {
+//        self.navTitleLabel.hidden = YES;
+//    }
     return YES;
 }
 - (void)webViewDidFinishLoad:(id<YZWebView>)webView{
@@ -239,6 +223,11 @@
                           self.shareButton.hidden = NO;
                       }else{
                           self.shareButton.hidden = YES;
+                      }
+                      
+                      self.navTitleLabel.hidden = NO;
+                      if ([strPathURL containsString:@"goods"] || [strPathURL isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"] || [strPathURL containsString:@"homepage"]) {
+                          self.navTitleLabel.hidden = YES;
                       }
                   }
                   
