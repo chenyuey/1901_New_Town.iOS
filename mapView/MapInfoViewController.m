@@ -44,6 +44,7 @@
     }
     return self;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -62,7 +63,9 @@
     bottomScrollView.showsHorizontalScrollIndicator = NO;
     bottomScrollView.delegate = self;
     [self.view addSubview:bottomScrollView];
-    
+    [self updateMapDataInfo];
+}
+- (void)updateMapDataInfo{
     if (isHomeType == NO) {
         NSString *region = [strMapTitle stringByReplacingOccurrencesOfString:@"发现" withString:@""];
         PFQuery *query = [PFQuery queryWithClassName:@"TownMap"];
@@ -91,10 +94,9 @@
                     }
                 }];
             }
-           
+            
         }];
     }
-    
 }
 #pragma mark - UI控件创建
 - (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
