@@ -81,8 +81,9 @@
         [currentTownQuery whereKey:@"name" equalTo:strMapTitle];
         [currentTownQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable results, NSError * _Nullable error) {
             if (results.count > 0) {
-                PFGeoPoint *currentGeoPoint = [[results objectAtIndex:0]objectForKey:@"coordinate"];
-                [query whereKey:@"coordinate" nearGeoPoint:currentGeoPoint withinMiles:5];
+                PFObject *currentTownItem = [results objectAtIndex:0];
+                NSString *objectId = currentTownItem.objectId;
+                [query whereKey:@"nearby_towns" containedIn:@[objectId]];
                 [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
                     if (objects.count>0) {
                         self->bottomScrollView.contentSize = CGSizeMake(SCROLLVIEW_WIDTH * objects.count, self->bottomScrollView.bounds.size.height);

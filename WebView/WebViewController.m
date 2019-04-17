@@ -180,7 +180,7 @@
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     if ([request.URL.absoluteString containsString:@"www.bing.com"]) {
-        MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:@"🏠 黄山店村" andType:YES];
+        MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text andType:YES];
         [self.navigationController pushViewController:mapInfoVC animated:YES];
         return NO;
     }
