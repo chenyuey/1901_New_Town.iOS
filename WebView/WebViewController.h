@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeWhenNeed = 2,  //演示后登录
 };
 
-@interface WebViewController : UIViewController{
+@interface WebViewController : UIViewController<UIScrollViewDelegate>{
     BOOL isCollecting;
     NSDictionary *shareInfo;
     UIView *shareView;

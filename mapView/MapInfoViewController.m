@@ -64,6 +64,7 @@
     bottomScrollView.delegate = self;
     [self.view addSubview:bottomScrollView];
     [self updateMapDataInfo];
+    isJoinInFirst = true;
 }
 - (void)updateMapDataInfo{
     if (isHomeType == NO) {
@@ -164,12 +165,20 @@
     // 设置地图中心的经度、纬度
     CLLocationCoordinate2D center = {annotation.coordinate.latitude,annotation.coordinate.longitude};
     // 设置地图显示的范围，地图显示范围越小，细节越清楚
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.1,0.1);
+    float zoom = 0.1;
+    if (isHomeType) {
+        zoom = 0.01;
+    }
+    MKCoordinateSpan span = MKCoordinateSpanMake(zoom,zoom);
+    if (!isJoinInFirst) {
+        span = self.mapView.region.span;
+    }
     // 创建MKCoordinateRegion对象，该对象代表地图的显示中心和显示范围
     MKCoordinateRegion region =MKCoordinateRegionMake(center, span);
     // 设置当前地图的显示中心和显示范围
     [self.mapView setRegion:region animated:YES];
     [self.mapView selectAnnotation:annotation animated:YES];
+    isJoinInFirst = false;
 }
 
 

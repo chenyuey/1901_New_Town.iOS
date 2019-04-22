@@ -74,7 +74,7 @@ As of April 5, 2017, Parse, LLC has transferred this code to the parse-community
 
 ## SDWebImage
 
-Copyright (c) 2009-2017 Olivier Poitrey rs@dailymotion.com
+Copyright (c) 2009-2018 Olivier Poitrey rs@dailymotion.com
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -103,7 +103,7 @@ Copyright (c) 2014 Tencent. All rights reserved.
 
 ## WechatOpenSDK
 
-Copyright 2018 tencent.com. All rights reserved.
+Copyright 2019 tencent.com. All rights reserved.
 
 
 ## Weibo_SDK

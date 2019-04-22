@@ -1,1 +1,0 @@
-../../../../YZAppSDK/Release/YZBaseSDK.framework/Headers/YZMessageModel.h

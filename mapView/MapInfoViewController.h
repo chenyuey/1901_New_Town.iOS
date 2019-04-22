@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
     UIScrollView *bottomScrollView;
     NSString *strMapTitle;
     BOOL isHomeType;
+    BOOL isJoinInFirst;
 }
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;

@@ -50,7 +50,7 @@
     [loginView addSubview:phoneNumberDownLineView];
     self.passwordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, 40+16, frame.size.width, 39)];
     [self.passwordTextField setPlaceholder:@"请输入验证码"];
-    self.passwordTextField.secureTextEntry = YES;
+//    self.passwordTextField.secureTextEntry = YES;
     [loginView addSubview:self.passwordTextField];
     UIView *passwordDownLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 40+16+39, frame.size.width, 1)];
     passwordDownLineView.backgroundColor = lineColor;
@@ -192,9 +192,12 @@
                 [self.getValidCodeBtn setTitle:[NSString stringWithFormat:@"倒计时%dS",waitFor/1000] forState:UIControlStateNormal];
                 self->timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeCountDownTime) userInfo:nil repeats:YES];
             }else{
-                self->errLabel.text = [[error.userInfo objectForKey:@"error"]objectForKey:@"statusMsg"];
-                self->errLabel.hidden = NO;
-                [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
+                if (error.userInfo != nil) {
+                    self->errLabel.text = [error.userInfo objectForKey:@"error"];
+                    self->errLabel.hidden = NO;
+                    [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
+                }
+                
             }
         }];
     }

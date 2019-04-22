@@ -97,7 +97,7 @@ As of April 5, 2017, Parse, LLC has transferred this code to the parse-community
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright (c) 2009-2017 Olivier Poitrey rs@dailymotion.com
+			<string>Copyright (c) 2009-2018 Olivier Poitrey rs@dailymotion.com
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -138,7 +138,7 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2018 tencent.com. All rights reserved.
+			<string>Copyright 2019 tencent.com. All rights reserved.
 </string>
 			<key>License</key>
 			<string>Copyright</string>

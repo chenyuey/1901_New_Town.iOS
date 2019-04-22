@@ -15,7 +15,6 @@
 
 @interface WebViewController () <YZWebViewDelegate, YZWebViewNoticeDelegate>
 @property (strong, nonatomic) YZWebView *webView;
-//@property (strong, nonatomic) UIBarButtonItem *closeBarButtonItem; /**< 关闭按钮 */
 @end
 
 @implementation WebViewController
@@ -64,7 +63,6 @@
     }else{
         [self showLoginViewControllerIfNeeded];
     }
-    
 }
 - (void)shareToYourFriend:(id)sender{
     isCollecting = NO;
@@ -107,17 +105,12 @@
     [self.webView setNeedsLayout];
     [self.webView layoutIfNeeded];
     self.navigationItem.rightBarButtonItem.enabled = NO;//默认分享按钮不可用
-    
     // 加载链接
     [self loginAndloadUrl:self.loadUrl];
     
     //添加分享弹框
     shareView = [self createShareViewWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 166)];
-//    [self.view addSubview:shareView];
 }
-
-
-
 - (void)dealloc {
     //Demo中 退出当前controller就清除用户登录信息
     [YZSDK.shared logout];
@@ -179,6 +172,8 @@
 }
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    self.navTitleLabel.text = @"加载中...";
+    self.navTitleLabel.hidden = NO;
     if ([request.URL.absoluteString containsString:@"www.bing.com"]) {
         MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text andType:YES];
         [self.navigationController pushViewController:mapInfoVC animated:YES];
@@ -194,10 +189,6 @@
     }else{
         self.mapButton.hidden = YES;
     }
-//    self.navTitleLabel.hidden = NO;
-//    if ([request.URL.path containsString:@"goods"] || [request.URL.path isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"] || [request.URL.path containsString:@"homepage"]) {
-//        self.navTitleLabel.hidden = YES;
-//    }
     return YES;
 }
 - (void)webViewDidFinishLoad:(id<YZWebView>)webView{
@@ -226,11 +217,10 @@
                       }
                       
                       self.navTitleLabel.hidden = NO;
-                      if ([strPathURL containsString:@"goods"] || [strPathURL isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"] || [strPathURL containsString:@"homepage"]) {
+                      if ([strPathURL containsString:@"goods"] || [strPathURL isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"]) {
                           self.navTitleLabel.hidden = YES;
                       }
                   }
-                  
                   
                   //加载新链接时，分享按钮先置为不可用
                   if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
@@ -241,10 +231,6 @@
                       self.backButton.hidden = YES;
                       self.tabBarController.tabBar.hidden=NO;
                       self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
-                      if ([response isEqualToString:@"首页"]) {
-                          self.webView.frame = CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - SafeAreaBottomHeight);
-                          return ;
-                      }
                   }
                   self.navTitleLabel.text = response;
                   //全部民宿不添加 收藏按钮 功能
@@ -257,8 +243,18 @@
                   if ([response isEqualToString:@"全部攻略"]) {
                       self.mapButton.hidden = YES;
                   }
+                  
+                  if ([self.navTitleLabel.text isEqualToString:@"首页"]) {
+                      self.webView.scrollView.delegate = self;
+                  }
               }];
 }
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    if (scrollView.contentOffset.y < -35 && [self.navTitleLabel.text isEqualToString:@"首页"]) {
+        [self reloadButtonAction];
+    }
+}
+
 
 #pragma mark - Action
 
@@ -281,7 +277,9 @@
     
 }
 - (void)viewWillAppear:(BOOL)animated{
-    [self reloadButtonAction];
+    if (self.navTitleLabel.text != nil && ![self.navTitleLabel.text isEqualToString: @"首页"]) {
+        [self reloadButtonAction];//首页不刷 别的页面刷
+    }
     self.isLoginYouZan = YES;
     if (self.childViewControllers.count > 0) {
         [self removeLoginViewController];
@@ -373,17 +371,6 @@
         [self presentViewController:loginVC animated:YES completion:nil];
     }
 }
-//-(void)viewWillDisappear:(BOOL)animated{
-//    if (self.childViewControllers.count > 0) {
-//        [self removeLoginViewController];
-//    }
-//}
-//- (void)removeLoginViewController{
-//    LoginViewController *loginVC = self.childViewControllers[0];
-//    [loginVC willMoveToParentViewController:nil];
-//    [loginVC.view removeFromSuperview];
-//    [loginVC removeFromParentViewController];
-//}
 
 /**
  *  显示分享数据
