@@ -217,11 +217,6 @@
                       }else{
                           self.shareButton.hidden = YES;
                       }
-                      
-//                      self.navTitleLabel.hidden = NO;
-//                      if ([strPathURL containsString:@"goods"] || [strPathURL isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"]) {
-//                          self.navTitleLabel.hidden = YES;
-//                      }
                   }
                   
                   //加载新链接时，分享按钮先置为不可用
@@ -247,18 +242,18 @@
                   if ([response isEqualToString:@"全部攻略"]) {
                       self.mapButton.hidden = YES;
                   }
-                  
-                  if ([self.navTitleLabel.text isEqualToString:@"首页"]) {
-                      self.webView.scrollView.delegate = self;
+                  if ([response isEqualToString:@"首页"] && self.webView.scrollView.mj_header == nil) {
+                      self.webView.scrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshWebView)];
                   }
+                  if (self.webView.scrollView.mj_header != nil) {
+                      [self.webView.scrollView.mj_header endRefreshing];
+                  }
+                  
               }];
 }
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    if (scrollView.contentOffset.y < -35 && [self.navTitleLabel.text isEqualToString:@"首页"]) {
-        [self reloadButtonAction];
-    }
+- (void)refreshWebView{
+    [self reloadButtonAction];
 }
-
 
 #pragma mark - Action
 

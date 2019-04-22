@@ -15,6 +15,7 @@
 #import <TencentOpenAPI/QQApiInterfaceObject.h>
 //#import "WBMessageObject.h"
 #import "WeiboSDK.h"
+#import "MJRefresh.h"
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录
@@ -22,7 +23,7 @@ typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeWhenNeed = 2,  //演示后登录
 };
 
-@interface WebViewController : UIViewController<UIScrollViewDelegate>{
+@interface WebViewController : UIViewController{
     BOOL isCollecting;
     NSDictionary *shareInfo;
     UIView *shareView;

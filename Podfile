@@ -8,6 +8,6 @@ target 'NewTown' do
     pod 'WechatOpenSDK'       #微信分享sdk
     pod 'TencentOpenApiSDK'   #腾讯sdk
     pod "Weibo_SDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git"  #新浪微博sdk
-
+    pod 'MJRefresh', '~> 3.1.16'
 end
 

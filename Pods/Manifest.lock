@@ -1,5 +1,6 @@
 PODS:
   - Bolts/Tasks (1.9.0)
+  - MJRefresh (3.1.16)
   - Parse (1.17.2):
     - Parse/Core (= 1.17.2)
   - Parse/Core (1.17.2):
@@ -19,6 +20,7 @@ PODS:
   - YZAppSDK/Core (6.4.12)
 
 DEPENDENCIES:
+  - MJRefresh (~> 3.1.16)
   - Parse (~> 1.17.2)
   - SDWebImage
   - TencentOpenApiSDK
@@ -29,6 +31,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
+    - MJRefresh
     - Parse
     - SDWebImage
     - TencentOpenApiSDK
@@ -46,6 +49,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  MJRefresh: 7798e16e53a5ef7f332dd05b27664db4e29530fd
   Parse: 3b31a3dd1777b07ee7f0caee32fafbff544483a5
   SDWebImage: 27dd2c9ea07a2252f94557c9fbb6105ee94b74c9
   TencentOpenApiSDK: a0d7716edd6eb438d65828168e8e5137301b436d
@@ -53,6 +57,6 @@ SPEC CHECKSUMS:
   Weibo_SDK: 652ca78c2f7147a5de5e75e7cbea89838a81772a
   YZAppSDK: 638f20248b41e88951eebbecac8bff9c35915bd7
 
-PODFILE CHECKSUM: e6926ba6944fec437f77c5e64fc2730fd3714e8d
+PODFILE CHECKSUM: 10004d4e3c299189bb351a545bdd8c41afa87852
 
 COCOAPODS: 1.5.3
