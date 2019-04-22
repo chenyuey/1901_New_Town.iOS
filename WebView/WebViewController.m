@@ -172,13 +172,15 @@
 }
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    self.navTitleLabel.text = @"加载中...";
-    self.navTitleLabel.hidden = NO;
+//    self.navTitleLabel.hidden = NO;
     if ([request.URL.absoluteString containsString:@"www.bing.com"]) {
-        MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text andType:YES];
-        [self.navigationController pushViewController:mapInfoVC animated:YES];
+        if (![self.navTitleLabel.text isEqualToString:@"加载中..."]) {
+            MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text andType:YES];
+            [self.navigationController pushViewController:mapInfoVC animated:YES];
+        }
         return NO;
     }
+    self.navTitleLabel.text = @"加载中...";
     [self addWebKitTransform:webView];
     NSLog(@"request.URL.path: %@",request.URL.path);
     NSString *strPathURL = request.URL.path;
@@ -216,28 +218,30 @@
                           self.shareButton.hidden = YES;
                       }
                       
-                      self.navTitleLabel.hidden = NO;
-                      if ([strPathURL containsString:@"goods"] || [strPathURL isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"]) {
-                          self.navTitleLabel.hidden = YES;
-                      }
+//                      self.navTitleLabel.hidden = NO;
+//                      if ([strPathURL containsString:@"goods"] || [strPathURL isEqualToString:@"/v2/showcase/category"] || [strPathURL containsString:@"feature"]) {
+//                          self.navTitleLabel.hidden = YES;
+//                      }
                   }
                   
                   //加载新链接时，分享按钮先置为不可用
                   if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
                       self.backButton.hidden = NO;
                       self.tabBarController.tabBar.hidden=YES;
-                      self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - SafeAreaBottomHeight);
+                      self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight- 44 - SafeAreaBottomHeight);
+                      [self.webView sizeThatFits:self.view.frame.size];
                   }else{
                       self.backButton.hidden = YES;
                       self.tabBarController.tabBar.hidden=NO;
                       self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
+                      [self.webView sizeThatFits:self.view.frame.size];
                   }
                   self.navTitleLabel.text = response;
                   //全部民宿不添加 收藏按钮 功能
                   if ([response isEqualToString:@"全部民宿"]) {
                       self.collectButton.hidden = YES;
                       self.shareButton.hidden = YES;
-                      self.navTitleLabel.hidden = NO;
+//                      self.navTitleLabel.hidden = NO;
                   }
                   [self showCollectionButtonStatus:response];
                   if ([response isEqualToString:@"全部攻略"]) {

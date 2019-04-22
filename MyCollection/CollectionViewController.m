@@ -175,7 +175,8 @@
         cell = [[CollectTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"identify%ld",(long)indexPath.row]];
     }
     PFObject *dictInfo = [collectionDataSource objectAtIndex:indexPath.row];
-    [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:[dictInfo objectForKey:@"cover_link"]]];
+//    [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:[dictInfo objectForKey:@"cover_link"]]];
+    [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:[dictInfo objectForKey:@"cover_link"]] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
     [cell.coverImageView layoutIfNeeded];
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:cell.coverImageView.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(6, 6)];
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];

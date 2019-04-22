@@ -26,6 +26,8 @@
     config.enableLog = NO; // 关闭 sdk 的 log 输出
     [YZSDK.shared initializeSDKWithConfig:config];
     YZSDK.shared.delegate = self; // 必须设置代理方法，保证 SDK 在需要 token 的时候可以正常运行
+    [YZSDK.shared preloadURLs:@[[NSURL URLWithString:@"https://j.youzan.com/Go44-9"], [NSURL URLWithString:@"https://h5.youzan.com/v2/feature/XgA5YjWnWO"]]];
+    
     WebViewController *indexWebVC = [[WebViewController alloc]initWithURLString:@"https://j.youzan.com/Go44-9"];
     UINavigationController *indexNavigationController = [[UINavigationController alloc]initWithRootViewController:indexWebVC];
     indexNavigationController.tabBarItem.title = @"首页";

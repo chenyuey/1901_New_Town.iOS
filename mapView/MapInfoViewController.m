@@ -121,7 +121,7 @@
         BottomTownItemView *townItemView = [[BottomTownItemView alloc]initTownInfoWithFrame:CGRectMake(SCROLLVIEW_WIDTH * i, 0, SCROLLVIEW_WIDTH, bottomScrollView.bounds.size.height)];
         PFObject *townInfo = [towns objectAtIndex:i];
         townItemView.webLinkURL = [townInfo objectForKey:@"link"];
-        [townItemView.coverImageView sd_setImageWithURL:[NSURL URLWithString:[townInfo objectForKey:@"cover_link"]]];
+        [townItemView.coverImageView sd_setImageWithURL:[NSURL URLWithString:[townInfo objectForKey:@"cover_link"]] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
         [townItemView.coverImageView layoutIfNeeded];
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:townItemView.coverImageView.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(6, 6)];
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
