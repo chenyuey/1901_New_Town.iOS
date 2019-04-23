@@ -82,18 +82,18 @@
     //修改导航栏样式
     self.navTitleLabel = [self createLabelWithFrame:CGRectMake(50, SafeStatusBarHeight, SCREEN_WIDTH - 100, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
     [self.view addSubview:self.navTitleLabel];
-    self.backButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(navigationShouldPopOnBackButton)];
+    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(navigationShouldPopOnBackButton)];
     self.backButton.hidden = YES;
     [self.view addSubview:self.backButton];
     //创建收藏按钮
-    self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20 - 24 -24, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
+    self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 8 - 10 - 24 -24, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
     self.collectButton.hidden = YES;
     [self.view addSubview:self.collectButton];
-    self.shareButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20, SafeStatusBarHeight+10, 24, 24) :@"shareIcon" :@selector(shareToYourFriend:)];
+    self.shareButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 10, SafeStatusBarHeight+8, 24, 24) :@"shareIcon" :@selector(shareToYourFriend:)];
     self.shareButton.hidden = YES;
     [self.view addSubview:self.shareButton];
     //创建地图按钮
-    self.mapButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 20, SafeStatusBarHeight+10, 24, 24) :@"mapIcon" :@selector(enterMapInfo:)];
+    self.mapButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 10, SafeStatusBarHeight+10, 24, 24) :@"mapIcon" :@selector(enterMapInfo:)];
     self.mapButton.hidden = YES;
     [self.view addSubview:self.mapButton];
     
@@ -172,7 +172,6 @@
 }
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-//    self.navTitleLabel.hidden = NO;
     if ([request.URL.absoluteString containsString:@"www.bing.com"]) {
         if (![self.navTitleLabel.text isEqualToString:@"加载中..."]) {
             MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text andType:YES];
@@ -181,6 +180,12 @@
         return NO;
     }
     self.navTitleLabel.text = @"加载中...";
+    if (loadingShadowView == nil) {
+        loadingShadowView = [self createLoadingShadowView];
+        [self.view bringSubviewToFront:loadingShadowView];
+    }
+    loadingShadowView.hidden = NO;
+    
     [self addWebKitTransform:webView];
     NSLog(@"request.URL.path: %@",request.URL.path);
     NSString *strPathURL = request.URL.path;
@@ -194,9 +199,9 @@
     return YES;
 }
 - (void)webViewDidFinishLoad:(id<YZWebView>)webView{
+    loadingShadowView.hidden = YES;
     [webView evaluateJavaScript:@"document.title"
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
-                  NSLog(@"TITLELLL: %@",response);
                   if (![self.navTitleLabel.text isEqualToString:response]) {
                       NSString *strPathURL = self.webView.URL.path;
                       //收藏按钮
@@ -236,7 +241,6 @@
                   if ([response isEqualToString:@"全部民宿"]) {
                       self.collectButton.hidden = YES;
                       self.shareButton.hidden = YES;
-//                      self.navTitleLabel.hidden = NO;
                   }
                   [self showCollectionButtonStatus:response];
                   if ([response isEqualToString:@"全部攻略"]) {
@@ -465,7 +469,20 @@
     }];
 }
 
-
+- (UIView *)createLoadingShadowView{
+    UIView *tmpView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight - 44)];
+    tmpView.hidden = YES;
+    tmpView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:tmpView];
+    
+    UIWebView *webViewTmp = [[UIWebView alloc] initWithFrame:CGRectMake((tmpView.frame.size.width - 48)/2,(tmpView.frame.size.height - 128)/2 - 44,48,48)];
+    [self.view addSubview:webViewTmp];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"loading" ofType:@"gif"];
+    NSURL *url = [NSURL URLWithString:path];
+    [webViewTmp loadRequest:[NSURLRequest requestWithURL:url]];
+    [tmpView addSubview:webViewTmp];
+    return tmpView;
+}
 #pragma mark - 分享到好友，朋友圈，qq，新浪
 - (UIView *)createShareViewWithFrame:(CGRect)frame{
     UIView *shadowView = [[UIView alloc]initWithFrame:Screen_Bounds];

@@ -88,7 +88,7 @@
     spitLineView.backgroundColor = splitLineColor;
     [self.view addSubview:spitLineView];
     
-    closeButton = [self createButtonWithImage:CGRectMake(20, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :@selector(close:)];
+    closeButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :@selector(close:)];
     [self.view addSubview:closeButton];
     
     [self createLoginViewWithFrame:CGRectMake(17, SafeStatusBarHeight + 44 + 96, SCREEN_WIDTH - 17 - 15, 180) :splitLineColor];
