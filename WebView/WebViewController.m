@@ -267,17 +267,29 @@
         return;
     }
     __weak typeof(self) weakSelf = self;
-    [self presentNativeLoginViewWithBlock:^(BOOL success){
-        if (success) {
-            self.isLoginYouZan = YES;
-            [weakSelf.webView reload];
-        } else {
-            if ([weakSelf.webView canGoBack]) {
-                [weakSelf.webView goBack];
+    if ([PFUser currentUser]) {
+        //自动登录
+        [PFCloud callFunctionInBackground:@"YZLogin" withParameters:nil block:^(id  _Nullable resultInfo, NSError * _Nullable error) {
+            if (error == nil && [[resultInfo objectForKey:@"msg"] isEqualToString:@"登录成功"]) {
+                [YZSDK.shared synchronizeAccessToken:resultInfo[@"data"][@"access_token"]
+                                           cookieKey:resultInfo[@"data"][@"cookie_key"]
+                                         cookieValue:resultInfo[@"data"][@"cookie_value"]];
+                [self.webView reload];
+
             }
-        };
-    }];
-    
+        }];
+    }else{
+        [self presentNativeLoginViewWithBlock:^(BOOL success){
+            if (success) {
+                self.isLoginYouZan = YES;
+                [weakSelf.webView reload];
+            } else {
+                if ([weakSelf.webView canGoBack]) {
+                    [weakSelf.webView goBack];
+                }
+            };
+        }];
+    }
 }
 - (void)viewWillAppear:(BOOL)animated{
     if (self.navTitleLabel.text != nil && ![self.navTitleLabel.text isEqualToString: @"首页"]) {
