@@ -32,7 +32,7 @@
     UINavigationController *indexNavigationController = [[UINavigationController alloc]initWithRootViewController:indexWebVC];
     indexNavigationController.tabBarItem.title = @"首页";
     indexNavigationController.tabBarItem.image = [UIImage imageNamed:@"indexBarIcon"];
-//    self.window.rootViewController = rootNavigationController;
+    
     WebViewController *newTownWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/feature/XgA5YjWnWO"];
     UINavigationController *newTownNavigationController = [[UINavigationController alloc]initWithRootViewController:newTownWebVC];
     newTownNavigationController.tabBarItem.title =@"全部民宿";
@@ -51,12 +51,16 @@
     
     
     NSArray *items = [NSArray arrayWithObjects:indexNavigationController,newTownNavigationController,collectNavigationController,userCenterNavigationController, nil];
-    UITabBarController *tabBarC = [[UITabBarController alloc]init];
-    [tabBarC setViewControllers:items];
-    tabBarC.tabBar.backgroundColor = [UIColor whiteColor];
-    tabBarC.tabBar.unselectedItemTintColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
-    tabBarC.tabBar.tintColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
-    self.window.rootViewController = tabBarC;
+    self.tabBarC = [[UITabBarController alloc]init];
+    [self.tabBarC setViewControllers:items];
+    self.tabBarC.tabBar.backgroundColor = [UIColor whiteColor];
+    self.tabBarC.tabBar.unselectedItemTintColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
+    self.tabBarC.tabBar.tintColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
+    
+    LYWNewfeatureViewController *startUpPage = [[LYWNewfeatureViewController alloc]init];
+    self.window.rootViewController = startUpPage;
+//    self.window.rootViewController = self.tabBarC;
+    
     
     //创建Parse服务链接
     ParseClientConfiguration *parseConfig = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {

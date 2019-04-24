@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		079F1827BD91AC71C7E50E74 /* libPods-NewTown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */; };
 		5221BC0F226EA96D00A78013 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5221BC0E226EA96D00A78013 /* loading.gif */; };
+		5221BC152270592000A78013 /* LYWNewfeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5221BC142270592000A78013 /* LYWNewfeatureViewController.m */; };
 		5229691F2253549F00BA72A8 /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5229691E2253549F00BA72A8 /* CustomLabel.m */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
@@ -48,6 +49,8 @@
 /* Begin PBXFileReference section */
 		191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewTown.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5221BC0E226EA96D00A78013 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
+		5221BC132270592000A78013 /* LYWNewfeatureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYWNewfeatureViewController.h; sourceTree = "<group>"; };
+		5221BC142270592000A78013 /* LYWNewfeatureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYWNewfeatureViewController.m; sourceTree = "<group>"; };
 		5229691D2253549F00BA72A8 /* CustomLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomLabel.h; sourceTree = "<group>"; };
 		5229691E2253549F00BA72A8 /* CustomLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomLabel.m; sourceTree = "<group>"; };
 		5256ACF8226D6ADA00AAFB77 /* YZSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZSDKCore.framework; path = ../../Downloads/Release/YZSDKCore.framework; sourceTree = "<group>"; };
@@ -126,9 +129,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5221BC12227058E000A78013 /* StartupPage */ = {
+			isa = PBXGroup;
+			children = (
+				5221BC132270592000A78013 /* LYWNewfeatureViewController.h */,
+				5221BC142270592000A78013 /* LYWNewfeatureViewController.m */,
+			);
+			path = StartupPage;
+			sourceTree = "<group>";
+		};
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
+				5221BC12227058E000A78013 /* StartupPage */,
 				5299AFF52243910700699683 /* MyCollection */,
 				5299AFF12242404E00699683 /* mapView */,
 				52707200222F655A00B73769 /* Define */,
@@ -467,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5221BC152270592000A78013 /* LYWNewfeatureViewController.m in Sources */,
 				527071F3222E76A300B73769 /* WebViewController.m in Sources */,
 				5299AFFE224A362900699683 /* BottomTownItemView.m in Sources */,
 				527071F7222E778A00B73769 /* UserModel.m in Sources */,

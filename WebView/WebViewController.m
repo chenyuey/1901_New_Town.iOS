@@ -275,7 +275,6 @@
                                            cookieKey:resultInfo[@"data"][@"cookie_key"]
                                          cookieValue:resultInfo[@"data"][@"cookie_value"]];
                 [self.webView reload];
-
             }
         }];
     }else{

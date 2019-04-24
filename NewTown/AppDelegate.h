@@ -17,12 +17,15 @@
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/QQApiInterfaceObject.h>
 
+#import "LYWNewfeatureViewController.h"
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate,YZSDKDelegate,WXApiDelegate,TencentSessionDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 @property(nonatomic,strong) TencentOAuth *tencentOAuth;
+@property(nonatomic,strong)UITabBarController *tabBarC;
 
 - (void)saveContext;
 
