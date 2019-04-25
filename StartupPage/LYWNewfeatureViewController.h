@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "CommonHeader.h"
 #import "AppDelegate.h"
+#import "UIImage+LXExtension.h"
+#import <Parse/Parse.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

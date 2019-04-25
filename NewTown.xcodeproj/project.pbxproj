@@ -10,6 +10,7 @@
 		079F1827BD91AC71C7E50E74 /* libPods-NewTown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */; };
 		5221BC0F226EA96D00A78013 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5221BC0E226EA96D00A78013 /* loading.gif */; };
 		5221BC152270592000A78013 /* LYWNewfeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5221BC142270592000A78013 /* LYWNewfeatureViewController.m */; };
+		522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 522934A8227160E900B30E94 /* UIImage+LXExtension.m */; };
 		5229691F2253549F00BA72A8 /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5229691E2253549F00BA72A8 /* CustomLabel.m */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
@@ -51,6 +52,8 @@
 		5221BC0E226EA96D00A78013 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		5221BC132270592000A78013 /* LYWNewfeatureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYWNewfeatureViewController.h; sourceTree = "<group>"; };
 		5221BC142270592000A78013 /* LYWNewfeatureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYWNewfeatureViewController.m; sourceTree = "<group>"; };
+		522934A7227160E900B30E94 /* UIImage+LXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+LXExtension.h"; sourceTree = "<group>"; };
+		522934A8227160E900B30E94 /* UIImage+LXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+LXExtension.m"; sourceTree = "<group>"; };
 		5229691D2253549F00BA72A8 /* CustomLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomLabel.h; sourceTree = "<group>"; };
 		5229691E2253549F00BA72A8 /* CustomLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomLabel.m; sourceTree = "<group>"; };
 		5256ACF8226D6ADA00AAFB77 /* YZSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZSDKCore.framework; path = ../../Downloads/Release/YZSDKCore.framework; sourceTree = "<group>"; };
@@ -138,9 +141,19 @@
 			path = StartupPage;
 			sourceTree = "<group>";
 		};
+		522934A6227160CE00B30E94 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				522934A7227160E900B30E94 /* UIImage+LXExtension.h */,
+				522934A8227160E900B30E94 /* UIImage+LXExtension.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
+				522934A6227160CE00B30E94 /* Tools */,
 				5221BC12227058E000A78013 /* StartupPage */,
 				5299AFF52243910700699683 /* MyCollection */,
 				5299AFF12242404E00699683 /* mapView */,
@@ -489,6 +502,7 @@
 				527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */,
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
+				522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */,
 				527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */,
 				5299AFFB2243AB8900699683 /* CollectTableViewCell.m in Sources */,
 				5299AFF82243912D00699683 /* CollectionViewController.m in Sources */,

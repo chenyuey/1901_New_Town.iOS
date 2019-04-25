@@ -34,25 +34,37 @@
     scrollView.contentSize = CGSizeMake(NewfeatureCount*SCREEN_WIDTH, 0);
     scrollView.delegate = self;
     
-    for (NSInteger i = 0; i < NewfeatureCount; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i*SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-        NSString *name = [NSString stringWithFormat:@"f%ld-5",i+1];
-        imageView.image = [UIImage imageNamed:name];
-        [scrollView addSubview:imageView];
-        if (i == NewfeatureCount - 1) {
-            [self setupStartBtn:imageView];
-        }
-    }
+    PFQuery *query = [PFQuery queryWithClassName:@"Advertisement"];
     
-    // 4.添加pageControl：分页，展示目前看的是第几页
-//    UIPageControl *pageControl = [[UIPageControl alloc] init];
-//    pageControl.numberOfPages = NewfeatureCount;
-//    pageControl.backgroundColor = [UIColor redColor];
-//    pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
-//    pageControl.pageIndicatorTintColor = [UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1.0];
-//    pageControl.center = CGPointMake(SCREEN_WIDTH*0.5, SCREEN_HEIGHT - 50);
-//    [self.view addSubview:pageControl];
-//    self.pageControl = pageControl;
+    [query whereKey:@"isOnline" equalTo:[NSNumber numberWithBool:true]];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    CGFloat scale = SCREEN_WIDTH / 375.0;
+    UIImage *bgImage = [UIImage scaleImage:[UIImage imageNamed:@"start_up"] toScale:scale];
+    UIImage *cutImage = [UIImage ct_imageFromImage:bgImage inRect:CGRectMake(0, bgImage.size.height - SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    imageView.image = cutImage;
+    [scrollView addSubview:imageView];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable result, NSError * _Nullable error) {
+        if (error == nil &&  result.count > 0) {
+            PFFileObject *userImageFile = [[result objectAtIndex:0]objectForKey:@"adImage"];
+            [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+                if (!error) {
+                    CGFloat scale = SCREEN_WIDTH / 375.0;
+                    UIImage *image = [UIImage imageWithData:imageData];
+                    UIImage *bgImage = [UIImage scaleImage:image toScale:scale];
+                    UIImage *cutImage = [UIImage ct_imageFromImage:bgImage inRect:CGRectMake(0, bgImage.size.height - SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+                    imageView.image = cutImage;
+                    [scrollView addSubview:imageView];
+                }
+            }];
+        }
+    }];
+    
+    
+    
+    
+    
+    [self performSelector:@selector(jumpToIndexViewController) withObject:nil afterDelay:2.0];
 }
 
 //左上角的灰色跳过按钮
@@ -93,7 +105,7 @@
 }
 
 //进入问医生按钮点击事件
--(void)BtnDidClicked
+-(void)jumpToIndexViewController
 {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
