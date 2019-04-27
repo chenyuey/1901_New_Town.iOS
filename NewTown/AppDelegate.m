@@ -79,6 +79,8 @@
     //设置WeiboSDK的调试模式
     [WeiboSDK enableDebugMode:YES];
     
+    [self checkSaveImageWithUUID];
+    
     
     return YES;
 }
@@ -102,10 +104,29 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
-
-
+- (NSString *)getUUIDString{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *myUUID = [defaults stringForKey:@"UUID"];
+    if (myUUID == nil) {
+        CFUUIDRef puuid = CFUUIDCreate(nil);
+        CFStringRef uuidString = CFUUIDCreateString(nil, puuid);
+        NSString *result = (NSString *)CFBridgingRelease(CFStringCreateCopy(NULL, uuidString));
+        NSMutableString *tmpResult = result.mutableCopy;
+        // 去除“-”
+        NSRange range = [tmpResult rangeOfString:@"-"];
+        while (range.location != NSNotFound) {
+            [tmpResult deleteCharactersInRange:range];
+            range = [tmpResult rangeOfString:@"-"];
+        }
+        [defaults setObject:tmpResult forKey:@"UUID"];
+        [defaults synchronize];
+        myUUID = tmpResult;
+    }
+    return myUUID;
+}
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    [self checkSaveImageWithUUID];
 }
 
 
@@ -213,5 +234,34 @@
 
 - (void)didReceiveWeiboRequest:(WBBaseRequest *)request {
     
+}
+#pragma mark - 检查是否有f图片网络
+- (void)checkSaveImageWithUUID{
+    PFQuery *query = [PFQuery queryWithClassName:@"Advertisement"];
+    [query whereKey:@"isOnline" equalTo:[NSNumber numberWithBool:true]];
+    NSString *uuid = [self getUUIDString];
+    NSLog(@"uuid:%@",uuid);
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable result, NSError * _Nullable error) {
+        if (error == nil &&  result.count > 0) {
+            PFObject *advertisementInfo = [result objectAtIndex:0];
+            NSMutableArray *updateUserList = [[NSMutableArray alloc]initWithArray:[advertisementInfo objectForKey:@"updateUserList"]];
+            PFFileObject *userImageFile = [[result objectAtIndex:0]objectForKey:@"adImage"];
+            if (updateUserList == nil || updateUserList.count == 0 || ![updateUserList containsObject:uuid]) {
+                //下载图片保存到本地
+                [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+                    if (!error) {
+                        UIImage *image = [UIImage imageWithData:imageData];
+                        NSString * path =NSHomeDirectory();
+                        NSString * PathImg =[path stringByAppendingString:@"/Documents/start_up.png"];
+                        [UIImagePNGRepresentation(image) writeToFile:PathImg atomically:YES];
+                        [updateUserList addObject:uuid];
+                        [advertisementInfo setObject:updateUserList forKey:@"updateUserList"];
+                        [advertisementInfo save];
+                    }
+                }];
+            }
+            
+        }
+    }];
 }
 @end

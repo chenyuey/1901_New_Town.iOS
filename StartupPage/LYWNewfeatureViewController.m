@@ -34,35 +34,31 @@
     scrollView.contentSize = CGSizeMake(NewfeatureCount*SCREEN_WIDTH, 0);
     scrollView.delegate = self;
     
-    PFQuery *query = [PFQuery queryWithClassName:@"Advertisement"];
-    
-    [query whereKey:@"isOnline" equalTo:[NSNumber numberWithBool:true]];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    CGFloat scale = SCREEN_WIDTH / 375.0;
-    UIImage *bgImage = [UIImage scaleImage:[UIImage imageNamed:@"start_up"] toScale:scale];
-    UIImage *cutImage = [UIImage ct_imageFromImage:bgImage inRect:CGRectMake(0, bgImage.size.height - SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    imageView.image = cutImage;
-    [scrollView addSubview:imageView];
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable result, NSError * _Nullable error) {
-        if (error == nil &&  result.count > 0) {
-            PFFileObject *userImageFile = [[result objectAtIndex:0]objectForKey:@"adImage"];
-            [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
-                if (!error) {
-                    CGFloat scale = SCREEN_WIDTH / 375.0;
-                    UIImage *image = [UIImage imageWithData:imageData];
-                    UIImage *bgImage = [UIImage scaleImage:image toScale:scale];
-                    UIImage *cutImage = [UIImage ct_imageFromImage:bgImage inRect:CGRectMake(0, bgImage.size.height - SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                    imageView.image = cutImage;
-                    [scrollView addSubview:imageView];
-                }
-            }];
+    NSString * PATH =[NSString stringWithFormat:@"%@/Documents/%@.png",NSHomeDirectory(),@"start_up"];
+    UIImage *start_up_image = [[UIImage alloc]initWithContentsOfFile:PATH];
+    if (start_up_image == nil) {
+        CGFloat scale = SCREEN_WIDTH / 375.0;
+        UIImage *bgImage = [UIImage scaleImage:[UIImage imageNamed:@"start_up"] toScale:scale];
+        UIImage *cutImage = [UIImage ct_imageFromImage:bgImage inRect:CGRectMake(0, bgImage.size.height - SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        imageView.image = cutImage;
+        [scrollView addSubview:imageView];
+    }else{
+        if (start_up_image.size.width / start_up_image.size.height < SCREEN_WIDTH / SCREEN_HEIGHT) {
+            //按照横屏缩放
+            CGFloat scale = SCREEN_WIDTH / start_up_image.size.width;
+            UIImage *bgImage = [UIImage scaleImage:start_up_image toScale:scale];
+            UIImage *cutImage = [UIImage ct_imageFromImage:bgImage inRect:CGRectMake(0, (bgImage.size.height - SCREEN_HEIGHT)/2, SCREEN_WIDTH, SCREEN_HEIGHT)];
+            imageView.image = cutImage;
+        }else{
+            //按照竖屏缩放
+            CGFloat scale = SCREEN_HEIGHT / start_up_image.size.height;
+            UIImage *bgImage = [UIImage scaleImage:start_up_image toScale:scale];
+            UIImage *cutImage = [UIImage ct_imageFromImage:bgImage inRect:CGRectMake((bgImage.size.width - SCREEN_WIDTH)/2, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+            imageView.image = cutImage;
         }
-    }];
-    
-    
-    
-    
+        [scrollView addSubview:imageView];
+    }
     
     [self performSelector:@selector(jumpToIndexViewController) withObject:nil afterDelay:2.0];
 }
