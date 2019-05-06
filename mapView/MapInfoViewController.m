@@ -68,7 +68,8 @@
 }
 - (void)updateMapDataInfo{
     if (isHomeType == NO) {
-        NSString *region = [strMapTitle stringByReplacingOccurrencesOfString:@"发现" withString:@""];
+//        NSString *region = [strMapTitle stringByReplacingOccurrencesOfString:@"发现" withString:@""];
+        NSString *region = strMapTitle;
         PFQuery *query = [PFQuery queryWithClassName:@"TownMap"];
         if (![region isEqualToString:@"全部小镇"]) {
             [query whereKey:@"region" equalTo:region];

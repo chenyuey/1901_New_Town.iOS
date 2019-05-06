@@ -185,8 +185,6 @@
         [self.view bringSubviewToFront:loadingShadowView];
     }
     loadingShadowView.hidden = NO;
-    
-    [self addWebKitTransform:webView];
     NSLog(@"request.URL.path: %@",request.URL.path);
     NSString *strPathURL = request.URL.path;
     //地图按钮的显示和隐藏
@@ -199,6 +197,7 @@
     return YES;
 }
 - (void)webViewDidFinishLoad:(id<YZWebView>)webView{
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"]; 
     loadingShadowView.hidden = YES;
     [webView evaluateJavaScript:@"document.title"
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
@@ -228,14 +227,28 @@
                   if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
                       self.backButton.hidden = NO;
                       self.tabBarController.tabBar.hidden=YES;
-                      self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight- 44 - SafeAreaBottomHeight);
-                      [self.webView sizeThatFits:self.view.frame.size];
+                      CGRect webviewFrame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight- 44  - SafeAreaBottomHeight);
+                      [self.webView sizeThatFits:webviewFrame.size];
+                      self.webView.frame = webviewFrame;
+                      if (@available(iOS 11.0, *)) {
+                          self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+                      } else {
+                          // Fallback on earlier versions
+                      }
                   }else{
                       self.backButton.hidden = YES;
                       self.tabBarController.tabBar.hidden=NO;
-                      self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
-                      [self.webView sizeThatFits:self.view.frame.size];
+                      CGRect webviewFrame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
+                      [self.webView sizeThatFits:webviewFrame.size];
+                      self.webView.frame = webviewFrame;
+//                      [self.webView setScalesPageToFit:YES];
+                      if (@available(iOS 11.0, *)) {
+                          self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+                      } else {
+                          // Fallback on earlier versions
+                      }
                   }
+                  [self addWebKitTransform:self.webView];
                   self.navTitleLabel.text = response;
                   //全部民宿不添加 收藏按钮 功能
                   if ([response isEqualToString:@"全部民宿"]) {

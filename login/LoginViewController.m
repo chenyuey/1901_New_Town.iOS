@@ -193,11 +193,14 @@
                 self->timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeCountDownTime) userInfo:nil repeats:YES];
             }else{
                 if (error.userInfo != nil) {
-                    self->errLabel.text = [error.userInfo objectForKey:@"error"];
+                    if ([[error.userInfo objectForKey:@"error"] isKindOfClass:[NSString class]]) {
+                        self->errLabel.text = [error.userInfo objectForKey:@"error"];
+                    }else if([[[error.userInfo objectForKey:@"error"] allKeys]containsObject:@"waitFor"]){
+                        self->errLabel.text = @"验证码请求过于频繁，请2分钟后重试";
+                    }
                     self->errLabel.hidden = NO;
                     [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
                 }
-                
             }
         }];
     }

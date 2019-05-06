@@ -81,7 +81,6 @@
     
     [self checkSaveImageWithUUID];
     
-    
     return YES;
 }
 - (void)yzsdk:(YZSDK *)sdk needInitToken:(void (^)(NSString * _Nullable))callback
