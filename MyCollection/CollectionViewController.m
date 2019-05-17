@@ -98,6 +98,10 @@
     
     collectionDataSource = @[];
     mCollectTableView.tableFooterView = [[UIView alloc]init];
+    noDataTintLabel = [self createLabelWithFrame:CGRectMake(0, (contentView.frame.size.height-60)/2, SCREEN_WIDTH, 40) :16 :@"Arial" :[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    noDataTintLabel.hidden = YES;
+    noDataTintLabel.text = @"你还没有收藏呢～";
+    [contentView addSubview:noDataTintLabel];
 
     
 }
@@ -106,9 +110,20 @@
     [query whereKey:@"user" equalTo:[PFUser currentUser]];
     [query whereKey:@"type" equalTo:[NSNumber numberWithInt:type]];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        NSLog(@"查找小镇数据：%@",objects);
-        self->collectionDataSource = objects;
-        [self->mCollectTableView reloadData];
+        if (error == nil) {
+            NSLog(@"查找小镇数据：%@",objects);
+            self->collectionDataSource = objects;
+            [self->mCollectTableView reloadData];
+            if (objects.count == 0) {
+                noDataTintLabel.hidden = NO;
+            }else{
+                noDataTintLabel.hidden = YES;
+            }
+        }else if (objects == nil && [[error.userInfo objectForKey:@"code"] intValue]==209) {
+            [PFUser logOut];
+            [self showLoginViewControllerIfNeeded];
+        }
+        
     }];
 }
 - (UIView *)cteateNavViewWithFrame:(CGRect)frame{

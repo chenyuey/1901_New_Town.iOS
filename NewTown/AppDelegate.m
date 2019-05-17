@@ -26,9 +26,9 @@
     config.enableLog = NO; // 关闭 sdk 的 log 输出
     [YZSDK.shared initializeSDKWithConfig:config];
     YZSDK.shared.delegate = self; // 必须设置代理方法，保证 SDK 在需要 token 的时候可以正常运行
-    [YZSDK.shared preloadURLs:@[[NSURL URLWithString:@"https://j.youzan.com/Go44-9"], [NSURL URLWithString:@"https://h5.youzan.com/v2/feature/XgA5YjWnWO"]]];
+    [YZSDK.shared preloadURLs:@[[NSURL URLWithString:@"https://h5.youzan.com/v2/showcase/homepage?alias=xrh79ni8"], [NSURL URLWithString:@"https://h5.youzan.com/v2/feature/XgA5YjWnWO"], [NSURL URLWithString:@"https://h5.youzan.com/v2/showcase/usercenter?alias=3hgmk8rs"]]];
     
-    WebViewController *indexWebVC = [[WebViewController alloc]initWithURLString:@"https://j.youzan.com/Go44-9"];
+    WebViewController *indexWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/showcase/homepage?alias=xrh79ni8"];
     UINavigationController *indexNavigationController = [[UINavigationController alloc]initWithRootViewController:indexWebVC];
     indexNavigationController.tabBarItem.title = @"首页";
     indexNavigationController.tabBarItem.image = [UIImage imageNamed:@"indexBarIcon"];
@@ -66,8 +66,8 @@
     ParseClientConfiguration *parseConfig = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
         configuration.server = @"http://47.95.200.31:1340/api/1";
 //        configuration.server = @"http://192.168.124.104:1340/api/1";
-        configuration.applicationId = @"myAppId";
-        configuration.clientKey = @"myMasterKey";
+        configuration.applicationId = @"khYEI0xFyAnVCUpO";
+        configuration.clientKey = @"iFPUdLm3yCPNnRVknBWHn4z5VDczgHOL";
     }];
     [Parse initializeWithConfiguration:parseConfig];
     //加入微信分享sdk

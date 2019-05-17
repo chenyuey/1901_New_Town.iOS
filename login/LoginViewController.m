@@ -70,6 +70,10 @@
     [loginBtn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     loginBtn.layer.cornerRadius = 5;
     [loginView addSubview:loginBtn];
+    
+    UILabel *tintLabel = [self createLabelWithFrame:CGRectMake(0, loginBtn.frame.origin.y+loginBtn.frame.size.height + 10, loginView.frame.size.width, 40) :16 :@"Arial" :[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    tintLabel.text = @"新用户登录将直接创建账号";
+    [loginView addSubview:tintLabel];
 }
 #pragma mark - 系统声明周期
 - (void)viewDidLoad {
@@ -91,7 +95,13 @@
     closeButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :@selector(close:)];
     [self.view addSubview:closeButton];
     
-    [self createLoginViewWithFrame:CGRectMake(17, SafeStatusBarHeight + 44 + 96, SCREEN_WIDTH - 17 - 15, 180) :splitLineColor];
+    UIImageView *logoImageView = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-80)/2, SafeStatusBarHeight + 44 + 20 , 80, 80)];
+    logoImageView.image = [UIImage imageNamed:@"logo192"];
+    logoImageView.layer.cornerRadius = 18;
+    logoImageView.layer.masksToBounds = YES;
+    [self.view addSubview:logoImageView];
+    
+    [self createLoginViewWithFrame:CGRectMake(17, SafeStatusBarHeight + 44 + 80 + 46, SCREEN_WIDTH - 17 - 15, 240) :splitLineColor];
     [self.view setUserInteractionEnabled:YES];
     
     if (currentType == 0) {

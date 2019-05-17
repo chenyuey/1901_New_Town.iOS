@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSArray *collectionDataSource;
     UIButton *categoryButton;
     UIButton *townButton;
+    UILabel *noDataTintLabel;
 }
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;
