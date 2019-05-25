@@ -71,7 +71,8 @@
     }];
     [Parse initializeWithConfiguration:parseConfig];
     //加入微信分享sdk
-    [WXApi registerApp:@"wxba64cb9bbbbea771"];
+//    [WXApi registerApp:@"wxba64cb9bbbbea771"];
+    [WXApi registerApp:@"wx185c740b0fdf8b55"];
     //加入腾讯分享sdk
     self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"101562763" andDelegate:self];
     
@@ -87,9 +88,23 @@
 {
     // 调用有赞云的 init Token 接口并返回 token. 见：https://www.youzanyun.com/docs/guide/3400/3466
     // 最好由你的服务端来调用有赞的接口，客户端通过你的服务端间接调用有赞的接口获取 initToken 以保证安全性。
-    [YZDUICService fetchInitTokenWithCompletionBlock:^(NSDictionary *info) {
-        callback(info[@"access_token"]);
-    }];
+//    [YZDUICService fetchInitTokenWithCompletionBlock:^(NSDictionary *info) {
+//        callback(info[@"access_token"]);
+//    }];
+    
+    // 调用有赞云的初始化Token接口并返回 token. 见：https://www.youzanyun.com/docs/guide/3400/3466
+    // 注意，下面的代码只是做为演示，请不要使用 UnsuggestMethod。
+    [YZDUICService loginWithOpenUid:[UserModel sharedManage].userId
+                      completionBlock:^(NSDictionary *info) {
+                          callback(info[@"access_token"]);
+                      }];
+    
+//    [YZAccountService fetchTokenWithCompletionBlock:^(NSString *token) {
+//        // token 为 nil 会让 SDK 取消当前操作
+//        // token 为有效，则 SDK 会正确地预加载资源
+//        // token 无效，则 SDK 会再次调用 needInitToken 方法。
+//        callback(token);
+//    }];
 }
 
 

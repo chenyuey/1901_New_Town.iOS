@@ -45,6 +45,12 @@
 #pragma mark - 页面事件
 - (BOOL)navigationShouldPopOnBackButton {
     if ([self.webView canGoBack]) {
+//        WKWebView *webview1 = (WKWebView *)self.webView;
+//        NSArray *backList = webview1.backForwardList.backList;
+//        WKNavigation *navigation = [webview1 goBack];
+//        if (navigation) {
+//
+//        }
         [self.webView goBack];
         return NO;
     } else if (self.navigationController.childViewControllers.count > 1){
@@ -98,7 +104,10 @@
     [self.view addSubview:self.mapButton];
     
     
-    self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight)];
+//    self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight)];
+    self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeUIWebView];
+    self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
+    
     [self.view addSubview:self.webView];
     self.webView.delegate = self;
     self.webView.noticeDelegate = self;
@@ -204,7 +213,7 @@
                   if (![self.navTitleLabel.text isEqualToString:response]) {
                       NSString *strPathURL = self.webView.URL.path;
                       //收藏按钮
-                      if ([strPathURL containsString:@"feature"]) {
+                      if ([strPathURL containsString:@"feature"] && ![strPathURL containsString:@"search"]) {
                           //显示收藏
                           self.collectButton.hidden = NO;
                           UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
@@ -216,7 +225,7 @@
                           self.collectButton.hidden = YES;
                       }
                       //分享按钮显示和隐藏
-                      if ([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) {
+                      if (([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) && ![strPathURL containsString:@"search"]) {
                           self.shareButton.hidden = NO;
                       }else{
                           self.shareButton.hidden = YES;

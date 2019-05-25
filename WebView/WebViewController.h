@@ -16,6 +16,7 @@
 //#import "WBMessageObject.h"
 #import "WeiboSDK.h"
 #import "MJRefresh.h"
+#import <WebKit/WebKit.h>
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录
