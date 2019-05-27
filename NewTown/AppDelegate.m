@@ -76,7 +76,7 @@
     //加入腾讯分享sdk
     self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"101562763" andDelegate:self];
     
-    [WeiboSDK registerApp:@"1555205002"];
+    [WeiboSDK registerApp:@"1090985283"];
     //设置WeiboSDK的调试模式
     [WeiboSDK enableDebugMode:YES];
     
