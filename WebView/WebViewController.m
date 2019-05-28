@@ -105,7 +105,7 @@
     
     
 //    self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight)];
-    self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeUIWebView];
+    self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
     self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
     
     [self.view addSubview:self.webView];
@@ -119,6 +119,8 @@
     
     //添加分享弹框
     shareView = [self createShareViewWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 166)];
+    
+    mArrTitles = [[NSMutableArray alloc]initWithCapacity:0];
 }
 - (void)dealloc {
     //Demo中 退出当前controller就清除用户登录信息
@@ -188,14 +190,22 @@
         }
         return NO;
     }
-    self.navTitleLabel.text = @"加载中...";
     if (loadingShadowView == nil) {
         loadingShadowView = [self createLoadingShadowView];
         [self.view bringSubviewToFront:loadingShadowView];
     }
-    loadingShadowView.hidden = NO;
-    NSLog(@"request.URL.path: %@",request.URL.path);
     NSString *strPathURL = request.URL.path;
+    if (navigationType != UIWebViewNavigationTypeBackForward) {
+        loadingShadowView.hidden = NO;
+        self.navTitleLabel.text = @"加载中...";
+    }
+    else{
+        [mArrTitles removeLastObject];
+        self.navTitleLabel.text = [mArrTitles objectAtIndex:(mArrTitles.count - 1)];
+        [self updateWebviewFrameAndTabbarHidden];
+        [self updateCollectBtnAndShareBtnHidden:strPathURL];
+    }
+    
     //地图按钮的显示和隐藏
     if ([strPathURL isEqualToString:@"/v2/showcase/category"]) {
         //显示地图按钮
@@ -203,6 +213,7 @@
     }else{
         self.mapButton.hidden = YES;
     }
+    
     return YES;
 }
 - (void)webViewDidFinishLoad:(id<YZWebView>)webView{
@@ -212,53 +223,14 @@
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
                   if (![self.navTitleLabel.text isEqualToString:response]) {
                       NSString *strPathURL = self.webView.URL.path;
-                      //收藏按钮
-                      if ([strPathURL containsString:@"feature"] && ![strPathURL containsString:@"search"]) {
-                          //显示收藏
-                          self.collectButton.hidden = NO;
-                          UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
-                          [imageTmp setAccessibilityIdentifier:@"uncollect"];
-                          [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-                      }
-                      else{
-                          //隐藏收藏
-                          self.collectButton.hidden = YES;
-                      }
-                      //分享按钮显示和隐藏
-                      if (([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) && ![strPathURL containsString:@"search"]) {
-                          self.shareButton.hidden = NO;
-                      }else{
-                          self.shareButton.hidden = YES;
-                      }
+                      [self updateCollectBtnAndShareBtnHidden:strPathURL];
                   }
                   
                   //加载新链接时，分享按钮先置为不可用
-                  if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
-                      self.backButton.hidden = NO;
-                      self.tabBarController.tabBar.hidden=YES;
-                      CGRect webviewFrame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight- 44  - SafeAreaBottomHeight);
-                      [self.webView sizeThatFits:webviewFrame.size];
-                      self.webView.frame = webviewFrame;
-                      if (@available(iOS 11.0, *)) {
-                          self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-                      } else {
-                          // Fallback on earlier versions
-                      }
-                  }else{
-                      self.backButton.hidden = YES;
-                      self.tabBarController.tabBar.hidden=NO;
-                      CGRect webviewFrame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
-                      [self.webView sizeThatFits:webviewFrame.size];
-                      self.webView.frame = webviewFrame;
-//                      [self.webView setScalesPageToFit:YES];
-                      if (@available(iOS 11.0, *)) {
-                          self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-                      } else {
-                          // Fallback on earlier versions
-                      }
-                  }
+                  [self updateWebviewFrameAndTabbarHidden];
                   [self addWebKitTransform:self.webView];
                   self.navTitleLabel.text = response;
+                  [self->mArrTitles addObject:response];
                   //全部民宿不添加 收藏按钮 功能
                   if ([response isEqualToString:@"全部民宿"]) {
                       self.collectButton.hidden = YES;
@@ -276,6 +248,52 @@
                   }
                   
               }];
+}
+- (void)updateWebviewFrameAndTabbarHidden{
+    if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
+        self.backButton.hidden = NO;
+        self.tabBarController.tabBar.hidden=YES;
+        CGRect webviewFrame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight- 44  - SafeAreaBottomHeight);
+        [self.webView sizeThatFits:webviewFrame.size];
+        self.webView.frame = webviewFrame;
+        if (@available(iOS 11.0, *)) {
+            self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        } else {
+            // Fallback on earlier versions
+        }
+    }else{
+        self.backButton.hidden = YES;
+        self.tabBarController.tabBar.hidden=NO;
+        CGRect webviewFrame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
+        [self.webView sizeThatFits:webviewFrame.size];
+        self.webView.frame = webviewFrame;
+        //                      [self.webView setScalesPageToFit:YES];
+        if (@available(iOS 11.0, *)) {
+            self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+}
+- (void)updateCollectBtnAndShareBtnHidden:(NSString *)strPathURL{
+    //收藏按钮
+    if ([strPathURL containsString:@"feature"] && ![strPathURL containsString:@"search"]) {
+        //显示收藏
+        self.collectButton.hidden = NO;
+        UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
+        [imageTmp setAccessibilityIdentifier:@"uncollect"];
+        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+    }
+    else{
+        //隐藏收藏
+        self.collectButton.hidden = YES;
+    }
+    //分享按钮显示和隐藏
+    if (([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) && ![strPathURL containsString:@"search"]) {
+        self.shareButton.hidden = NO;
+    }else{
+        self.shareButton.hidden = YES;
+    }
 }
 - (void)refreshWebView{
     [self reloadButtonAction];

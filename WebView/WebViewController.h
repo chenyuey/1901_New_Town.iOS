@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, loginTime) {
     NSDictionary *shareInfo;
     UIView *shareView;
     UIView *loadingShadowView;
+    NSMutableArray *mArrTitles;
 }
 /**
  登录时机
