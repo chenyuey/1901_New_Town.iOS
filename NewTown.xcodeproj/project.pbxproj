@@ -12,6 +12,7 @@
 		5221BC152270592000A78013 /* LYWNewfeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5221BC142270592000A78013 /* LYWNewfeatureViewController.m */; };
 		522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 522934A8227160E900B30E94 /* UIImage+LXExtension.m */; };
 		5229691F2253549F00BA72A8 /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5229691E2253549F00BA72A8 /* CustomLabel.m */; };
+		5233B337229D389900155B67 /* preloader_64.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5233B336229D389900155B67 /* preloader_64.gif */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
 		527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 527071C2222CF1BC00B73769 /* NewTown.xcdatamodeld */; };
@@ -56,6 +57,7 @@
 		522934A8227160E900B30E94 /* UIImage+LXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+LXExtension.m"; sourceTree = "<group>"; };
 		5229691D2253549F00BA72A8 /* CustomLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomLabel.h; sourceTree = "<group>"; };
 		5229691E2253549F00BA72A8 /* CustomLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomLabel.m; sourceTree = "<group>"; };
+		5233B336229D389900155B67 /* preloader_64.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = preloader_64.gif; sourceTree = "<group>"; };
 		5256ACF8226D6ADA00AAFB77 /* YZSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZSDKCore.framework; path = ../../Downloads/Release/YZSDKCore.framework; sourceTree = "<group>"; };
 		5256ACF9226D6ADA00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = ../../Downloads/Release/YZBaseSDK.framework; sourceTree = "<group>"; };
 		5256ACFC226D6B1A00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = Release/YZBaseSDK.framework; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 		527071B8222CF1BC00B73769 /* NewTown */ = {
 			isa = PBXGroup;
 			children = (
+				5233B336229D389900155B67 /* preloader_64.gif */,
 				5221BC0E226EA96D00A78013 /* loading.gif */,
 				527071B9222CF1BC00B73769 /* AppDelegate.h */,
 				527071BA222CF1BC00B73769 /* AppDelegate.m */,
@@ -404,6 +407,7 @@
 			files = (
 				527071C9222CF1BE00B73769 /* LaunchScreen.storyboard in Resources */,
 				5221BC0F226EA96D00A78013 /* loading.gif in Resources */,
+				5233B337229D389900155B67 /* preloader_64.gif in Resources */,
 				527071C6222CF1BE00B73769 /* Assets.xcassets in Resources */,
 				527071C1222CF1BC00B73769 /* Main.storyboard in Resources */,
 			);
@@ -687,7 +691,7 @@
 					"$(PROJECT_DIR)/Release",
 				);
 				INFOPLIST_FILE = NewTown/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -713,7 +717,7 @@
 					"$(PROJECT_DIR)/Release",
 				);
 				INFOPLIST_FILE = NewTown/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

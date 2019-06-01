@@ -102,8 +102,6 @@
     noDataTintLabel.hidden = YES;
     noDataTintLabel.text = @"你还没有收藏呢～";
     [contentView addSubview:noDataTintLabel];
-
-    
 }
 - (void)findCollectionInfosWithType:(int)type{
     PFQuery *query = [PFQuery queryWithClassName:@"Collection"];

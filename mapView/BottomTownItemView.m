@@ -13,8 +13,8 @@
 - (id)initTownInfoWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        float scale = SCREEN_WIDTH/375;
-        self.coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 83*scale, 83*scale)];
+//        float scale = SCREEN_WIDTH/375;
+        self.coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 83, 83)];
         self.coverImageView.layer.cornerRadius = 6;
         [self addSubview:self.coverImageView];
         float titleOriginX = self.coverImageView.frame.size.width + 20 + 16;
@@ -31,7 +31,8 @@
                          constrainedToSize:CGSizeMake(maxWidth, MAXFLOAT)
                              lineBreakMode:NSLineBreakByWordWrapping];
     CGRect labelFrame = label.frame;
-    labelFrame.size.height = size.height;
+    CGFloat height = size.height > 60 ? 60 : size.height;
+    labelFrame.size.height = height;
     label.frame = labelFrame;
     return label;
 }

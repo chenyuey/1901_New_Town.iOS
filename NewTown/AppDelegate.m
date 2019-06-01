@@ -82,6 +82,8 @@
     
     [self checkSaveImageWithUUID];
     
+//    UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    
     return YES;
 }
 - (void)yzsdk:(YZSDK *)sdk needInitToken:(void (^)(NSString * _Nullable))callback

@@ -103,11 +103,17 @@
     self.mapButton.hidden = YES;
     [self.view addSubview:self.mapButton];
     
-    
-//    self.webView = [[YZWebView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight)];
     self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
-    self.webView.frame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
+    if (SafeStatusBarHeight == 20) {
+        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight - SafeAreaTopHeight);
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 44, 0);
+    }else{
+        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight);
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 44, 0);
+    }
     
+//    self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 0, 0);
+    self.webView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.webView];
     self.webView.delegate = self;
     self.webView.noticeDelegate = self;
@@ -196,7 +202,7 @@
     }
     NSString *strPathURL = request.URL.path;
     if (navigationType != UIWebViewNavigationTypeBackForward) {
-        loadingShadowView.hidden = NO;
+//        loadingShadowView.hidden = NO;
         self.navTitleLabel.text = @"加载中...";
     }
     else{
@@ -219,6 +225,15 @@
 - (void)webViewDidFinishLoad:(id<YZWebView>)webView{
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"]; 
     loadingShadowView.hidden = YES;
+    [self updateWebviewFrameAndTabbarHidden];
+//    if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
+//        self.backButton.hidden = NO;
+//        self.tabBarController.tabBar.hidden=YES;
+//    }else{
+//        self.backButton.hidden = YES;
+//        self.tabBarController.tabBar.hidden=NO;
+//    }
+
     [webView evaluateJavaScript:@"document.title"
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
                   if (![self.navTitleLabel.text isEqualToString:response]) {
@@ -226,8 +241,9 @@
                       [self updateCollectBtnAndShareBtnHidden:strPathURL];
                   }
                   
+                  
                   //加载新链接时，分享按钮先置为不可用
-                  [self updateWebviewFrameAndTabbarHidden];
+//                  [self updateWebviewFrameAndTabbarHidden];
                   [self addWebKitTransform:self.webView];
                   self.navTitleLabel.text = response;
                   [self->mArrTitles addObject:response];
@@ -253,26 +269,14 @@
     if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
         self.backButton.hidden = NO;
         self.tabBarController.tabBar.hidden=YES;
-        CGRect webviewFrame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight- 44  - SafeAreaBottomHeight);
-        [self.webView sizeThatFits:webviewFrame.size];
-        self.webView.frame = webviewFrame;
-        if (@available(iOS 11.0, *)) {
-            self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        } else {
-            // Fallback on earlier versions
-        }
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 0, 0);
     }else{
         self.backButton.hidden = YES;
         self.tabBarController.tabBar.hidden=NO;
-        CGRect webviewFrame = CGRectMake(0, SafeStatusBarHeight+44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight-44 - 44 - SafeAreaBottomHeight);
-        [self.webView sizeThatFits:webviewFrame.size];
-        self.webView.frame = webviewFrame;
-        //                      [self.webView setScalesPageToFit:YES];
-        if (@available(iOS 11.0, *)) {
-            self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        } else {
-            // Fallback on earlier versions
-        }
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 44, 0);;
+    }
+    if (@available(iOS 11.0, *)) {
+        self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
 }
 - (void)updateCollectBtnAndShareBtnHidden:(NSString *)strPathURL{

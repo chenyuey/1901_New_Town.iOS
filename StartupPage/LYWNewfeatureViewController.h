@@ -15,7 +15,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LYWNewfeatureViewController : UIViewController
-
+{
+    UILabel *versionLabel;
+}
 @end
 
 NS_ASSUME_NONNULL_END
