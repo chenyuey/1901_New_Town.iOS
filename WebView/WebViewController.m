@@ -104,13 +104,8 @@
     [self.view addSubview:self.mapButton];
     
     self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
-    if (SafeStatusBarHeight == 20) {
-        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight - SafeAreaTopHeight);
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 44, 0);
-    }else{
-        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight);
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 44, 0);
-    }
+//    self.webView.scrollView.clipsToBounds = NO;
+    self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44);
     
 //    self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 0, 0);
     self.webView.backgroundColor = [UIColor redColor];
@@ -202,7 +197,7 @@
     }
     NSString *strPathURL = request.URL.path;
     if (navigationType != UIWebViewNavigationTypeBackForward) {
-//        loadingShadowView.hidden = NO;
+        loadingShadowView.hidden = NO;
         self.navTitleLabel.text = @"加载中...";
     }
     else{
@@ -226,13 +221,6 @@
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"]; 
     loadingShadowView.hidden = YES;
     [self updateWebviewFrameAndTabbarHidden];
-//    if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
-//        self.backButton.hidden = NO;
-//        self.tabBarController.tabBar.hidden=YES;
-//    }else{
-//        self.backButton.hidden = YES;
-//        self.tabBarController.tabBar.hidden=NO;
-//    }
 
     [webView evaluateJavaScript:@"document.title"
               completionHandler:^(id  _Nullable response, NSError * _Nullable error) {
@@ -240,7 +228,6 @@
                       NSString *strPathURL = self.webView.URL.path;
                       [self updateCollectBtnAndShareBtnHidden:strPathURL];
                   }
-                  
                   
                   //加载新链接时，分享按钮先置为不可用
 //                  [self updateWebviewFrameAndTabbarHidden];
@@ -265,15 +252,18 @@
                   
               }];
 }
+- (void)webView:(id<YZWebView>)webView didFailLoadWithError:(NSError *)error{
+    
+}
 - (void)updateWebviewFrameAndTabbarHidden{
     if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
         self.backButton.hidden = NO;
         self.tabBarController.tabBar.hidden=YES;
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 0, 0);
+        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight);
     }else{
         self.backButton.hidden = YES;
         self.tabBarController.tabBar.hidden=NO;
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 44, 0);;
+        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44);
     }
     if (@available(iOS 11.0, *)) {
         self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -525,13 +515,20 @@
 }
 
 - (UIView *)createLoadingShadowView{
-    UIView *tmpView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight - 44)];
+    UIView *tmpView = [[UIView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - 120)/2, SafeStatusBarHeight + 44 + 120, 120, 120)];
     tmpView.hidden = YES;
     tmpView.backgroundColor = [UIColor whiteColor];
+    tmpView.layer.cornerRadius = 16;
     [self.view addSubview:tmpView];
     
-    UIWebView *webViewTmp = [[UIWebView alloc] initWithFrame:CGRectMake((tmpView.frame.size.width - 48)/2,(tmpView.frame.size.height - 128)/2 - 44,48,48)];
-    [self.view addSubview:webViewTmp];
+    //添加阴影
+    tmpView.layer.shadowColor = [UIColor blackColor].CGColor;
+    tmpView.layer.shadowOffset = CGSizeMake(0,0);
+    tmpView.layer.shadowOpacity = 0.5;
+    tmpView.layer.shadowRadius = 5;
+    
+    
+    UIWebView *webViewTmp = [[UIWebView alloc] initWithFrame:CGRectMake((tmpView.frame.size.width - 48)/2,(tmpView.frame.size.height - 48)/2 ,48,48)];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"loading" ofType:@"gif"];
     NSURL *url = [NSURL URLWithString:path];
     [webViewTmp loadRequest:[NSURLRequest requestWithURL:url]];
