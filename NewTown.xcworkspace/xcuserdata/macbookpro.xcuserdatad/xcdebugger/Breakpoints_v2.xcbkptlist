@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebView/WebViewController.m"
-            timestampString = "581237568.718982"
+            timestampString = "581317882.621147"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "-webView:didReceiveNotice:"
             landmarkType = "7">
          </BreakpointContent>
@@ -36,27 +36,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebView/WebViewController.m"
-            timestampString = "581237568.7194099"
+            timestampString = "581317882.621756"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "-webView:didReceiveNotice:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WebView/WebViewController.m"
+            timestampString = "581317882.622429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "155"
             endingLineNumber = "155"
-            landmarkName = "-webView:didReceiveNotice:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WebView/WebViewController.m"
-            timestampString = "581237568.719707"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
             landmarkName = "-webView:didReceiveNotice:"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,11 +158,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebView/WebViewController.m"
-            timestampString = "581237568.720067"
+            timestampString = "581317882.622902"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "593"
-            endingLineNumber = "593"
+            startingLineNumber = "592"
+            endingLineNumber = "592"
             landmarkName = "-shareToWechat:"
             landmarkType = "7">
          </BreakpointContent>
@@ -174,11 +174,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebView/WebViewController.m"
-            timestampString = "581237568.7204421"
+            timestampString = "581317882.623279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
+            startingLineNumber = "408"
+            endingLineNumber = "408"
             landmarkName = "-presentNativeLoginViewWithBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,11 +222,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebView/WebViewController.m"
-            timestampString = "581237568.720731"
+            timestampString = "581317882.623565"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "657"
-            endingLineNumber = "657"
+            startingLineNumber = "656"
+            endingLineNumber = "656"
             landmarkName = "-shareToSina:"
             landmarkType = "7">
          </BreakpointContent>
@@ -286,11 +286,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NewTown/AppDelegate.m"
-            timestampString = "581068227.6059721"
+            timestampString = "581317882.62389"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "-getUUIDString"
             landmarkType = "7">
          </BreakpointContent>
@@ -413,11 +413,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebView/WebViewController.m"
-            timestampString = "581237568.72113"
+            timestampString = "581317882.623984"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "-webView:shouldStartLoadWithRequest:navigationType:"
             landmarkType = "7">
          </BreakpointContent>
@@ -429,12 +429,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebView/WebViewController.m"
-            timestampString = "581237568.721342"
+            timestampString = "581317882.6242419"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "-webViewDidFinishLoad:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WebView/WebViewController.m"
+            timestampString = "581317882.624492"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
+            landmarkName = "-updateWebviewFrameAndTabbarHidden"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

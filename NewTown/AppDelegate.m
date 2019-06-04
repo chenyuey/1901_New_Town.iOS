@@ -83,6 +83,9 @@
     [self checkSaveImageWithUUID];
     
 //    UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    if (@available(ios 11.0,*)){
+        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
     
     return YES;
 }

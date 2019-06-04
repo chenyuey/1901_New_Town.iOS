@@ -104,10 +104,8 @@
     [self.view addSubview:self.mapButton];
     
     self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
-//    self.webView.scrollView.clipsToBounds = NO;
     self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44);
-    
-//    self.webView.scrollView.contentInset = UIEdgeInsetsMake(0 , 0 , 0, 0);
+    self.tabBarController.tabBar.hidden=YES;
     self.webView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.webView];
     self.webView.delegate = self;
@@ -230,7 +228,6 @@
                   }
                   
                   //加载新链接时，分享按钮先置为不可用
-//                  [self updateWebviewFrameAndTabbarHidden];
                   [self addWebKitTransform:self.webView];
                   self.navTitleLabel.text = response;
                   [self->mArrTitles addObject:response];
@@ -265,6 +262,7 @@
         self.tabBarController.tabBar.hidden=NO;
         self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44);
     }
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     if (@available(iOS 11.0, *)) {
         self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
