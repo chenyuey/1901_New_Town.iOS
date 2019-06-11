@@ -75,7 +75,8 @@
     [self.webView share];
 }
 - (void)enterMapInfo:(id)sender{
-    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
+//    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
+    MapNavgationViewController *mapInfoVC = [[MapNavgationViewController alloc]initWithHomeName:@"河北省石家庄市裕华区科技大学"];
     [self.navigationController pushViewController:mapInfoVC animated:YES];
 }
 #pragma mark - 视图加载
@@ -104,7 +105,7 @@
     [self.view addSubview:self.mapButton];
     
     self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
-    self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44);
+    self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44 + SafeStatusBarHeight);
     self.tabBarController.tabBar.hidden=YES;
     self.webView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.webView];
@@ -256,11 +257,11 @@
     if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
         self.backButton.hidden = NO;
         self.tabBarController.tabBar.hidden=YES;
-        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight);
+        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight + SafeStatusBarHeight);
     }else{
         self.backButton.hidden = YES;
         self.tabBarController.tabBar.hidden=NO;
-        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44);
+        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44 + SafeStatusBarHeight);
     }
     self.edgesForExtendedLayout = UIRectEdgeNone;
     if (@available(iOS 11.0, *)) {

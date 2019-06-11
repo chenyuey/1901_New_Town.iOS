@@ -17,6 +17,7 @@
 #import "WeiboSDK.h"
 #import "MJRefresh.h"
 #import <WebKit/WebKit.h>
+#import "MapNavgationViewController.h"
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录

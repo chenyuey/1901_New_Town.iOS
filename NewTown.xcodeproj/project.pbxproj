@@ -12,6 +12,7 @@
 		5221BC152270592000A78013 /* LYWNewfeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5221BC142270592000A78013 /* LYWNewfeatureViewController.m */; };
 		522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 522934A8227160E900B30E94 /* UIImage+LXExtension.m */; };
 		5229691F2253549F00BA72A8 /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5229691E2253549F00BA72A8 /* CustomLabel.m */; };
+		522E2D3122AE50EE009F1224 /* MapNavgationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E2D3022AE50EE009F1224 /* MapNavgationViewController.m */; };
 		5233B337229D389900155B67 /* preloader_64.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5233B336229D389900155B67 /* preloader_64.gif */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
@@ -57,6 +58,8 @@
 		522934A8227160E900B30E94 /* UIImage+LXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+LXExtension.m"; sourceTree = "<group>"; };
 		5229691D2253549F00BA72A8 /* CustomLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomLabel.h; sourceTree = "<group>"; };
 		5229691E2253549F00BA72A8 /* CustomLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomLabel.m; sourceTree = "<group>"; };
+		522E2D2F22AE50EE009F1224 /* MapNavgationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapNavgationViewController.h; sourceTree = "<group>"; };
+		522E2D3022AE50EE009F1224 /* MapNavgationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapNavgationViewController.m; sourceTree = "<group>"; };
 		5233B336229D389900155B67 /* preloader_64.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = preloader_64.gif; sourceTree = "<group>"; };
 		5256ACF8226D6ADA00AAFB77 /* YZSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZSDKCore.framework; path = ../../Downloads/Release/YZSDKCore.framework; sourceTree = "<group>"; };
 		5256ACF9226D6ADA00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = ../../Downloads/Release/YZBaseSDK.framework; sourceTree = "<group>"; };
@@ -272,6 +275,8 @@
 				5299AFF32242407000699683 /* MapInfoViewController.m */,
 				5299AFFC224A362800699683 /* BottomTownItemView.h */,
 				5299AFFD224A362800699683 /* BottomTownItemView.m */,
+				522E2D2F22AE50EE009F1224 /* MapNavgationViewController.h */,
+				522E2D3022AE50EE009F1224 /* MapNavgationViewController.m */,
 			);
 			path = mapView;
 			sourceTree = "<group>";
@@ -503,6 +508,7 @@
 				527071F7222E778A00B73769 /* UserModel.m in Sources */,
 				527071FF222E780900B73769 /* YZDUICService.m in Sources */,
 				5299AFF42242407000699683 /* MapInfoViewController.m in Sources */,
+				522E2D3122AE50EE009F1224 /* MapNavgationViewController.m in Sources */,
 				527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */,
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
