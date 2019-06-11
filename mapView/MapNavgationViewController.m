@@ -15,14 +15,19 @@
 @implementation MapNavgationViewController
 #pragma mark - 底部弹出框
 -(void)creatActionSheet {
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"显示路线" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if ([action.title isEqualToString:@"显示路线"]) {
-            [self showTheRoute];
-        }else{
+    UIAlertAction *action1;
+    if ([self.mapView.overlays containsObject:mCurrentOverLay]) {
+        action1 = [UIAlertAction actionWithTitle:@"隐藏路线" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self hideTheRoute];
-        }
-    }];
+        }];
+    }else{
+        action1 = [UIAlertAction actionWithTitle:@"显示路线" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self showTheRoute];
+        }];
+    }
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
     [action1 setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"Apple 地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self enterAppleMapNavgation];
@@ -37,11 +42,8 @@
     [actionSheet addAction:action1];
     [actionSheet addAction:action2];
     [actionSheet addAction:action3];
-    
-    
     //相当于之前的[actionSheet show];
     [self presentViewController:actionSheet animated:YES completion:nil];
-    
 }
 #pragma mark - 系统初始化
 - (id)initWithHomeName:(NSString *)strName{
