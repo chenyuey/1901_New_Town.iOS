@@ -76,7 +76,7 @@
 }
 - (void)enterMapInfo:(id)sender{
 //    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
-    MapNavgationViewController *mapInfoVC = [[MapNavgationViewController alloc]initWithHomeName:@"河北省石家庄市裕华区科技大学"];
+    MapNavgationViewController *mapInfoVC = [[MapNavgationViewController alloc]initWithHomeName:@"湖南省长沙县果园镇浔龙河生态艺术小镇故湘民宿"];
     [self.navigationController pushViewController:mapInfoVC animated:YES];
 }
 #pragma mark - 视图加载

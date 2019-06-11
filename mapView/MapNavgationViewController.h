@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
     UILabel *mAddressDetailLabel;
     
     CLLocationCoordinate2D mCoordinateDestination;
+    
+    MKPolyline *mCurrentOverLay;
 }
 @property (nonatomic,strong) MKMapView *mapView;
 @property (strong,nonatomic) CLGeocoder *geocoder;

@@ -13,6 +13,37 @@
 @end
 
 @implementation MapNavgationViewController
+#pragma mark - 底部弹出框
+-(void)creatActionSheet {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"显示路线" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([action.title isEqualToString:@"显示路线"]) {
+            [self showTheRoute];
+        }else{
+            [self hideTheRoute];
+        }
+    }];
+    [action1 setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"Apple 地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self enterAppleMapNavgation];
+    }];
+    [action2 setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"取消");
+    }];
+    [action3 setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    
+    //把action添加到actionSheet里
+    [actionSheet addAction:action1];
+    [actionSheet addAction:action2];
+    [actionSheet addAction:action3];
+    
+    
+    //相当于之前的[actionSheet show];
+    [self presentViewController:actionSheet animated:YES completion:nil];
+    
+}
+#pragma mark - 系统初始化
 - (id)initWithHomeName:(NSString *)strName{
     self = [super init];
     if (self) {
@@ -23,44 +54,47 @@
 - (void)back:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (void)enterNavgation:(id)sender{
-    NSLog(@"开始导航");
-    
+//进入apple地图导航
+- (void)enterAppleMapNavgation{
     //当前的位置
-    
     MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
-    
-    //起点
-    
-    //MKMapItem *currentLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:coords1 addressDictionary:nil]];
-    
     //目的地的位置
-    
     MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:mCoordinateDestination addressDictionary:nil]];
-    
     toLocation.name = mHotelLabel.text;
-    
-//    NSString *myname=[dataSource objectForKey:@"name"];
-//
-//    if (![XtomFunction xfunc_check_strEmpty:myname])
-//
-//    {
-//
-//        toLocation.name =myname;
-//
-//    }
-    
-    
-    
     NSArray *items = [NSArray arrayWithObjects:currentLocation, toLocation, nil];
-    
     NSDictionary *options = @{ MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving, MKLaunchOptionsMapTypeKey: [NSNumber numberWithInteger:MKMapTypeStandard], MKLaunchOptionsShowsTrafficKey:@YES };
-    
     //打开苹果自身地图应用，并呈现特定的item
-    
     [MKMapItem openMapsWithItems:items launchOptions:options];
-    
 }
+//查看路线
+- (void)showTheRoute{
+    MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:[[_locationManager location] coordinate] addressDictionary:nil];
+    MKPlacemark *toPlacemark = [[MKPlacemark alloc] initWithCoordinate:mCoordinateDestination addressDictionary:nil];
+    MKMapItem *fromItem = [[MKMapItem alloc] initWithPlacemark:fromPlacemark];
+    MKMapItem *toItem = [[MKMapItem alloc] initWithPlacemark:toPlacemark];
+    MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
+    request.source = fromItem;
+    request.destination = toItem;
+    request.requestsAlternateRoutes = YES;
+    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+    [directions calculateDirectionsWithCompletionHandler:
+     ^(MKDirectionsResponse *response, NSError *error) {
+         if (error) {
+             NSLog(@"error:%@", error);
+         }
+         else {
+             MKRoute *route = response.routes[0];
+             self->mCurrentOverLay = route.polyline;
+             [self.mapView addOverlay:self->mCurrentOverLay];
+         }
+     }];
+}
+- (void)hideTheRoute{
+    [self.mapView removeOverlay:mCurrentOverLay];
+}
+
+
+//打开定位服务
 - (void)addUpdateLoactionManager{
     _locationManager = [[CLLocationManager alloc] init];
     
@@ -109,27 +143,23 @@
     mAddressDetailLabel.numberOfLines = 0;
     [self.view addSubview:mAddressDetailLabel];
     
-    UIButton *navigationImageBtn = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 40 - 20 , self.mapView.frame.origin.y + self.mapView.frame.size.height + 20, 40, 40) :@"navigation" :@selector(enterNavgation:)];
+    UIButton *navigationImageBtn = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 40 - 20 , self.mapView.frame.origin.y + self.mapView.frame.size.height + 20, 40, 40) :@"navigation" :@selector(creatActionSheet)];
     [self.view addSubview:navigationImageBtn];
     
-    
     self.geocoder = [[CLGeocoder alloc]init];
-    [self.geocoder geocodeAddressString:strHomeName completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-        NSLog(@"%@",placemarks);
-        if (placemarks.count == 0 || error != nil) {
-            return ;
-        }
-        self->mPlacemarks = placemarks;
-        // placemarks地标数组, 地标数组中存放着地标, 每一个地标包含了该位置的经纬度以及城市/区域/国家代码/邮编等等...
-        // 获取数组中的第一个地标
-        for (int i = 0; i < placemarks.count; i ++) {
-            CLPlacemark *placemark = [placemarks objectAtIndex:i];
-            MKPointAnnotation *annotation = [self locateToLatitude:placemark.location.coordinate.latitude longitude:placemark.location.coordinate.longitude :placemark.name];
-            if (i == 0) {
-                [self moveCenterLocationToLatitude:annotation];
-            }
-        }
-        
+    mHotelLabel.text = strHomeName;
+    PFQuery *query = [PFQuery queryWithClassName:@"HomeMap"];
+    [query whereKey:@"name" equalTo:strHomeName];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable results, NSError * _Nullable error) {
+        PFObject *homeItemInfo = [results objectAtIndex:0];
+        PFGeoPoint *coordinate = [homeItemInfo objectForKey:@"coordinate"];
+        [self locateToLatitude:coordinate.latitude longitude:coordinate.longitude :self->strHomeName];
+        self->mCoordinateDestination = CLLocationCoordinate2DMake(coordinate.latitude,coordinate.longitude);
+        CLLocation *loc = [[CLLocation alloc]initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+        [self.geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+            CLPlacemark *mark = [placemarks objectAtIndex:0];
+            self->mAddressDetailLabel.text = [NSString stringWithFormat:@"%@ %@",[[mark.addressDictionary objectForKey:@"FormattedAddressLines"]objectAtIndex:0],self->strHomeName];
+        }];
     }];
 }
 
@@ -160,34 +190,7 @@
     [self.mapView addAnnotation:annotation];
     return annotation;
 }
-- (void)moveCenterLocationToTapPosition:(UITapGestureRecognizer *)gesture{
-    MKAnnotationView *annotationView = (MKAnnotationView *)gesture.view;
-    annotationView.image = [UIImage imageNamed:@"locationIconHighLight"];
-    MKPointAnnotation *annotation = annotationView.annotation;
-    [self moveCenterLocationToLatitude:annotation];
-}
-- (void)moveCenterLocationToLatitude:(MKPointAnnotation *)annotation{
-    for (int i = 0; i < mPlacemarks.count; i ++) {
-        CLPlacemark *mark = [mPlacemarks objectAtIndex:i];
-        if (mark.location.coordinate.latitude == annotation.coordinate.latitude && mark.location.coordinate.longitude == annotation.coordinate.longitude) {
-            mHotelLabel.text = [mark.addressDictionary objectForKey:@"Name"];
-            mAddressDetailLabel.text = [NSString stringWithFormat:@"%@ %@",[[mark.addressDictionary objectForKey:@"FormattedAddressLines"]objectAtIndex:0],[mark.addressDictionary objectForKey:@"Name"]];
-        }
-    }
-    
-    // 设置地图中心的经度、纬度
-    CLLocationCoordinate2D center = {annotation.coordinate.latitude,annotation.coordinate.longitude};
-    mCoordinateDestination = center;
-    // 设置地图显示的范围，地图显示范围越小，细节越清楚
-    float zoom = 0.1;
-    MKCoordinateSpan span = MKCoordinateSpanMake(zoom,zoom);
-    // 创建MKCoordinateRegion对象，该对象代表地图的显示中心和显示范围
-    MKCoordinateRegion region =MKCoordinateRegionMake(center, span);
-    // 设置当前地图的显示中心和显示范围
-    [self.mapView setRegion:region animated:YES];
-    [self.mapView selectAnnotation:annotation animated:YES];
-    
-}
+
 #pragma mark - MKMapViewDelegate
 - (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
@@ -201,14 +204,19 @@
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         annoView.image = [UIImage imageNamed:@"location"];
     }else if([annotation isKindOfClass:[MKPointAnnotation class]]){
-        annoView.image = [UIImage imageNamed:@"locationIcon"];
-        UITapGestureRecognizer *tapAnnoview = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(moveCenterLocationToTapPosition:)];
-        [annoView addGestureRecognizer:tapAnnoview];
+        annoView.image = [UIImage imageNamed:@"locationIconHighLight"];
     }
     return annoView;
 }
-- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
-    view.image = [UIImage imageNamed:@"locationIcon"];
+//线路的绘制
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView
+            rendererForOverlay:(id<MKOverlay>)overlay
+{
+    MKPolylineRenderer *renderer;
+    renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
+    renderer.lineWidth = 5.0;
+    renderer.strokeColor = [UIColor colorWithRed:138.0/255.0 green:159.0/255.0 blue:244.0/255.0 alpha:1.0];
+    return renderer;
 }
 
 #pragma mark - CLLocationManagerDelegate Methods
