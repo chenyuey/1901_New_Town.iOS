@@ -75,8 +75,7 @@
     [self.webView share];
 }
 - (void)enterMapInfo:(id)sender{
-//    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
-    MapNavgationViewController *mapInfoVC = [[MapNavgationViewController alloc]initWithHomeName:@"湖南省长沙县果园镇浔龙河生态艺术小镇故湘民宿"];
+    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
     [self.navigationController pushViewController:mapInfoVC animated:YES];
 }
 #pragma mark - 视图加载
@@ -188,6 +187,11 @@
             MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text andType:YES];
             [self.navigationController pushViewController:mapInfoVC animated:YES];
         }
+        return NO;
+    }
+    if ([request.URL.absoluteString containsString:@"http://hostlocation.com/"]) {
+        MapNavgationViewController *mapInfoVC = [[MapNavgationViewController alloc]initWithHomeName:self.navTitleLabel.text];
+        [self.navigationController pushViewController:mapInfoVC animated:YES];
         return NO;
     }
     if (loadingShadowView == nil) {
