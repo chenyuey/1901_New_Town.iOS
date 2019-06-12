@@ -26,7 +26,7 @@
     [self setupScrollView];
     
     versionLabel = [self createLabelWithFrame:CGRectMake(0, SCREEN_HEIGHT - SafeAreaBottomHeight - 50, SCREEN_WIDTH, 50) :16 :@"Arial" :[UIColor grayColor] :NSTextAlignmentCenter];
-    versionLabel.text = @"版本信息：1.03beta";
+    versionLabel.text = @"版本信息：1.04beta";
     [self.view addSubview:versionLabel];
 }
 

@@ -29,7 +29,7 @@
     
     
     [action1 setValue:[UIColor blackColor] forKey:@"titleTextColor"];
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"Apple 地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"用Apple地图导航" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self enterAppleMapNavgation];
     }];
     [action2 setValue:[UIColor blackColor] forKey:@"titleTextColor"];
@@ -190,6 +190,9 @@
     annotation.title = markerTitle;
     // 添加锚点
     [self.mapView addAnnotation:annotation];
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.1,0.1);
+    MKCoordinateRegion region =MKCoordinateRegionMake(coordinate, span);
+    [self.mapView setRegion:region animated:YES];
     return annotation;
 }
 
