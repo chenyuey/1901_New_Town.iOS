@@ -10,6 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "CommonHeader.h"
 #import <Parse/Parse.h>
+#import "CustomLabel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,12 +27,14 @@ NS_ASSUME_NONNULL_BEGIN
     CLLocationCoordinate2D mCoordinateStart;
     
     MKPolyline *mCurrentOverLay;
+    
+    PFObject *mHomeItemInfo;
 }
 @property (nonatomic,strong) MKMapView *mapView;
 @property (strong,nonatomic) CLGeocoder *geocoder;
 //左侧返回按钮
 @property (nonatomic,strong) UIButton *backButton;
-- (id)initWithHomeName:(NSString *)strName;
+- (id)initWithHomeName:(NSString *)strName :(PFObject *)homeItemInfo;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -31,6 +31,7 @@ typedef NS_ENUM(NSUInteger, loginTime) {
     UIView *shareView;
     UIView *loadingShadowView;
     NSMutableArray *mArrTitles;
+    UILabel *mErrorLabel;
 }
 /**
  登录时机

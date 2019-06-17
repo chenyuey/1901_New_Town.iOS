@@ -34,6 +34,13 @@
     label.textAlignment = alignment;
     return label;
 }
+- (CustomLabel *)createLabelWithFrameCustom:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
+    CustomLabel *label = [[CustomLabel alloc]initWithFrame:frame];
+    label.font = [UIFont fontWithName:fontName size:fontSize];
+    label.textColor = fontColor;
+    label.textAlignment = alignment;
+    return label;
+}
 - (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
     UIImage *image = [UIImage imageNamed:imageName];
@@ -190,8 +197,24 @@
         return NO;
     }
     if ([request.URL.absoluteString containsString:@"http://hostlocation.com/"]) {
-        MapNavgationViewController *mapInfoVC = [[MapNavgationViewController alloc]initWithHomeName:self.navTitleLabel.text];
-        [self.navigationController pushViewController:mapInfoVC animated:YES];
+        self->mErrorLabel = [self createErrorToastViewWithFrame:CGRectMake((SCREEN_WIDTH - 200)/2, (SCREEN_HEIGHT - SafeAreaBottomHeight - 40 - SafeAreaTopHeight)/2, 200, 40)];
+        self->mErrorLabel.text = @"未找到位置信息";
+        self->mErrorLabel.hidden = YES;
+        [self.view addSubview:self->mErrorLabel];
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"HomeMap"];
+        [query whereKey:@"name" equalTo:self.navTitleLabel.text];
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable results, NSError * _Nullable error) {
+            if (results.count > 0) {
+                PFObject *homeItemInfo = [results objectAtIndex:0];
+                MapNavgationViewController *mapInfoVC = [[MapNavgationViewController alloc]initWithHomeName:self.navTitleLabel.text :homeItemInfo];
+                [self.navigationController pushViewController:mapInfoVC animated:YES];
+            }else{
+                self->mErrorLabel.hidden = NO;
+                [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
+            }
+        }];
+        
         return NO;
     }
     if (loadingShadowView == nil) {
@@ -583,7 +606,6 @@
     req1.bText = NO;
     req1.message = message;
     return req1;
-    
 }
 - (void)shareToWechat:(id)sender{
     NSString *strMsgTitle = @"";
@@ -661,6 +683,22 @@
     
     WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:wbmsg authInfo:authRequest access_token:nil];
     [WeiboSDK sendRequest:request];
+}
+-(UILabel *)createErrorToastViewWithFrame:(CGRect)frame{
+    CustomLabel *subscribeSuccessView = [self createLabelWithFrameCustom:frame :14 :@"Arial" :[UIColor whiteColor] :NSTextAlignmentCenter];
+    subscribeSuccessView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
+    subscribeSuccessView.layer.borderWidth = 1;
+    subscribeSuccessView.layer.borderColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8].CGColor;
+    subscribeSuccessView.clipsToBounds = YES;
+    subscribeSuccessView.layer.cornerRadius = 12;
+    subscribeSuccessView.numberOfLines = 0;
+    subscribeSuccessView.textInsets = UIEdgeInsetsMake(10, 0, 10, 0);
+    subscribeSuccessView.hidden = YES;
+    [self.view addSubview:subscribeSuccessView];
+    return subscribeSuccessView;
+}
+- (void)hideErrorLabel{
+    mErrorLabel.hidden = YES;
 }
 @end
 

@@ -46,10 +46,11 @@
     [self presentViewController:actionSheet animated:YES completion:nil];
 }
 #pragma mark - 系统初始化
-- (id)initWithHomeName:(NSString *)strName{
+- (id)initWithHomeName:(NSString *)strName :(PFObject *)homeItemInfo{
     self = [super init];
     if (self) {
         strHomeName = strName;
+        mHomeItemInfo = homeItemInfo;
     }
     return self;
 }
@@ -138,6 +139,7 @@
     
     mCoordinateStart = CLLocationCoordinate2DMake(0, 0);
     
+    
     self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(back:)];
     [self.view addSubview:self.backButton];
     
@@ -153,21 +155,16 @@
     [self.view addSubview:navigationImageBtn];
     
     self.geocoder = [[CLGeocoder alloc]init];
+    
+    //解析房屋信息
     mHotelLabel.text = strHomeName;
-    PFQuery *query = [PFQuery queryWithClassName:@"HomeMap"];
-    [query whereKey:@"name" equalTo:strHomeName];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable results, NSError * _Nullable error) {
-        if (results.count > 0) {
-            PFObject *homeItemInfo = [results objectAtIndex:0];
-            PFGeoPoint *coordinate = [homeItemInfo objectForKey:@"coordinate"];
-            [self locateToLatitude:coordinate.latitude longitude:coordinate.longitude :self->strHomeName];
-            self->mCoordinateDestination = CLLocationCoordinate2DMake(coordinate.latitude,coordinate.longitude);
-            CLLocation *loc = [[CLLocation alloc]initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-            [self.geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-                CLPlacemark *mark = [placemarks objectAtIndex:0];
-                self->mAddressDetailLabel.text = [NSString stringWithFormat:@"%@ %@",[[mark.addressDictionary objectForKey:@"FormattedAddressLines"]objectAtIndex:0],self->strHomeName];
-            }];
-        }
+    PFGeoPoint *coordinate = [mHomeItemInfo objectForKey:@"coordinate"];
+    [self locateToLatitude:coordinate.latitude longitude:coordinate.longitude :self->strHomeName];
+    self->mCoordinateDestination = CLLocationCoordinate2DMake(coordinate.latitude,coordinate.longitude);
+    CLLocation *loc = [[CLLocation alloc]initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+    [self.geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        CLPlacemark *mark = [placemarks objectAtIndex:0];
+        self->mAddressDetailLabel.text = [NSString stringWithFormat:@"%@ %@",[[mark.addressDictionary objectForKey:@"FormattedAddressLines"]objectAtIndex:0],self->strHomeName];
     }];
 }
 
@@ -253,5 +250,6 @@
         self.mapView = nil;
     }
 }
+
 
 @end
