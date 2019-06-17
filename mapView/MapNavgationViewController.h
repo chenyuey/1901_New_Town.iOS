@@ -21,7 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
     UILabel *mHotelLabel;
     UILabel *mAddressDetailLabel;
     
+    
     CLLocationCoordinate2D mCoordinateDestination;
+    CLLocationCoordinate2D mCoordinateStart;
     
     MKPolyline *mCurrentOverLay;
 }

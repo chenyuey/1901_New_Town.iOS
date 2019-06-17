@@ -55,6 +55,8 @@
 }
 - (void)back:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
+    [_locationManager stopUpdatingLocation];
+    self.mapView = nil;
 }
 //进入apple地图导航
 - (void)enterAppleMapNavgation{
@@ -70,7 +72,7 @@
 }
 //查看路线
 - (void)showTheRoute{
-    MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:[[_locationManager location] coordinate] addressDictionary:nil];
+    MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:mCoordinateStart addressDictionary:nil];
     MKPlacemark *toPlacemark = [[MKPlacemark alloc] initWithCoordinate:mCoordinateDestination addressDictionary:nil];
     MKMapItem *fromItem = [[MKMapItem alloc] initWithPlacemark:fromPlacemark];
     MKMapItem *toItem = [[MKMapItem alloc] initWithPlacemark:toPlacemark];
@@ -117,7 +119,7 @@
     self.mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
     self.mapView.showsUserLocation = YES;
     _locationManager.delegate = self;
-    _locationManager.distanceFilter = 200;
+    _locationManager.distanceFilter = 10;
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [_locationManager startUpdatingLocation];
 }
@@ -133,6 +135,8 @@
     self.mapView.scrollEnabled = YES;
     self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
+    
+    mCoordinateStart = CLLocationCoordinate2DMake(0, 0);
     
     self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(back:)];
     [self.view addSubview:self.backButton];
@@ -153,15 +157,17 @@
     PFQuery *query = [PFQuery queryWithClassName:@"HomeMap"];
     [query whereKey:@"name" equalTo:strHomeName];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable results, NSError * _Nullable error) {
-        PFObject *homeItemInfo = [results objectAtIndex:0];
-        PFGeoPoint *coordinate = [homeItemInfo objectForKey:@"coordinate"];
-        [self locateToLatitude:coordinate.latitude longitude:coordinate.longitude :self->strHomeName];
-        self->mCoordinateDestination = CLLocationCoordinate2DMake(coordinate.latitude,coordinate.longitude);
-        CLLocation *loc = [[CLLocation alloc]initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-        [self.geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-            CLPlacemark *mark = [placemarks objectAtIndex:0];
-            self->mAddressDetailLabel.text = [NSString stringWithFormat:@"%@ %@",[[mark.addressDictionary objectForKey:@"FormattedAddressLines"]objectAtIndex:0],self->strHomeName];
-        }];
+        if (results.count > 0) {
+            PFObject *homeItemInfo = [results objectAtIndex:0];
+            PFGeoPoint *coordinate = [homeItemInfo objectForKey:@"coordinate"];
+            [self locateToLatitude:coordinate.latitude longitude:coordinate.longitude :self->strHomeName];
+            self->mCoordinateDestination = CLLocationCoordinate2DMake(coordinate.latitude,coordinate.longitude);
+            CLLocation *loc = [[CLLocation alloc]initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+            [self.geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+                CLPlacemark *mark = [placemarks objectAtIndex:0];
+                self->mAddressDetailLabel.text = [NSString stringWithFormat:@"%@ %@",[[mark.addressDictionary objectForKey:@"FormattedAddressLines"]objectAtIndex:0],self->strHomeName];
+            }];
+        }
     }];
 }
 
@@ -190,9 +196,6 @@
     annotation.title = markerTitle;
     // 添加锚点
     [self.mapView addAnnotation:annotation];
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.1,0.1);
-    MKCoordinateRegion region =MKCoordinateRegionMake(coordinate, span);
-    [self.mapView setRegion:region animated:YES];
     return annotation;
 }
 
@@ -208,6 +211,12 @@
     annoView.canShowCallout = YES;
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         annoView.image = [UIImage imageNamed:@"location"];
+        if(mCoordinateStart.latitude == 0 && mCoordinateStart.longitude == 0){
+            MKCoordinateSpan span = MKCoordinateSpanMake(0.1,0.1);
+            MKCoordinateRegion region =MKCoordinateRegionMake(mCoordinateDestination, span);
+            [self.mapView setRegion:region animated:YES];
+        }
+        mCoordinateStart = annotation.coordinate;
     }else if([annotation isKindOfClass:[MKPointAnnotation class]]){
         annoView.image = [UIImage imageNamed:@"locationIconHighLight"];
     }
@@ -232,9 +241,17 @@
     theSpan.latitudeDelta=0.05;
     theSpan.longitudeDelta=0.05;
     MKCoordinateRegion theRegion;
+//    mCoordinateStart = [[_locationManager location] coordinate];
     theRegion.center=[[_locationManager location] coordinate];
     theRegion.span=theSpan;
     [self.mapView setRegion:theRegion];
+}
+
+- (void)dealloc
+{
+    if (self.mapView != nil) {
+        self.mapView = nil;
+    }
 }
 
 @end
