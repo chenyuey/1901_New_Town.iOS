@@ -30,6 +30,7 @@
 		5299AFF82243912D00699683 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFF72243912C00699683 /* CollectionViewController.m */; };
 		5299AFFB2243AB8900699683 /* CollectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFFA2243AB8900699683 /* CollectTableViewCell.m */; };
 		5299AFFE224A362900699683 /* BottomTownItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFFD224A362800699683 /* BottomTownItemView.m */; };
+		52BC542322C7478C00E31B50 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BC542222C7478C00E31B50 /* SearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,8 @@
 		5299AFFA2243AB8900699683 /* CollectTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectTableViewCell.m; sourceTree = "<group>"; };
 		5299AFFC224A362800699683 /* BottomTownItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BottomTownItemView.h; sourceTree = "<group>"; };
 		5299AFFD224A362800699683 /* BottomTownItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BottomTownItemView.m; sourceTree = "<group>"; };
+		52BC542122C7478C00E31B50 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		52BC542222C7478C00E31B50 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.release.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.release.xcconfig"; sourceTree = "<group>"; };
 		F854899CA6E759B27AD4D6C2 /* Pods-NewTown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +161,7 @@
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
+				52BC542422C7479600E31B50 /* search */,
 				522934A6227160CE00B30E94 /* Tools */,
 				5221BC12227058E000A78013 /* StartupPage */,
 				5299AFF52243910700699683 /* MyCollection */,
@@ -290,6 +294,15 @@
 				5299AFFA2243AB8900699683 /* CollectTableViewCell.m */,
 			);
 			path = MyCollection;
+			sourceTree = "<group>";
+		};
+		52BC542422C7479600E31B50 /* search */ = {
+			isa = PBXGroup;
+			children = (
+				52BC542122C7478C00E31B50 /* SearchViewController.h */,
+				52BC542222C7478C00E31B50 /* SearchViewController.m */,
+			);
+			path = search;
 			sourceTree = "<group>";
 		};
 		CC41333DD9054A9D0C4D6A27 /* Frameworks */ = {
@@ -508,6 +521,7 @@
 				527071F7222E778A00B73769 /* UserModel.m in Sources */,
 				527071FF222E780900B73769 /* YZDUICService.m in Sources */,
 				5299AFF42242407000699683 /* MapInfoViewController.m in Sources */,
+				52BC542322C7478C00E31B50 /* SearchViewController.m in Sources */,
 				522E2D3122AE50EE009F1224 /* MapNavgationViewController.m in Sources */,
 				527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */,
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
@@ -689,6 +703,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SWGGTC62S7;
 				ENABLE_BITCODE = YES;
@@ -715,6 +730,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SWGGTC62S7;
 				ENABLE_BITCODE = YES;

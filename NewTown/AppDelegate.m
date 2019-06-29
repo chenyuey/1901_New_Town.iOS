@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "WebViewController.h"
 #import "CollectionViewController.h"
+#import "SearchViewController.h"
 #import "WeiboSDK.h"
 
 @interface AppDelegate ()
@@ -48,9 +49,14 @@
     userCenterNavigationController.tabBarItem.title =@"个人中心";
     userCenterNavigationController.tabBarItem.image = [UIImage imageNamed:@"userCenterBarIcon"];
     
+    //添加搜索页面
+    SearchViewController *searchViewController = [[SearchViewController alloc]init];
+    UINavigationController *searchNavigationController = [[UINavigationController alloc]initWithRootViewController:searchViewController];
+    searchNavigationController.tabBarItem.title =@"搜索";
+    searchNavigationController.tabBarItem.image = [UIImage imageNamed:@"searchIcon"];
     
     
-    NSArray *items = [NSArray arrayWithObjects:indexNavigationController,newTownNavigationController,collectNavigationController,userCenterNavigationController, nil];
+    NSArray *items = [NSArray arrayWithObjects:indexNavigationController,newTownNavigationController,searchNavigationController,collectNavigationController,userCenterNavigationController, nil];
     self.tabBarC = [[UITabBarController alloc]init];
     [self.tabBarC setViewControllers:items];
     self.tabBarC.tabBar.backgroundColor = [UIColor whiteColor];
