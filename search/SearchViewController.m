@@ -95,6 +95,10 @@
 - (void)selectAddress:(id)sender{
     NSLog(@"选择地址");
     SelectAddressViewController *selectAddressVC = [[SelectAddressViewController alloc]init];
+    selectAddressVC.selectValueBlock = ^(NSString *addressName){
+        self->mAddressLocationLabel.text = [NSString stringWithFormat:@" %@",addressName];
+        self->mAddressLocationLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
+    };
     [self.navigationController pushViewController:selectAddressVC animated:YES];
 }
 /*

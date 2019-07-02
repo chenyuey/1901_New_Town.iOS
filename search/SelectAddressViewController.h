@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong) CLLocationManager *locationManager;
 
+@property (nonatomic, copy) void(^selectValueBlock)(NSString * valueStr);
 @end
 
 NS_ASSUME_NONNULL_END

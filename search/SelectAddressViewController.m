@@ -125,14 +125,17 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+    if (section == 0 || section == 1) {
+        return 1;
+    }
     NSString *key = [_keys objectAtIndex:section];
     NSArray *citySection = [_cities objectForKey:key];
-    return [citySection count] || 1;
+    return [citySection count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell %ld-%ld",indexPath.section,indexPath.row];
     
     NSString *key = [_keys objectAtIndex:indexPath.section];
     
@@ -148,7 +151,7 @@
     }
     if (indexPath.section == 0) {
         if (mCurrentLocCity == nil) {
-            mCurrentLocCity = [self createButtonWithFrame:CGRectMake(20, 15, 80, 30) :@"定位中" :@selector(selectCityPress)];
+            mCurrentLocCity = [self createButtonWithFrame:CGRectMake(20, 15, 80, 30) :@"定位中" :@selector(selectCityPress:)];
             mCurrentLocCity.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
             mCurrentLocCity.layer.borderWidth = 1.0;
             [cell addSubview:mCurrentLocCity];
@@ -167,6 +170,14 @@
         return 30;
     }
     
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section > 1) {
+        NSString *key = [_keys objectAtIndex:indexPath.section];
+        self.selectValueBlock([[_cities objectForKey:key] objectAtIndex:indexPath.row]);
+        //获取定位数据
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 #pragma mark - 开始定位
 - (void)startLocate{
@@ -204,7 +215,9 @@
 - (void)selectCityPress:(id)sender{
     UIButton *currentBtn = (UIButton *)sender;
     if (![currentBtn.titleLabel.text isEqualToString:@"定位中"]) {
+        self.selectValueBlock(currentBtn.titleLabel.text);
         //获取定位数据
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 /*
