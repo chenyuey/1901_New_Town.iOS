@@ -37,6 +37,10 @@
     mDateLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
     mDateLabel.text = @" 请选择入住时间";
     [self.view addSubview:mDateLabel];
+    //添加选择地址点击事件
+    mDateLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapDate = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectDate:)];
+    [mDateLabel addGestureRecognizer:tapDate];
     
     mHomeNameLabel = [[UITextField alloc]initWithFrame:CGRectMake(43, mDateLabel.frame.origin.y + mDateLabel.frame.size.height + 5, SCREEN_WIDTH - 43*2, 30)];
     mHomeNameLabel.placeholder = @"位置/地标/房源名称";
@@ -100,6 +104,14 @@
         self->mAddressLocationLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
     };
     [self.navigationController pushViewController:selectAddressVC animated:YES];
+}
+- (void)selectDate:(id)sender{
+    HotelCalendarViewController *vc = [[HotelCalendarViewController alloc] init];
+    [vc setSelectCheckDateBlock:^(NSString *startDateStr, NSString *endDateStr, NSString *daysStr) {
+        self->mDateLabel.text = [NSString stringWithFormat:@"%@ ~ %@ %@晚",startDateStr,endDateStr,daysStr];
+        self->mDateLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
+    }];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 /*
 #pragma mark - Navigation
