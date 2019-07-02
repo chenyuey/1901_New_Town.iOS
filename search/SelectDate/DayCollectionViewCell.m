@@ -10,7 +10,7 @@
 #import "MonthModel.h"
 
 #define NormalColor [UIColor whiteColor]
-#define StartAndEndColor [UIColor redColor]
+#define StartAndEndColor [UIColor orangeColor]
 #define SelectedColor [UIColor blueColor]
 
 
