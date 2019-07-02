@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(backToRegion:)];
+    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(backToSelectVC)];
     [self.view addSubview:self.backButton];
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
@@ -68,8 +68,9 @@
     return button;
 }
 #pragma mark - 页面事件
-- (void)backToRegion:(id)sender{
+- (void)backToSelectVC{
     [self.navigationController popViewControllerAnimated:YES];
+    self.tabBarController.tabBar.hidden=NO;
 }
 
 #pragma mark - 添加全国城市信息
@@ -176,7 +177,7 @@
         NSString *key = [_keys objectAtIndex:indexPath.section];
         self.selectValueBlock([[_cities objectForKey:key] objectAtIndex:indexPath.row]);
         //获取定位数据
-        [self.navigationController popViewControllerAnimated:YES];
+        [self backToSelectVC];
     }
 }
 #pragma mark - 开始定位
@@ -217,7 +218,7 @@
     if (![currentBtn.titleLabel.text isEqualToString:@"定位中"]) {
         self.selectValueBlock(currentBtn.titleLabel.text);
         //获取定位数据
-        [self.navigationController popViewControllerAnimated:YES];
+        [self backToSelectVC];
     }
 }
 /*

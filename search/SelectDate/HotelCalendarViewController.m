@@ -22,8 +22,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    self.tabBarController.tabBar.hidden=YES;
     //返回按钮
-    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(backToSearch:)];
+    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(backToSearch)];
     [self.view addSubview:self.backButton];
     //确定按钮
     self.confirmButton = [self createButtonWithFrame:CGRectMake(SCREEN_WIDTH - 20 - 40, SafeStatusBarHeight+10, 40, 24) :@"确定" :@selector(selectedCheckDate)];
@@ -131,15 +132,16 @@
         if (_selectCheckDateBlock) {
             _selectCheckDateBlock(startDateStr,endDateStr,daysStr);
         }
-        [self.navigationController popViewControllerAnimated:YES];
+        [self backToSearch];
     }else{
         return ;
     }
     
 }
 
-- (void)backToSearch:(id)sender{
+- (void)backToSearch{
     [self.navigationController popViewControllerAnimated:YES];
+    self.tabBarController.tabBar.hidden=NO;
 }
 
 /////////////////////////////////////代理方法///////////////////////////////////////////

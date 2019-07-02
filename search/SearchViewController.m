@@ -98,7 +98,6 @@
     [mHomeNameLabel resignFirstResponder]; // 空白处收起
 }
 - (void)selectAddress:(id)sender{
-    NSLog(@"选择地址");
     SelectAddressViewController *selectAddressVC = [[SelectAddressViewController alloc]init];
     selectAddressVC.selectValueBlock = ^(NSString *addressName){
         self->mAddressLocationLabel.text = [NSString stringWithFormat:@" %@",addressName];
