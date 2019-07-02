@@ -10,6 +10,7 @@
 #import "CommonHeader.h"
 #import "SelectAddressViewController.h"
 #import "HotelCalendarViewController.h"
+#import "SearchResultViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

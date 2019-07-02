@@ -17,6 +17,7 @@
 		522E9F1F22CB457200781502 /* HotelCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F1722CB457200781502 /* HotelCalendarViewController.m */; };
 		522E9F2022CB457200781502 /* MonthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F1822CB457200781502 /* MonthModel.m */; };
 		522E9F2122CB457200781502 /* MonthTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F1B22CB457200781502 /* MonthTableViewCell.m */; };
+		522E9F2422CB4FFC00781502 /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F2322CB4FFC00781502 /* SearchResultViewController.m */; };
 		5233B337229D389900155B67 /* preloader_64.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5233B336229D389900155B67 /* preloader_64.gif */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
@@ -75,6 +76,8 @@
 		522E9F1B22CB457200781502 /* MonthTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthTableViewCell.m; sourceTree = "<group>"; };
 		522E9F1C22CB457200781502 /* HotelCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelCalendarViewController.h; sourceTree = "<group>"; };
 		522E9F1D22CB457200781502 /* MonthModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthModel.h; sourceTree = "<group>"; };
+		522E9F2222CB4FFC00781502 /* SearchResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultViewController.h; sourceTree = "<group>"; };
+		522E9F2322CB4FFC00781502 /* SearchResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultViewController.m; sourceTree = "<group>"; };
 		5233B336229D389900155B67 /* preloader_64.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = preloader_64.gif; sourceTree = "<group>"; };
 		5256ACF8226D6ADA00AAFB77 /* YZSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZSDKCore.framework; path = ../../Downloads/Release/YZSDKCore.framework; sourceTree = "<group>"; };
 		5256ACF9226D6ADA00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = ../../Downloads/Release/YZBaseSDK.framework; sourceTree = "<group>"; };
@@ -337,6 +340,8 @@
 				52BC542222C7478C00E31B50 /* SearchViewController.m */,
 				52BC542522C9F0E300E31B50 /* SelectAddressViewController.h */,
 				52BC542622C9F0E300E31B50 /* SelectAddressViewController.m */,
+				522E9F2222CB4FFC00781502 /* SearchResultViewController.h */,
+				522E9F2322CB4FFC00781502 /* SearchResultViewController.m */,
 			);
 			path = search;
 			sourceTree = "<group>";
@@ -565,6 +570,7 @@
 				527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */,
 				52BC542722C9F0E300E31B50 /* SelectAddressViewController.m in Sources */,
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
+				522E9F2422CB4FFC00781502 /* SearchResultViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
 				522E9F1E22CB457200781502 /* DayCollectionViewCell.m in Sources */,
 				522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */,

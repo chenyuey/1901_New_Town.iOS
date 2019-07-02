@@ -87,7 +87,8 @@
 }
 #pragma mark - 动态事件
 - (void)findButtonClick:(id)sender{
-    NSLog(@"查找按钮");
+    SearchResultViewController *searchVC = [[SearchResultViewController alloc]initWithAddress:mAddressLocationLabel.text AndDate:mDateLabel.text AndName:mHomeNameLabel.text];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
