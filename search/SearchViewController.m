@@ -20,10 +20,40 @@
     //导航栏
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
-//    //修改导航栏样式
-//    self.navTitleLabel = [self createLabelWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
-//    self.navTitleLabel.text = @"我的收藏";
-//    [self.view addSubview:self.navTitleLabel];
+    mAddressLocationLabel = [self createLabelWithFrame:CGRectMake(43, SafeAreaTopHeight, SCREEN_WIDTH - 43*2, 30) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
+    mAddressLocationLabel.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
+    mAddressLocationLabel.layer.borderWidth = 1.0;
+    mAddressLocationLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
+    mAddressLocationLabel.text = @" 请选择地址";
+    mAddressLocationLabel.userInteractionEnabled = YES;
+    [self.view addSubview:mAddressLocationLabel];
+    //添加选择地址点击事件
+    UITapGestureRecognizer *tapAddress = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectAddress:)];
+    [mAddressLocationLabel addGestureRecognizer:tapAddress];
+    
+    mDateLabel = [self createLabelWithFrame:CGRectMake(43, mAddressLocationLabel.frame.origin.y + mAddressLocationLabel.frame.size.height + 5, SCREEN_WIDTH - 43*2, 30) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
+    mDateLabel.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
+    mDateLabel.layer.borderWidth = 1.0;
+    mDateLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
+    mDateLabel.text = @" 请选择入住时间";
+    [self.view addSubview:mDateLabel];
+    
+    mHomeNameLabel = [[UITextField alloc]initWithFrame:CGRectMake(43, mDateLabel.frame.origin.y + mDateLabel.frame.size.height + 5, SCREEN_WIDTH - 43*2, 30)];
+    mHomeNameLabel.placeholder = @"位置/地标/房源名称";
+    mHomeNameLabel.font = [UIFont systemFontOfSize:14.0];
+    mHomeNameLabel.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
+    mHomeNameLabel.layer.borderWidth = 1.0;
+    mHomeNameLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
+    mHomeNameLabel.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 8, 0)];
+    //设置显示模式为永远显示(默认不显示 必须设置 否则没有效果)
+    mHomeNameLabel.leftViewMode = UITextFieldViewModeAlways;
+    [self.view addSubview:mHomeNameLabel];
+    
+    mFindBtn = [self createButtonWithFrame:CGRectMake(43, mHomeNameLabel.frame.origin.y + mHomeNameLabel.frame.size.height + 11, SCREEN_WIDTH - 43*2, 30) :@"查找" :@selector(findButtonClick:)];
+    mFindBtn.backgroundColor = [UIColor colorWithRed:21.0/255.0 green:144.0/255.0 blue:253.0/255.0 alpha:1.0];
+    [mFindBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    mFindBtn.layer.cornerRadius = 4;
+    [self.view addSubview:mFindBtn];
 }
 #pragma mark - UI控件创建
 - (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
@@ -51,7 +81,22 @@
     [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
-
+#pragma mark - 动态事件
+- (void)findButtonClick:(id)sender{
+    NSLog(@"查找按钮");
+}
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    return YES;
+}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    [mHomeNameLabel resignFirstResponder]; // 空白处收起
+}
+- (void)selectAddress:(id)sender{
+    NSLog(@"选择地址");
+    SelectAddressViewController *selectAddressVC = [[SelectAddressViewController alloc]init];
+    [self.navigationController pushViewController:selectAddressVC animated:YES];
+}
 /*
 #pragma mark - Navigation
 
