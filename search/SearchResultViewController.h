@@ -10,10 +10,11 @@
 #import "CommonHeader.h"
 #import "DoubleSliderView.h"
 #import "UIView+Extension.h"
+#import "YZNavigationMenuView.h"
 
 //NS_ASSUME_NONNULL_BEGIN
 
-@interface SearchResultViewController : UIViewController{
+@interface SearchResultViewController : UIViewController<YZNavigationMenuViewDelegate>{
     NSString *mStrAddress;
     NSString *mStrDate;
     NSString *mStrHomeName;
@@ -26,6 +27,7 @@
     NSString *mStrSelectPeopleNumber;
     
     UIView *mShowPriceView;
+    YZNavigationMenuView *mShowSortView;
 }
 //左侧返回按钮
 @property (nonatomic,strong) UIButton *backButton;

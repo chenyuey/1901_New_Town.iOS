@@ -45,6 +45,10 @@
     mShowPeopleNumberView.hidden = YES;
     mShowPriceView = [self createSelectPriceView];
     mShowPriceView.hidden = YES;
+    mShowSortView = [[YZNavigationMenuView alloc]initWithFrame:CGRectMake(0, mSearchShowView.frame.origin.y+mSearchShowView.frame.size.height+13 + 20 + 5, SCREEN_WIDTH, 176) titleArray:@[@"默认",@"低价优先",@"高价优先",@"距离优先"]];
+    mShowSortView.hidden = YES;
+    mShowSortView.delegate = self;
+    [self.view addSubview:mShowSortView];
 }
 
 
@@ -107,15 +111,19 @@
             subview.selected = NO;
         }
     }
-    mShowPeopleNumberView.hidden = YES;
-    mShowPriceView.hidden = YES;
-    
     if ([title isEqualToString:@"人数"]) {
         //显示人数筛选
         mShowPeopleNumberView.hidden = !button.selected;
+        mShowPriceView.hidden = YES;
+        mShowSortView.hidden = YES;
     }else if([title isEqualToString:@"价格"]){
         mShowPriceView.hidden = !button.selected;
+        mShowPeopleNumberView.hidden = YES;
+        mShowSortView.hidden = YES;
     }else if([title isEqualToString:@"排序"]){
+        mShowPriceView.hidden = YES;
+        mShowPeopleNumberView.hidden = YES;
+        mShowSortView.hidden = !button.selected;
         
     }else {
         
@@ -339,5 +347,10 @@
     }
     return _doubleSliderView;
 }
-
+#pragma mark - YZNavigationMenuViewDelegate
+- (void)navigationMenuView:(YZNavigationMenuView *)menuView clickedAtIndex:(NSInteger)index;
+{
+    NSLog(@"------我是第%ld栏",index + 1);
+    mShowSortView.hidden = YES;
+}
 @end
