@@ -42,15 +42,16 @@
     UITapGestureRecognizer *tapDate = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectDate:)];
     [mDateLabel addGestureRecognizer:tapDate];
     
-    mHomeNameLabel = [[UITextField alloc]initWithFrame:CGRectMake(43, mDateLabel.frame.origin.y + mDateLabel.frame.size.height + 5, SCREEN_WIDTH - 43*2, 30)];
-    mHomeNameLabel.placeholder = @"位置/地标/房源名称";
-    mHomeNameLabel.font = [UIFont systemFontOfSize:14.0];
+    mHomeNameLabel = [self createLabelWithFrame:CGRectMake(43, mDateLabel.frame.origin.y + mDateLabel.frame.size.height + 5, SCREEN_WIDTH - 43*2, 30) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
     mHomeNameLabel.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
     mHomeNameLabel.layer.borderWidth = 1.0;
-    mHomeNameLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
-    mHomeNameLabel.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 8, 0)];
+    mHomeNameLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
+    mHomeNameLabel.text = @" 位置/地标/房源名称";
+    mHomeNameLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapHomeName = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectHomeName:)];
+    [mHomeNameLabel addGestureRecognizer:tapHomeName];
+    
     //设置显示模式为永远显示(默认不显示 必须设置 否则没有效果)
-    mHomeNameLabel.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:mHomeNameLabel];
     
     mFindBtn = [self createButtonWithFrame:CGRectMake(43, mHomeNameLabel.frame.origin.y + mHomeNameLabel.frame.size.height + 11, SCREEN_WIDTH - 43*2, 30) :@"查找" :@selector(findButtonClick:)];
@@ -110,6 +111,14 @@
     [vc setSelectCheckDateBlock:^(NSString *startDateStr, NSString *endDateStr, NSString *daysStr) {
         self->mDateLabel.text = [NSString stringWithFormat:@"%@ ~ %@ %@晚",startDateStr,endDateStr,daysStr];
         self->mDateLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
+    }];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)selectHomeName:(id)sender{
+    SearchNameViewController *vc = [[SearchNameViewController alloc] init];
+    [vc setSelectCheckDateBlock:^(NSString *homeName) {
+        self->mHomeNameLabel.text = homeName;
+        self->mHomeNameLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
     }];
     [self.navigationController pushViewController:vc animated:YES];
 }

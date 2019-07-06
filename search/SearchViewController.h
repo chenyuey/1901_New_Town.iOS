@@ -11,6 +11,7 @@
 #import "SelectAddressViewController.h"
 #import "HotelCalendarViewController.h"
 #import "SearchResultViewController.h"
+#import "SearchNameViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     UILabel *mAddressLocationLabel;
     UILabel *mDateLabel;
-    UITextField *mHomeNameLabel;
+    UILabel *mHomeNameLabel;
     
     UIButton *mFindBtn;
 }
