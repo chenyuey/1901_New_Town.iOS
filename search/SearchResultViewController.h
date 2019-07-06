@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonHeader.h"
+#import "DoubleSliderView.h"
+#import "UIView+Extension.h"
 
 //NS_ASSUME_NONNULL_BEGIN
 
@@ -16,9 +18,18 @@
     NSString *mStrDate;
     NSString *mStrHomeName;
     UIView *mSearchShowView;
+    UIView *mDateView;
+    UILabel *mAddressLabel;
+    UILabel *mSearchNameView;
+    
+    UIView *mShowPeopleNumberView;
+    NSString *mStrSelectPeopleNumber;
+    
+    UIView *mShowPriceView;
 }
 //左侧返回按钮
 @property (nonatomic,strong) UIButton *backButton;
+
 - (id)initWithAddress:(NSString *)address AndDate:(NSString *)strDate AndName:(NSString *)strName;
 @end
 

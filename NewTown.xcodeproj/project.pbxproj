@@ -18,6 +18,8 @@
 		522E9F2022CB457200781502 /* MonthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F1822CB457200781502 /* MonthModel.m */; };
 		522E9F2122CB457200781502 /* MonthTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F1B22CB457200781502 /* MonthTableViewCell.m */; };
 		522E9F2422CB4FFC00781502 /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F2322CB4FFC00781502 /* SearchResultViewController.m */; };
+		522E9F3922CF03F800781502 /* DoubleSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F3722CF03F800781502 /* DoubleSliderView.m */; };
+		522E9F3A22CF03F800781502 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F3822CF03F800781502 /* UIView+Extension.m */; };
 		5233B337229D389900155B67 /* preloader_64.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5233B336229D389900155B67 /* preloader_64.gif */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
@@ -78,6 +80,10 @@
 		522E9F1D22CB457200781502 /* MonthModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthModel.h; sourceTree = "<group>"; };
 		522E9F2222CB4FFC00781502 /* SearchResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultViewController.h; sourceTree = "<group>"; };
 		522E9F2322CB4FFC00781502 /* SearchResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultViewController.m; sourceTree = "<group>"; };
+		522E9F3522CF03F700781502 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		522E9F3622CF03F700781502 /* DoubleSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleSliderView.h; sourceTree = "<group>"; };
+		522E9F3722CF03F800781502 /* DoubleSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoubleSliderView.m; sourceTree = "<group>"; };
+		522E9F3822CF03F800781502 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		5233B336229D389900155B67 /* preloader_64.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = preloader_64.gif; sourceTree = "<group>"; };
 		5256ACF8226D6ADA00AAFB77 /* YZSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZSDKCore.framework; path = ../../Downloads/Release/YZSDKCore.framework; sourceTree = "<group>"; };
 		5256ACF9226D6ADA00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = ../../Downloads/Release/YZBaseSDK.framework; sourceTree = "<group>"; };
@@ -191,6 +197,24 @@
 				522E9F1B22CB457200781502 /* MonthTableViewCell.m */,
 			);
 			path = SelectDate;
+			sourceTree = "<group>";
+		};
+		522E9F2522CCCB3A00781502 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		522E9F2F22CE1B6F00781502 /* ScaleSlider */ = {
+			isa = PBXGroup;
+			children = (
+				522E9F3622CF03F700781502 /* DoubleSliderView.h */,
+				522E9F3722CF03F800781502 /* DoubleSliderView.m */,
+				522E9F3522CF03F700781502 /* UIView+Extension.h */,
+				522E9F3822CF03F800781502 /* UIView+Extension.m */,
+			);
+			path = ScaleSlider;
 			sourceTree = "<group>";
 		};
 		527071AD222CF1BC00B73769 = {
@@ -335,6 +359,8 @@
 		52BC542422C7479600E31B50 /* search */ = {
 			isa = PBXGroup;
 			children = (
+				522E9F2F22CE1B6F00781502 /* ScaleSlider */,
+				522E9F2522CCCB3A00781502 /* Menu */,
 				522E9F1522CB454A00781502 /* SelectDate */,
 				52BC542122C7478C00E31B50 /* SearchViewController.h */,
 				52BC542222C7478C00E31B50 /* SearchViewController.m */,
@@ -428,6 +454,7 @@
 				TargetAttributes = {
 					527071B5222CF1BC00B73769 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 					527071D0222CF1BE00B73769 = {
 						CreatedOnToolsVersion = 10.1;
@@ -563,12 +590,14 @@
 				527071F3222E76A300B73769 /* WebViewController.m in Sources */,
 				5299AFFE224A362900699683 /* BottomTownItemView.m in Sources */,
 				527071F7222E778A00B73769 /* UserModel.m in Sources */,
+				522E9F3A22CF03F800781502 /* UIView+Extension.m in Sources */,
 				527071FF222E780900B73769 /* YZDUICService.m in Sources */,
 				5299AFF42242407000699683 /* MapInfoViewController.m in Sources */,
 				52BC542322C7478C00E31B50 /* SearchViewController.m in Sources */,
 				522E2D3122AE50EE009F1224 /* MapNavgationViewController.m in Sources */,
 				527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */,
 				52BC542722C9F0E300E31B50 /* SelectAddressViewController.m in Sources */,
+				522E9F3922CF03F800781502 /* DoubleSliderView.m in Sources */,
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				522E9F2422CB4FFC00781502 /* SearchResultViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
@@ -750,6 +779,7 @@
 			baseConfigurationReference = F854899CA6E759B27AD4D6C2 /* Pods-NewTown.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: guangsong Li (UU5JGNRYN4)";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
@@ -768,6 +798,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bigegg.com.NewTownSpecial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = new_town_dev_lgs;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -777,6 +810,7 @@
 			baseConfigurationReference = B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: guangsong Li (UU5JGNRYN4)";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
@@ -795,6 +829,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bigegg.com.NewTownSpecial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = new_town_dev_lgs;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
