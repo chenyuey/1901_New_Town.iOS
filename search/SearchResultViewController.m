@@ -33,13 +33,13 @@
     UIView *dropDownView = [[UIView alloc]initWithFrame:CGRectMake(35, mSearchShowView.frame.origin.y+mSearchShowView.frame.size.height+13, SCREEN_WIDTH-70, 20)];
     [self.view addSubview:dropDownView];
     float distance = (dropDownView.frame.size.width - 46*3-84)/3;
-    UIButton *peopleNumberButton = [self createButtonWithTitleAndImage:@"人数" :CGRectMake(0, 0, 46, 20) :30];
+    peopleNumberButton = [self createButtonWithTitleAndImage:@"人数" :CGRectMake(0, 0, 46, 20) :30];
     [dropDownView addSubview:peopleNumberButton];
-    UIButton *priceButton = [self createButtonWithTitleAndImage:@"价格" :CGRectMake(peopleNumberButton.frame.origin.x+peopleNumberButton.frame.size.width+distance, 0, 46, 20) :30];
+    priceButton = [self createButtonWithTitleAndImage:@"价格" :CGRectMake(peopleNumberButton.frame.origin.x+peopleNumberButton.frame.size.width+distance, 0, 46, 20) :30];
     [dropDownView addSubview:priceButton];
     UIButton *moreButton = [self createButtonWithTitleAndImage:@"更多筛选" :CGRectMake(priceButton.frame.origin.x+priceButton.frame.size.width+distance, 0, 84, 20) :66];
     [dropDownView addSubview:moreButton];
-    UIButton *sortButton = [self createButtonWithTitleAndImage:@"排序" :CGRectMake(moreButton.frame.origin.x+moreButton.frame.size.width+distance, 0, 46, 20) :30];
+    sortButton = [self createButtonWithTitleAndImage:@"排序" :CGRectMake(moreButton.frame.origin.x+moreButton.frame.size.width+distance, 0, 46, 20) :30];
     [dropDownView addSubview:sortButton];
     mShowPeopleNumberView = [self createSelectPeopleView];
     mShowPeopleNumberView.hidden = YES;
@@ -256,6 +256,7 @@
 - (void)confirmSelectPrice:(id)sender{
     NSLog(@"%@",self.ageTipsLabel.text);
     mShowPriceView.hidden = YES;
+    priceButton.selected = NO;
 }
 #pragma mark - 选择价格
 #pragma mark - action
@@ -352,5 +353,7 @@
 {
     NSLog(@"------我是第%ld栏",index + 1);
     mShowSortView.hidden = YES;
+    mStrSort = [menuView.titleArray  objectAtIndex:index];
+    sortButton.selected = NO;
 }
 @end

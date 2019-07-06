@@ -28,6 +28,11 @@
     
     UIView *mShowPriceView;
     YZNavigationMenuView *mShowSortView;
+    NSString *mStrSort;
+    
+    UIButton *peopleNumberButton;//选择人数
+    UIButton *priceButton;//选择价格
+    UIButton *sortButton;//选择排序
 }
 //左侧返回按钮
 @property (nonatomic,strong) UIButton *backButton;

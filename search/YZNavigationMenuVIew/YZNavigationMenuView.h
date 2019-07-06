@@ -19,6 +19,7 @@
  点击每一栏时通过block回调,索引从0开始,
  */
 @property (nonatomic, copy) void (^clickedBlock)(NSInteger index);
+@property (nonatomic, strong) NSArray *titleArray;
 
 - (instancetype)initWithFrame:(CGRect)frame titleArray:(NSArray *)titleArray;
 

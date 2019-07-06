@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *imageArray;
-@property (nonatomic, strong) NSArray *titleArray;
 @property (nonatomic, assign) CGPoint point;
 @property (nonatomic, strong) UIView *shapeView;
 
