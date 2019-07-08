@@ -61,7 +61,14 @@
     self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10+8, 24, 24) :@"back_btn" :@selector(backToSearch)];
     [self.view addSubview:self.backButton];
     mSearchShowView = [self createSearchShowViewWithFrame:CGRectMake(35, SafeStatusBarHeight + 10, SCREEN_WIDTH - 35 - 11, 40) :mStrDate :mStrAddress];
+    mAllHotelTableview = [[UITableView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+109, SCREEN_HEIGHT, SCREEN_HEIGHT - SafeStatusBarHeight - 109) style:UITableViewStylePlain];//274
+    mAllHotelTableview.delegate = self;
+    mAllHotelTableview.dataSource = self;
+    mAllHotelTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:mAllHotelTableview];
     [self createDropDownList];
+    
+    mAllHotelList = @[@""];
 }
 #pragma mark - UI控件创建
 - (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
@@ -355,5 +362,27 @@
     mShowSortView.hidden = YES;
     mStrSort = [menuView.titleArray  objectAtIndex:index];
     sortButton.selected = NO;
+}
+#pragma mark -  UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return mAllHotelList.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *strIndentify = [NSString stringWithFormat:@"cell%ld",(long)indexPath.row];
+    HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:strIndentify];
+    if (!cell) {
+        cell = [[HotelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strIndentify];
+    }
+    [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:@"https://img.yzcdn.cn/upload_files/2019/04/07/FqhbWHnpMzLaKgCxaV3sP5mShbEP.jpg"] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
+    [cell.coverImageView layoutIfNeeded];
+    cell.profileLabel.text = @"整套出租 双人床 2人";
+    cell.hotelNameLabel.text = @"浔龙河生态艺术小镇故湘民宿";
+    cell.remarksLabel.text = @"故湘客栈于2015年10月1日正式营业，客栈将浔龙河特有的民俗...";
+    cell.priceLabel.text = @"¥538";
+    return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 274;
 }
 @end

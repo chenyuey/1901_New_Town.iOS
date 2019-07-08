@@ -11,10 +11,12 @@
 #import "DoubleSliderView.h"
 #import "UIView+Extension.h"
 #import "YZNavigationMenuView.h"
+#import "HotelCell/HotelTableViewCell.h"
+#import "UIImageView+WebCache.h"
 
 //NS_ASSUME_NONNULL_BEGIN
 
-@interface SearchResultViewController : UIViewController<YZNavigationMenuViewDelegate>{
+@interface SearchResultViewController : UIViewController<YZNavigationMenuViewDelegate,UITableViewDelegate,UITableViewDataSource>{
     NSString *mStrAddress;
     NSString *mStrDate;
     NSString *mStrHomeName;
@@ -33,6 +35,9 @@
     UIButton *peopleNumberButton;//选择人数
     UIButton *priceButton;//选择价格
     UIButton *sortButton;//选择排序
+    
+    UITableView *mAllHotelTableview;
+    NSArray *mAllHotelList;
 }
 //左侧返回按钮
 @property (nonatomic,strong) UIButton *backButton;
