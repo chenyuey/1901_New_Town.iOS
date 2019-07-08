@@ -13,7 +13,12 @@
 @end
 
 @implementation SearchNameViewController
-
+- (CLGeocoder *)geocoder {
+    if (_geocoder == nil) {
+        _geocoder = [[CLGeocoder alloc] init];
+    }
+    return _geocoder;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
@@ -28,6 +33,7 @@
     mSearchBarView.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
     mSearchBarView.layer.borderWidth = 1.0;
     mSearchBarView.layer.cornerRadius = 20.0;
+    mSearchBarView.delegate = self;
     
     UIImage* searchBarBg = [SearchNameViewController GetImageWithColor:[UIColor clearColor] andHeight:32.0f];
     //设置背景图片
@@ -36,6 +42,12 @@
     [mSearchBarView setBackgroundColor:[UIColor clearColor]];
     //设置文本框背景
     [mSearchBarView setSearchFieldBackgroundImage:searchBarBg forState:UIControlStateNormal];
+    
+    mShowAddressTableview = [[UITableView alloc]initWithFrame:CGRectMake(0, mSearchBarView.frame.origin.x+mSearchBarView.frame.size.height, SCREEN_WIDTH, SCREEN_HEIGHT - mSearchBarView.frame.origin.y - mSearchBarView.frame.size.height) style:UITableViewStyleGrouped];
+    mShowAddressTableview.delegate = self;
+    mShowAddressTableview.dataSource = self;
+    [self.view addSubview:mShowAddressTableview];
+    mAddressList = [[NSArray alloc]init];
 }
 - (void)backToSearch{
     [self.navigationController popViewControllerAnimated:YES];
@@ -80,7 +92,50 @@
     
     return img;
 }
+#pragma mark - UISearchBarDelegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    if (searchText.length > 0) {
+        [self.geocoder geocodeAddressString:searchText completionHandler:^(NSArray *placemarks, NSError *error) {
+            self->mAddressList = placemarks;
+            [self->mShowAddressTableview reloadData];
+        }];  
+    }
+}
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+}
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return mAddressList.count;
+}
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *strIndentify = [NSString stringWithFormat:@"cell%ld",(long)indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:strIndentify];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strIndentify];
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
+    }
+    CLPlacemark *mark = [mAddressList objectAtIndex:indexPath.row];
+    cell.textLabel.text = mark.name;
+    cell.textLabel.textAlignment = NSTextAlignmentLeft;
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    CLPlacemark *mark = [mAddressList objectAtIndex:indexPath.row];
+    self.selectValueBlock(mark.name);
+    //获取定位数据
+    [self backToSelectVC];
+}
+#pragma mark - 页面事件
+- (void)backToSelectVC{
+    [self.navigationController popViewControllerAnimated:YES];
+    self.tabBarController.tabBar.hidden=NO;
+}
 
 /*
 #pragma mark - Navigation

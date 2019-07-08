@@ -116,7 +116,7 @@
 }
 - (void)selectHomeName:(id)sender{
     SearchNameViewController *vc = [[SearchNameViewController alloc] init];
-    [vc setSelectCheckDateBlock:^(NSString *homeName) {
+    [vc setSelectValueBlock:^(NSString *homeName) {
         self->mHomeNameLabel.text = homeName;
         self->mHomeNameLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
     }];
