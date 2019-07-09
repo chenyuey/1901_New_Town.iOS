@@ -18,6 +18,7 @@
 #import "MJRefresh.h"
 #import <WebKit/WebKit.h>
 #import "MapNavgationViewController.h"
+#import "HotelDetailView.h"
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录
@@ -25,13 +26,15 @@ typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeWhenNeed = 2,  //演示后登录
 };
 
-@interface WebViewController : UIViewController{
+@interface WebViewController : UIViewController<NSURLConnectionDelegate>{
     BOOL isCollecting;
     NSDictionary *shareInfo;
     UIView *shareView;
     UIView *loadingShadowView;
     NSMutableArray *mArrTitles;
     UILabel *mErrorLabel;
+    HotelDetailView *mShowHotelDetailView;
+    NSMutableData *arrHotelDetailData;
 }
 /**
  登录时机

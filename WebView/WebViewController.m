@@ -12,6 +12,7 @@
 #import "YZDUICService.h"
 #import "CommonHeader.h"
 #import "MapInfoViewController.h"
+#define BASE_URL @"http://192.168.124.104:1330/api/1/functions"
 
 @interface WebViewController () <YZWebViewDelegate, YZWebViewNoticeDelegate>
 @property (strong, nonatomic) YZWebView *webView;
@@ -59,6 +60,7 @@
 //
 //        }
         [self.webView goBack];
+        mShowHotelDetailView.superview.hidden = YES;
         return NO;
     } else if (self.navigationController.childViewControllers.count > 1){
         [self.navigationController popViewControllerAnimated:YES];
@@ -258,6 +260,12 @@
                   //加载新链接时，分享按钮先置为不可用
                   [self addWebKitTransform:self.webView];
                   self.navTitleLabel.text = response;
+                  if ([self.webView.URL.path containsString:@"goods"]) {
+                      self.navTitleLabel.text = @"房源详情";
+                      self.navTitleLabel.userInteractionEnabled = YES;
+                      UITapGestureRecognizer *tapDate = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showHotelInfo)];
+                      [self.navTitleLabel addGestureRecognizer:tapDate];
+                  }
                   [self->mArrTitles addObject:response];
                   //全部民宿不添加 收藏按钮 功能
                   if ([response isEqualToString:@"全部民宿"]) {
@@ -700,5 +708,153 @@
 - (void)hideErrorLabel{
     mErrorLabel.hidden = YES;
 }
+#pragma mark - 显示房源详情
+- (void)showHotelInfo{
+    if ([self.navTitleLabel.text isEqualToString:@"房源详情"]) {
+        
+        if (mShowHotelDetailView == nil) {
+            mShowHotelDetailView = [self createHotelDetailView];
+        }
+        
+        mShowHotelDetailView.superview.hidden = !mShowHotelDetailView.superview.hidden;
+        if (mShowHotelDetailView.superview.hidden == NO) {
+            [self getRequestListWithUrl:@"/dome" :^(NSDictionary *dictData) {
+                int houseTypeMapCode = [[[dictData objectForKey:@"result"] objectForKey:@"houseTypeMap"]intValue];
+                int leaseTypeCode = [[[dictData objectForKey:@"result"] objectForKey:@"leaseType"]intValue];
+                NSDictionary *bedList = [[dictData objectForKey:@"result"] objectForKey:@"bedList"]; //objectForKey:@"doubleBed"]intValue];
+//                int doubleDeckBedCode = [[[[dictData objectForKey:@"result"] objectForKey:@"bedList"] objectForKey:@"doubleDeckBed"]intValue];
+                int maxPeopleCnt = [[[dictData objectForKey:@"result"] objectForKey:@"maxPeopleCnt"]intValue];
+                int toiletTypeCode = [[[dictData objectForKey:@"result"] objectForKey:@"toiletType"]intValue];
+                NSDictionary *equipmentList1 = [[dictData objectForKey:@"result"] objectForKey:@"equipmentList"];
+                NSArray *noticeCodeArray = [[dictData objectForKey:@"result"] objectForKey:@"notice"];
+                
+                
+                [self getRequestListWithUrl:@"/equipmentList" :^(NSDictionary *dictData) {
+                    for (int i = 0; i < mShowHotelDetailView.equipmengListView.subviews.count; i ++) {
+                        UIView *subviewTmp = [mShowHotelDetailView.equipmengListView.subviews objectAtIndex:i];
+                        [subviewTmp removeFromSuperview];
+                    }
+                    NSDictionary *allEqList = [dictData objectForKey:@"result"];
+                    NSMutableArray* allEquipmentList = [NSMutableArray new]; //存储所有属性
+                    for (int i = 0; i < allEqList.allKeys.count; i ++) {
+                        NSString *strKey = [allEqList.allKeys objectAtIndex:i];
+                        NSArray *eqListItems = [[allEqList objectForKey:strKey] objectForKey:@"equipmentList"];
+                        [allEquipmentList addObjectsFromArray:eqListItems];
+                    }
+                    NSMutableArray* allExistEquipmentList = [NSMutableArray new];//存储房屋信息中存在的属性
+                    for (int i = 0; i < equipmentList1.allKeys.count; i ++) {
+                        NSString *strKey = [[equipmentList1 allKeys] objectAtIndex:i];//key
+                        NSArray *arrCodes = [equipmentList1 objectForKey:strKey];//code 数组
+                        NSArray *allEQTypeList = [[allEqList objectForKey:strKey] objectForKey:@"equipmentList"];
+                        for (int m = 0; m < arrCodes.count; m ++) {
+                            for (int n = 0; n < allEQTypeList.count; n ++) {
+                                if ([[[allEQTypeList objectAtIndex:n] objectForKey:@"code"]intValue] == [[arrCodes objectAtIndex:m]intValue] ) {
+                                    [allExistEquipmentList addObject:[allEQTypeList objectAtIndex:n]];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    for (int i = 0; i < allEquipmentList.count; i ++) {
+                        Boolean isExist = false;
+                        for (int j = 0; j < allExistEquipmentList.count; j ++) {
+                            if ([[allEquipmentList objectAtIndex:i] isEqual:[allExistEquipmentList objectAtIndex:j]]) {
+                                isExist = true;
+                                break;
+                            }
+                        }
+                        UILabel *tmpLabel = [self createLabelWithFrame:CGRectMake(76.5*(i%4), 29*floor(i/4.0), 76.5, 29) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0]  :NSTextAlignmentLeft];
+                        tmpLabel.text = [[allEquipmentList objectAtIndex:i]objectForKey:@"description"];
+                        [self->mShowHotelDetailView.equipmengListView addSubview:tmpLabel];
+                        if (!isExist) {
+                            tmpLabel.textColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0];
+                        }
+                    }
+                }];
+                [self getRequestListWithUrl:@"/leaseType" :^(NSDictionary *dictData) {
+                    NSArray *allLeaseList = [dictData objectForKey:@"result"];
+                    for (int i = 0; i < allLeaseList.count; i ++) {
+                        if ([[[allLeaseList objectAtIndex:i]objectForKey:@"code"]intValue] == leaseTypeCode) {
+                            self->mShowHotelDetailView.leaseTypeLabel.text = [[allLeaseList objectAtIndex:i]objectForKey:@"description"];
+                            break;
+                        }
+                    }
+                }];
+                [self getRequestListWithUrl:@"/bedList" :^(NSDictionary *dictData) {
+                    NSArray *arrBedList = [dictData objectForKey:@"result"];
+                    NSMutableString* arrExistBed = [NSMutableString new];
+                    for (int i = 0; i < bedList.allKeys.count; i ++) {
+                        NSString *strBedKey = [bedList.allKeys objectAtIndex:i];
+                        for (int j = 0; j < arrBedList.count; j ++) {
+                            NSDictionary *bedInfo = [arrBedList objectAtIndex:j];
+                            if ([[bedInfo objectForKey:@"key"] isEqualToString:strBedKey]) {
+                                if (arrExistBed.length == 0) {
+                                    [arrExistBed appendString:[NSString stringWithFormat:@"%@*%d",[bedInfo objectForKey:@"description"],[[bedList objectForKey:strBedKey]intValue]]];
+                                }else{
+                                    [arrExistBed appendString:[NSString stringWithFormat:@"/%@*%d",[bedInfo objectForKey:@"description"],[[bedList objectForKey:strBedKey]intValue]]];
+                                }
+                                
+                                break;
+                            }
+                        }
+                    }
+                    self->mShowHotelDetailView.bedLabel.text = arrExistBed;
+                    
+                }];
+                [self getRequestListWithUrl:@"/notice" :^(NSDictionary *dictData) {
+                    NSArray *arrNoticeList = [dictData objectForKey:@"result"];
+                    NSMutableString *allNoticeDesc = [NSMutableString new];
+                    for (int i = 0; i < noticeCodeArray.count; i ++) {
+                        for (int j = 0; j < arrNoticeList.count; j ++) {
+                            if ([[noticeCodeArray objectAtIndex:i]intValue] == [[[arrNoticeList objectAtIndex:j]objectForKey:@"code"]intValue]) {
+                                [allNoticeDesc appendString:[NSString stringWithFormat:@"%@; ",[[arrNoticeList objectAtIndex:j]objectForKey:@"description"]]];
+                                break;
+                            }
+                        }
+                    }
+                    self->mShowHotelDetailView.noticeLabel.text = allNoticeDesc;
+                }];
+                [self getRequestListWithUrl:@"/toiletType" :^(NSDictionary *dictData) {
+                    NSArray *allToiletList = [dictData objectForKey:@"result"];
+                    for (int i = 0; i < allToiletList.count; i ++) {
+                        if ([[[allToiletList objectAtIndex:i]objectForKey:@"code"]intValue] == toiletTypeCode) {
+                            self->mShowHotelDetailView.toiletLabel.text = [[allToiletList objectAtIndex:i]objectForKey:@"description"];
+                            break;
+                        }
+                    }
+                }];
+            }];
+            
+        }
+    }
+}
+- (HotelDetailView *)createHotelDetailView{
+    UIView *hotelDetailView = [[UIView alloc]initWithFrame:self.webView.frame];
+    hotelDetailView.backgroundColor = [UIColor colorWithRed:57.0/255.0 green:37.0/255.0 blue:37.0/255.0 alpha:0.6];
+    hotelDetailView.hidden = YES;
+    [self.view addSubview:hotelDetailView];
+    [self.view bringSubviewToFront:hotelDetailView];
+    HotelDetailView *hotelDetailViewTmp = [[HotelDetailView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 338, 0, 338, SCREEN_HEIGHT - SafeAreaTopHeight)];
+    [hotelDetailView addSubview:hotelDetailViewTmp];
+    return hotelDetailViewTmp;
+}
+
+- (void)getRequestListWithUrl:(NSString *)strUrl :(void(^)(NSDictionary *dictData))showDataInView{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BASE_URL,strUrl]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
+    NSURLSession *session =[NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        //回到主线程 刷新数据 要是刷新就在这里面
+        dispatch_async(dispatch_get_main_queue(), ^{
+            showDataInView(dic);
+        });
+    }];
+    //启动任务
+    [dataTask resume];
+}
+
 @end
 

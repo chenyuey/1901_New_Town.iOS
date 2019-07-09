@@ -23,6 +23,7 @@
 		522E9F3E22D06AD200781502 /* YZNavigationMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F3D22D06AD200781502 /* YZNavigationMenuView.m */; };
 		522E9F4222D07EC900781502 /* SearchNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F4122D07EC900781502 /* SearchNameViewController.m */; };
 		522E9F4622D30E3100781502 /* HotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F4522D30E3100781502 /* HotelTableViewCell.m */; };
+		522E9F4A22D4868800781502 /* HotelDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F4922D4868800781502 /* HotelDetailView.m */; };
 		5233B337229D389900155B67 /* preloader_64.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5233B336229D389900155B67 /* preloader_64.gif */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
@@ -93,6 +94,8 @@
 		522E9F4122D07EC900781502 /* SearchNameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchNameViewController.m; sourceTree = "<group>"; };
 		522E9F4422D30E3100781502 /* HotelTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotelTableViewCell.h; sourceTree = "<group>"; };
 		522E9F4522D30E3100781502 /* HotelTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotelTableViewCell.m; sourceTree = "<group>"; };
+		522E9F4822D4868800781502 /* HotelDetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotelDetailView.h; sourceTree = "<group>"; };
+		522E9F4922D4868800781502 /* HotelDetailView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotelDetailView.m; sourceTree = "<group>"; };
 		5233B336229D389900155B67 /* preloader_64.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = preloader_64.gif; sourceTree = "<group>"; };
 		5256ACF8226D6ADA00AAFB77 /* YZSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZSDKCore.framework; path = ../../Downloads/Release/YZSDKCore.framework; sourceTree = "<group>"; };
 		5256ACF9226D6ADA00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = ../../Downloads/Release/YZBaseSDK.framework; sourceTree = "<group>"; };
@@ -246,9 +249,19 @@
 			path = HotelCell;
 			sourceTree = "<group>";
 		};
+		522E9F4722D4865B00781502 /* HotelDatail */ = {
+			isa = PBXGroup;
+			children = (
+				522E9F4822D4868800781502 /* HotelDetailView.h */,
+				522E9F4922D4868800781502 /* HotelDetailView.m */,
+			);
+			path = HotelDatail;
+			sourceTree = "<group>";
+		};
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
+				522E9F4722D4865B00781502 /* HotelDatail */,
 				52BC542422C7479600E31B50 /* search */,
 				522934A6227160CE00B30E94 /* Tools */,
 				5221BC12227058E000A78013 /* StartupPage */,
@@ -633,6 +646,7 @@
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				522E9F2422CB4FFC00781502 /* SearchResultViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
+				522E9F4A22D4868800781502 /* HotelDetailView.m in Sources */,
 				522E9F1E22CB457200781502 /* DayCollectionViewCell.m in Sources */,
 				522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */,
 				527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */,
