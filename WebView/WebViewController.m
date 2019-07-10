@@ -96,6 +96,11 @@
     
     //修改导航栏样式
     self.navTitleLabel = [self createLabelWithFrame:CGRectMake(50, SafeStatusBarHeight, SCREEN_WIDTH - 100, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
+    self.infoImageView = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - 100)/2+45, 12, 20, 20)];
+    self.infoImageView.image = [UIImage imageNamed:@"info_icon"];
+    self.infoImageView.hidden = YES;
+    [self.navTitleLabel addSubview:self.infoImageView];
+    
     [self.view addSubview:self.navTitleLabel];
     self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(navigationShouldPopOnBackButton)];
     self.backButton.hidden = YES;
@@ -256,12 +261,13 @@
                       NSString *strPathURL = self.webView.URL.path;
                       [self updateCollectBtnAndShareBtnHidden:strPathURL];
                   }
-                  
+                  self.infoImageView.hidden = YES;
                   //加载新链接时，分享按钮先置为不可用
                   [self addWebKitTransform:self.webView];
                   self.navTitleLabel.text = response;
                   if ([self.webView.URL.path containsString:@"goods"]) {
                       self.navTitleLabel.text = @"房源详情";
+                      self.infoImageView.hidden = NO;
                       self.navTitleLabel.userInteractionEnabled = YES;
                       UITapGestureRecognizer *tapDate = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showHotelInfo)];
                       [self.navTitleLabel addGestureRecognizer:tapDate];

@@ -57,6 +57,8 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 
 @property BOOL isLoginYouZan;
 
+@property (nonatomic,strong) UIImageView *infoImageView;
+
 - (id)initWithURLString:(NSString *)strURL;
 @end
 
