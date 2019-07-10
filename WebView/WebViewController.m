@@ -839,7 +839,15 @@
     [self.view bringSubviewToFront:hotelDetailView];
     HotelDetailView *hotelDetailViewTmp = [[HotelDetailView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 338, 0, 338, SCREEN_HEIGHT - SafeAreaTopHeight)];
     [hotelDetailView addSubview:hotelDetailViewTmp];
+    UIView *clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 338, SCREEN_HEIGHT - SafeAreaTopHeight)];
+    clearView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapLeftView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideInfoView)];
+    [clearView addGestureRecognizer:tapLeftView];
+    [hotelDetailView addSubview:clearView];
     return hotelDetailViewTmp;
+}
+- (void)hideInfoView{
+    mShowHotelDetailView.superview.hidden = YES;
 }
 
 - (void)getRequestListWithUrl:(NSString *)strUrl :(void(^)(NSDictionary *dictData))showDataInView{
