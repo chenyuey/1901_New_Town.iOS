@@ -318,22 +318,9 @@
         }
     }
     [self.ageTipsLabel sizeToFit];
-//    self.ageTipsLabel.centerY = self.ageLabel.centerY;
-//    self.ageTipsLabel.x = self.ageLabel.right + 7;
 }
 
 #pragma mark - setter & getter
-
-//- (UILabel *)ageLabel {
-//    if (!_ageLabel) {
-//        _ageLabel = [[UILabel alloc] init];
-//        _ageLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
-//        _ageLabel.textColor = [UIColor blackColor];
-//        _ageLabel.text = @"年龄 age";
-//        [_ageLabel sizeToFit];
-//    }
-//    return _ageLabel;
-//}
 
 - (UILabel *)ageTipsLabel {
     if (!_ageTipsLabel) {

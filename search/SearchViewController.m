@@ -20,8 +20,8 @@
     //导航栏
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
-    mAddressLocationLabel = [self createLabelWithFrame:CGRectMake(43, SafeAreaTopHeight, SCREEN_WIDTH - 43*2, 30) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
-    mAddressLocationLabel.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
+    mAddressLocationLabel = [self createLabelWithFrame:CGRectMake(16, SafeStatusBarHeight+19, SCREEN_WIDTH - 16*2, 44) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
+    mAddressLocationLabel.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
     mAddressLocationLabel.layer.borderWidth = 1.0;
     mAddressLocationLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
     mAddressLocationLabel.text = @" 请选择地址";
@@ -31,8 +31,8 @@
     UITapGestureRecognizer *tapAddress = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectAddress:)];
     [mAddressLocationLabel addGestureRecognizer:tapAddress];
     
-    mDateLabel = [self createLabelWithFrame:CGRectMake(43, mAddressLocationLabel.frame.origin.y + mAddressLocationLabel.frame.size.height + 5, SCREEN_WIDTH - 43*2, 30) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
-    mDateLabel.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
+    mDateLabel = [self createLabelWithFrame:CGRectMake(16, mAddressLocationLabel.frame.origin.y + mAddressLocationLabel.frame.size.height + 8, SCREEN_WIDTH - 16*2, 44) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
+    mDateLabel.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
     mDateLabel.layer.borderWidth = 1.0;
     mDateLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
     mDateLabel.text = @" 请选择入住时间";
@@ -42,8 +42,8 @@
     UITapGestureRecognizer *tapDate = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectDate:)];
     [mDateLabel addGestureRecognizer:tapDate];
     
-    mHomeNameLabel = [self createLabelWithFrame:CGRectMake(43, mDateLabel.frame.origin.y + mDateLabel.frame.size.height + 5, SCREEN_WIDTH - 43*2, 30) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
-    mHomeNameLabel.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
+    mHomeNameLabel = [self createLabelWithFrame:CGRectMake(16, mDateLabel.frame.origin.y + mDateLabel.frame.size.height + 8, SCREEN_WIDTH - 16*2, 44) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
+    mHomeNameLabel.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
     mHomeNameLabel.layer.borderWidth = 1.0;
     mHomeNameLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
     mHomeNameLabel.text = @" 位置/地标/房源名称";
@@ -54,8 +54,8 @@
     //设置显示模式为永远显示(默认不显示 必须设置 否则没有效果)
     [self.view addSubview:mHomeNameLabel];
     
-    mFindBtn = [self createButtonWithFrame:CGRectMake(43, mHomeNameLabel.frame.origin.y + mHomeNameLabel.frame.size.height + 11, SCREEN_WIDTH - 43*2, 30) :@"查找" :@selector(findButtonClick:)];
-    mFindBtn.backgroundColor = [UIColor colorWithRed:21.0/255.0 green:144.0/255.0 blue:253.0/255.0 alpha:1.0];
+    mFindBtn = [self createButtonWithFrame:CGRectMake(16, mHomeNameLabel.frame.origin.y + mHomeNameLabel.frame.size.height + 11, SCREEN_WIDTH - 16*2, 44) :@"查找" :@selector(findButtonClick:)];
+    mFindBtn.backgroundColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
     [mFindBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     mFindBtn.layer.cornerRadius = 4;
     [self.view addSubview:mFindBtn];
