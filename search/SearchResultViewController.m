@@ -170,6 +170,7 @@
 }
 - (UIView *)createSelectPeopleView{
     UIView *view  = [[UIView alloc]initWithFrame:CGRectMake(0, mSearchShowView.frame.origin.y+mSearchShowView.frame.size.height+13 + 20 + 5, SCREEN_WIDTH, 125)];
+    view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
     float dis = (SCREEN_WIDTH - 50 - 75*4)/3;
     UIButton *btn1 = [self createSelectButtonWithFrame:CGRectMake(25, 30, 75, 25) :@"1～2人"];
@@ -231,6 +232,7 @@
 #pragma mark - 创建价格选择筛选
 - (UIView *)createSelectPriceView{
     UIView *view  = [[UIView alloc]initWithFrame:CGRectMake(0, mSearchShowView.frame.origin.y+mSearchShowView.frame.size.height+13 + 20 + 5, SCREEN_WIDTH, 160)];
+    view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
     self.ageTipsLabel = [self createLabelWithFrame:CGRectMake(18, 9, 63, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
     self.ageTipsLabel.text = @"¥0 - 不限";

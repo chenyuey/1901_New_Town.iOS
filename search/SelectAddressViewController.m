@@ -80,7 +80,6 @@
     NSString *path=[[NSBundle mainBundle] pathForResource:@"citydict"
                                                    ofType:@"plist"];
     [self.keys addObject:@" "];
-    [self.keys addObject:@" "];
     self.cities = [NSMutableDictionary dictionaryWithContentsOfFile:path];
     [self.keys addObjectsFromArray:[[self.cities allKeys] sortedArrayUsingSelector:@selector(compare:)]];
 }
@@ -106,9 +105,10 @@
     [bgView addSubview:titleLabel];
     if (section == 0) {
         titleLabel.text = @"定位城市";
-    }else if (section == 1){
-        titleLabel.text = @"最近访问";
     }
+//    else if (section == 1){
+//        titleLabel.text = @"最近访问";
+//    }
     return bgView;
 }
 
@@ -126,7 +126,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (section == 0 || section == 1) {
+    if (section == 0) {
         return 1;
     }
     NSString *key = [_keys objectAtIndex:section];
@@ -158,14 +158,13 @@
             [cell addSubview:mCurrentLocCity];
             [self startLocate];
         }
-    }else if (indexPath.section == 1){
     }else{
        cell.textLabel.text = [[_cities objectForKey:key] objectAtIndex:indexPath.row];
     }
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0 || indexPath.section == 1) {
+    if (indexPath.section == 0) {
         return 60;
     }else{
         return 30;
@@ -173,7 +172,7 @@
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section > 1) {
+    if (indexPath.section > 0) {
         NSString *key = [_keys objectAtIndex:indexPath.section];
         self.selectValueBlock([[_cities objectForKey:key] objectAtIndex:indexPath.row]);
         //获取定位数据
