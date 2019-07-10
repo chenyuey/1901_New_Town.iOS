@@ -196,6 +196,7 @@
 }
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    self.infoImageView.hidden = YES;
     if ([request.URL.absoluteString containsString:@"www.bing.com"]) {
         if (![self.navTitleLabel.text isEqualToString:@"加载中..."]) {
             MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text andType:YES];
@@ -261,7 +262,6 @@
                       NSString *strPathURL = self.webView.URL.path;
                       [self updateCollectBtnAndShareBtnHidden:strPathURL];
                   }
-                  self.infoImageView.hidden = YES;
                   //加载新链接时，分享按钮先置为不可用
                   [self addWebKitTransform:self.webView];
                   self.navTitleLabel.text = response;
@@ -717,18 +717,15 @@
 #pragma mark - 显示房源详情
 - (void)showHotelInfo{
     if ([self.navTitleLabel.text isEqualToString:@"房源详情"]) {
-        
         if (mShowHotelDetailView == nil) {
             mShowHotelDetailView = [self createHotelDetailView];
         }
-        
         mShowHotelDetailView.superview.hidden = !mShowHotelDetailView.superview.hidden;
         if (mShowHotelDetailView.superview.hidden == NO) {
             [self getRequestListWithUrl:@"/dome" :^(NSDictionary *dictData) {
                 int houseTypeMapCode = [[[dictData objectForKey:@"result"] objectForKey:@"houseTypeMap"]intValue];
                 int leaseTypeCode = [[[dictData objectForKey:@"result"] objectForKey:@"leaseType"]intValue];
-                NSDictionary *bedList = [[dictData objectForKey:@"result"] objectForKey:@"bedList"]; //objectForKey:@"doubleBed"]intValue];
-//                int doubleDeckBedCode = [[[[dictData objectForKey:@"result"] objectForKey:@"bedList"] objectForKey:@"doubleDeckBed"]intValue];
+                NSDictionary *bedList = [[dictData objectForKey:@"result"] objectForKey:@"bedList"];
                 int maxPeopleCnt = [[[dictData objectForKey:@"result"] objectForKey:@"maxPeopleCnt"]intValue];
                 int toiletTypeCode = [[[dictData objectForKey:@"result"] objectForKey:@"toiletType"]intValue];
                 NSDictionary *equipmentList1 = [[dictData objectForKey:@"result"] objectForKey:@"equipmentList"];
@@ -736,8 +733,8 @@
                 
                 
                 [self getRequestListWithUrl:@"/equipmentList" :^(NSDictionary *dictData) {
-                    for (int i = 0; i < mShowHotelDetailView.equipmengListView.subviews.count; i ++) {
-                        UIView *subviewTmp = [mShowHotelDetailView.equipmengListView.subviews objectAtIndex:i];
+                    for (int i = 0; i < self->mShowHotelDetailView.equipmengListView.subviews.count; i ++) {
+                        UIView *subviewTmp = [self->mShowHotelDetailView.equipmengListView.subviews objectAtIndex:i];
                         [subviewTmp removeFromSuperview];
                     }
                     NSDictionary *allEqList = [dictData objectForKey:@"result"];
