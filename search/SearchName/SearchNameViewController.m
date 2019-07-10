@@ -103,6 +103,10 @@
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
+    if (self->mAddressList.count == 0) {
+        self.selectValueBlock(searchBar.text);
+        [self backToSelectVC];
+    }
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

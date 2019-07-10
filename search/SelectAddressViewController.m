@@ -148,7 +148,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [cell.textLabel setTextColor:[UIColor blackColor]];
-        cell.textLabel.font = [UIFont systemFontOfSize:18];
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
     }
     if (indexPath.section == 0) {
         if (mCurrentLocCity == nil) {
@@ -167,7 +167,7 @@
     if (indexPath.section == 0) {
         return 60;
     }else{
-        return 30;
+        return 35;
     }
     
 }

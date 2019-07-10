@@ -10,8 +10,8 @@
 #import "MonthModel.h"
 
 #define NormalColor [UIColor whiteColor]
-#define StartAndEndColor [UIColor orangeColor]
-#define SelectedColor [UIColor blueColor]
+#define StartAndEndColor [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
+#define SelectedColor [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
 
 
 @interface DayCollectionViewCell ()
@@ -21,6 +21,7 @@
 @implementation DayCollectionViewCell
 - (instancetype)initWithFrame:(CGRect)frame
 {
+    
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
@@ -49,8 +50,8 @@
     }else{
         if (model.isToday) {//是今天
             self.gregorianCalendarLabel.text = @"今天";
-            self.lunarCalendarLabel.textColor = [UIColor redColor];
-            self.gregorianCalendarLabel.textColor = [UIColor redColor];
+            self.lunarCalendarLabel.textColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
+            self.gregorianCalendarLabel.textColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
             NSString *string = [self getJieJiaRiWithMonth:model.month Day:model.day];
             if (string.length) {
                 self.lunarCalendarLabel.text = string;
@@ -64,8 +65,8 @@
             NSString *string = [self getJieJiaRiWithMonth:model.month Day:model.day];
             if (string.length) {//是阳历节日
                 self.lunarCalendarLabel.text = string;
-                self.lunarCalendarLabel.textColor = [UIColor blueColor];
-                self.gregorianCalendarLabel.textColor = [UIColor blueColor];
+                self.lunarCalendarLabel.textColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
+                self.gregorianCalendarLabel.textColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
             }else{
                 NSDictionary *lunarDic = [self LunarForSolarYear:(int)model.year Month:(int)model.month Day:(int)model.day];
                 NSString *lunarStr = [self lunarWith:lunarDic];
@@ -73,8 +74,8 @@
                     self.lunarCalendarLabel.textColor = [UIColor blackColor];
                     self.gregorianCalendarLabel.textColor = [UIColor blackColor];;
                 }else{//是阴历节日
-                    self.lunarCalendarLabel.textColor = [UIColor orangeColor];
-                    self.gregorianCalendarLabel.textColor = [UIColor orangeColor];
+                    self.lunarCalendarLabel.textColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
+                    self.gregorianCalendarLabel.textColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
                 }
                 self.lunarCalendarLabel.text = lunarStr;
             }
