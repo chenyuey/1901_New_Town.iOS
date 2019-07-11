@@ -22,9 +22,10 @@
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     mAddressLocationLabel = [self createLabelWithFrame:CGRectMake(16, SafeStatusBarHeight+19, SCREEN_WIDTH - 16*2, 44) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
     mAddressLocationLabel.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
+    mAddressLocationLabel.layer.cornerRadius = 4;
     mAddressLocationLabel.layer.borderWidth = 1.0;
     mAddressLocationLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
-    mAddressLocationLabel.text = @" 请选择地址";
+    mAddressLocationLabel.text = @"请选择地址";
     mAddressLocationLabel.userInteractionEnabled = YES;
     [self.view addSubview:mAddressLocationLabel];
     //添加选择地址点击事件
@@ -33,9 +34,10 @@
     
     mDateLabel = [self createLabelWithFrame:CGRectMake(16, mAddressLocationLabel.frame.origin.y + mAddressLocationLabel.frame.size.height + 8, SCREEN_WIDTH - 16*2, 44) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
     mDateLabel.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
+    mDateLabel.layer.cornerRadius = 4;
     mDateLabel.layer.borderWidth = 1.0;
     mDateLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
-    mDateLabel.text = @" 请选择入住时间";
+    mDateLabel.text = @"请选择入住时间";
     [self.view addSubview:mDateLabel];
     //添加选择地址点击事件
     mDateLabel.userInteractionEnabled = YES;
@@ -44,9 +46,10 @@
     
     mHomeNameLabel = [self createLabelWithFrame:CGRectMake(16, mDateLabel.frame.origin.y + mDateLabel.frame.size.height + 8, SCREEN_WIDTH - 16*2, 44) :14 :@"Arial" :[UIColor colorWithRed:58/255.0 green:60/255.0 blue:64/255.0 alpha:1.0] :NSTextAlignmentLeft];
     mHomeNameLabel.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
+    mHomeNameLabel.layer.cornerRadius = 4;
     mHomeNameLabel.layer.borderWidth = 1.0;
     mHomeNameLabel.textColor = [UIColor colorWithRed:136.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
-    mHomeNameLabel.text = @" 位置/地标/房源名称";
+    mHomeNameLabel.text = @"位置/地标/房源名称";
     mHomeNameLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapHomeName = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectHomeName:)];
     [mHomeNameLabel addGestureRecognizer:tapHomeName];
@@ -61,8 +64,8 @@
     [self.view addSubview:mFindBtn];
 }
 #pragma mark - UI控件创建
-- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    UILabel *label = [[UILabel alloc]initWithFrame:frame];
+- (SFLabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
+    SFLabel *label = [[SFLabel alloc]initWithFrame:frame];
     label.font = [UIFont fontWithName:fontName size:fontSize];
     label.textColor = fontColor;
     label.textAlignment = alignment;

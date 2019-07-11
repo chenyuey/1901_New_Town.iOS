@@ -53,12 +53,6 @@
 #pragma mark - 页面事件
 - (BOOL)navigationShouldPopOnBackButton {
     if ([self.webView canGoBack]) {
-//        WKWebView *webview1 = (WKWebView *)self.webView;
-//        NSArray *backList = webview1.backForwardList.backList;
-//        WKNavigation *navigation = [webview1 goBack];
-//        if (navigation) {
-//
-//        }
         [self.webView goBack];
         mShowHotelDetailView.superview.hidden = YES;
         return NO;
@@ -271,6 +265,7 @@
                       self.navTitleLabel.userInteractionEnabled = YES;
                       UITapGestureRecognizer *tapDate = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showHotelInfo)];
                       [self.navTitleLabel addGestureRecognizer:tapDate];
+                      [self showHotelInfo];
                   }
                   [self->mArrTitles addObject:response];
                   //全部民宿不添加 收藏按钮 功能
@@ -720,8 +715,9 @@
         if (mShowHotelDetailView == nil) {
             mShowHotelDetailView = [self createHotelDetailView];
         }
-        mShowHotelDetailView.superview.hidden = !mShowHotelDetailView.superview.hidden;
-        if (mShowHotelDetailView.superview.hidden == NO) {
+        Boolean isHidden = !mShowHotelDetailView.superview.hidden;
+        mShowHotelDetailView.superview.hidden = isHidden;
+        if (isHidden == NO) {
             [self getRequestListWithUrl:@"/dome" :^(NSDictionary *dictData) {
                 int houseTypeMapCode = [[[dictData objectForKey:@"result"] objectForKey:@"houseTypeMap"]intValue];
                 int leaseTypeCode = [[[dictData objectForKey:@"result"] objectForKey:@"leaseType"]intValue];
@@ -827,7 +823,14 @@
                     }
                 }];
             }];
-            
+            //添加动画 CGRectMake(SCREEN_WIDTH - 338, 0, 338, SCREEN_HEIGHT - SafeAreaTopHeight)
+            [UIView animateWithDuration:0.3 animations:^{
+                self->mShowHotelDetailView.center = CGPointMake(SCREEN_WIDTH - 338+338/2, (SCREEN_HEIGHT - SafeAreaTopHeight)/2);
+            }];
+        }else{
+            [UIView animateWithDuration:0.3 animations:^{
+                self->mShowHotelDetailView.center = CGPointMake(SCREEN_WIDTH+338/2, (SCREEN_HEIGHT - SafeAreaTopHeight)/2);
+            }];
         }
     }
 }
@@ -837,7 +840,7 @@
     hotelDetailView.hidden = YES;
     [self.view addSubview:hotelDetailView];
     [self.view bringSubviewToFront:hotelDetailView];
-    HotelDetailView *hotelDetailViewTmp = [[HotelDetailView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 338, 0, 338, SCREEN_HEIGHT - SafeAreaTopHeight)];
+    HotelDetailView *hotelDetailViewTmp = [[HotelDetailView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH, 0, 338, SCREEN_HEIGHT - SafeAreaTopHeight)];
     [hotelDetailView addSubview:hotelDetailViewTmp];
     UIView *clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 338, SCREEN_HEIGHT - SafeAreaTopHeight)];
     clearView.userInteractionEnabled = YES;

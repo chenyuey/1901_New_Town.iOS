@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		079F1827BD91AC71C7E50E74 /* libPods-NewTown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */; };
+		521C612322D6D0FE00489BCD /* SFLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 521C612222D6D0FE00489BCD /* SFLabel.m */; };
 		5221BC0F226EA96D00A78013 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5221BC0E226EA96D00A78013 /* loading.gif */; };
 		5221BC152270592000A78013 /* LYWNewfeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5221BC142270592000A78013 /* LYWNewfeatureViewController.m */; };
 		522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 522934A8227160E900B30E94 /* UIImage+LXExtension.m */; };
@@ -65,6 +66,8 @@
 
 /* Begin PBXFileReference section */
 		191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewTown.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		521C612122D6D0FE00489BCD /* SFLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFLabel.h; sourceTree = "<group>"; };
+		521C612222D6D0FE00489BCD /* SFLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFLabel.m; sourceTree = "<group>"; };
 		5221BC0E226EA96D00A78013 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		5221BC132270592000A78013 /* LYWNewfeatureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYWNewfeatureViewController.h; sourceTree = "<group>"; };
 		5221BC142270592000A78013 /* LYWNewfeatureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYWNewfeatureViewController.m; sourceTree = "<group>"; };
@@ -176,6 +179,15 @@
 				B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		521C612022D6D0E000489BCD /* SFLabel */ = {
+			isa = PBXGroup;
+			children = (
+				521C612122D6D0FE00489BCD /* SFLabel.h */,
+				521C612222D6D0FE00489BCD /* SFLabel.m */,
+			);
+			path = SFLabel;
 			sourceTree = "<group>";
 		};
 		5221BC12227058E000A78013 /* StartupPage */ = {
@@ -401,6 +413,7 @@
 		52BC542422C7479600E31B50 /* search */ = {
 			isa = PBXGroup;
 			children = (
+				521C612022D6D0E000489BCD /* SFLabel */,
 				522E9F4322D30DF000781502 /* HotelCell */,
 				522E9F3F22D07E9D00781502 /* SearchName */,
 				522E9F3B22D06AD200781502 /* YZNavigationMenuVIew */,
@@ -647,6 +660,7 @@
 				522E9F2422CB4FFC00781502 /* SearchResultViewController.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
 				522E9F4A22D4868800781502 /* HotelDetailView.m in Sources */,
+				521C612322D6D0FE00489BCD /* SFLabel.m in Sources */,
 				522E9F1E22CB457200781502 /* DayCollectionViewCell.m in Sources */,
 				522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */,
 				527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */,

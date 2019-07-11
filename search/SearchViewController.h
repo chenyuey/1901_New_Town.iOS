@@ -12,14 +12,15 @@
 #import "HotelCalendarViewController.h"
 #import "SearchResultViewController.h"
 #import "SearchNameViewController.h"
+#import "SFLabel/SFLabel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchViewController : UIViewController<UITextFieldDelegate>
 {
-    UILabel *mAddressLocationLabel;
-    UILabel *mDateLabel;
-    UILabel *mHomeNameLabel;
+    SFLabel *mAddressLocationLabel;
+    SFLabel *mDateLabel;
+    SFLabel *mHomeNameLabel;
     
     UIButton *mFindBtn;
 }
