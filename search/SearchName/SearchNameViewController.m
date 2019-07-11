@@ -19,6 +19,16 @@
     }
     return _geocoder;
 }
+- (id)initWithCityName:(NSString *)strCityName{
+    self = [super init];
+    if (self) {
+        if (strCityName==nil || strCityName.length == 0) {
+            mStrCity = @"中国";
+        }
+        mStrCity = strCityName;
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
@@ -48,6 +58,8 @@
     mShowAddressTableview.dataSource = self;
     [self.view addSubview:mShowAddressTableview];
     mAddressList = [[NSArray alloc]init];
+    
+    
 }
 - (void)backToSearch{
     [self.navigationController popViewControllerAnimated:YES];
@@ -95,10 +107,26 @@
 #pragma mark - UISearchBarDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     if (searchText.length > 0) {
-        [self.geocoder geocodeAddressString:searchText completionHandler:^(NSArray *placemarks, NSError *error) {
-            self->mAddressList = placemarks;
-            [self->mShowAddressTableview reloadData];
-        }];  
+        [self.geocoder geocodeAddressString:mStrCity completionHandler:^(NSArray *placemarks, NSError *error) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            
+            MKCoordinateRegion region = MKCoordinateRegionMake(placemark.location.coordinate,MKCoordinateSpanMake(0.1,0.1));
+            MKLocalSearchRequest *localSearchRequest = [[MKLocalSearchRequest alloc] init] ;
+            localSearchRequest.region = region;
+            localSearchRequest.naturalLanguageQuery = searchText;//搜索关键词
+            MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:localSearchRequest];
+            
+            [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+                NSLog(@"the response's count is:%ld",response.mapItems.count);
+                if (error){
+                    NSLog(@"error info：%@",error);
+                }
+                else{
+                    self->mAddressList = response.mapItems;
+                    [self->mShowAddressTableview reloadData];
+                }
+            }];
+        }];
     }
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
@@ -120,7 +148,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strIndentify];
         cell.textLabel.font = [UIFont systemFontOfSize:16];
     }
-    CLPlacemark *mark = [mAddressList objectAtIndex:indexPath.row];
+    MKMapItem *mark = [mAddressList objectAtIndex:indexPath.row];
     cell.textLabel.text = mark.name;
     cell.textLabel.textAlignment = NSTextAlignmentLeft;
     return cell;

@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "CommonHeader.h"
 #import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchNameViewController : UIViewController<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>{
     UISearchBar *mSearchBarView;
     UITableView *mShowAddressTableview;
     NSArray *mAddressList;
+    NSString *mStrCity;
 }
 @property(nonatomic,copy) void(^selectCheckDateBlock)(NSString *homeName);
 //左侧返回按钮
@@ -24,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, copy) void(^selectValueBlock)(NSString * valueStr);
+- (id)initWithCityName:(NSString *)strCityName;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -91,6 +91,16 @@
 }
 #pragma mark - 动态事件
 - (void)findButtonClick:(id)sender{
+    if ([mAddressLocationLabel.text isEqualToString:@"请选择地址"]) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择填入地址" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    if ([mDateLabel.text isEqualToString:@"请选择入住时间"]) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择填入入住时间" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
     SearchResultViewController *searchVC = [[SearchResultViewController alloc]initWithAddress:mAddressLocationLabel.text AndDate:mDateLabel.text AndName:mHomeNameLabel.text];
     [self.navigationController pushViewController:searchVC animated:YES];
 }
@@ -118,7 +128,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)selectHomeName:(id)sender{
-    SearchNameViewController *vc = [[SearchNameViewController alloc] init];
+    SearchNameViewController *vc = [[SearchNameViewController alloc] initWithCityName:self->mAddressLocationLabel.text];
     [vc setSelectValueBlock:^(NSString *homeName) {
         self->mHomeNameLabel.text = homeName;
         self->mHomeNameLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];

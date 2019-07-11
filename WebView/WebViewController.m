@@ -745,10 +745,9 @@
         Boolean isHidden = !mShowHotelDetailView.superview.hidden;
         mShowHotelDetailView.superview.hidden = isHidden;
         
-        NSString *strGoodId = @"367rrfcmr4ucp";//[[self.webView.URL.path componentsSeparatedByString:@"/"]lastObject];
+        NSString *strGoodId =[[self.webView.URL.path componentsSeparatedByString:@"/"]lastObject];// @"367rrfcmr4ucp";//
         NSDictionary *dicValue = @{@"alias_id":strGoodId};
         NSString *strFilterValue = [self convertToJsonData:dicValue];
-        NSString *strUTF8Url = [strFilterValue stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
         if (isHidden == NO) {
             [self getRequestListWithUrlGet:[NSString stringWithFormat:@"classes/Item?where=%@",strFilterValue] :^(NSDictionary *dictData) {

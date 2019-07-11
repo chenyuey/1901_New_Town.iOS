@@ -193,11 +193,14 @@
     mDateView = [[UIView alloc]initWithFrame:CGRectMake(15, 5, 50, 30)];
     [showSearchItemView addSubview:mDateView];
     UILabel *startDateLabel = [self createLabelWithFrame:CGRectMake(0, 0, mDateView.frame.size.width, 15) :14 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
-    startDateLabel.text = [NSString stringWithFormat:@"入%@",[strDate substringWithRange:NSMakeRange(5, 5)]];
+    
     [mDateView addSubview:startDateLabel];
     UILabel *endDateLabel = [self createLabelWithFrame:CGRectMake(0, 15, mDateView.frame.size.width, 15) :14 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
-    endDateLabel.text = [NSString stringWithFormat:@"离%@",[strDate substringWithRange:NSMakeRange(18, 5)]];
     [mDateView addSubview:endDateLabel];
+    if (strDate.length > 10) {
+        startDateLabel.text = [NSString stringWithFormat:@"入%@",[strDate substringWithRange:NSMakeRange(5, 5)]];
+        endDateLabel.text = [NSString stringWithFormat:@"离%@",[strDate substringWithRange:NSMakeRange(18, 5)]];
+    }
     mAddressLabel = [self createLabelWithFrame:CGRectMake(mDateView.frame.origin.x + mDateView.frame.size.width+10, 10, 40, 20) : 14:@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     mAddressLabel.text = strAddress;
     [mAddressLabel sizeToFit];
