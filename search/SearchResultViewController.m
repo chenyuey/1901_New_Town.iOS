@@ -7,7 +7,7 @@
 //
 
 #import "SearchResultViewController.h"
-
+#define BASE_URL @"http://192.168.124.104:1330/api/1/"
 @interface SearchResultViewController ()
 @property (nonatomic, assign) NSInteger minAge;
 @property (nonatomic, assign) NSInteger maxAge;
@@ -69,7 +69,41 @@
     [self createDropDownList];
     
     mAllHotelList = @[@""];
+    
+    
+    NSString *startDate = [mStrDate substringWithRange:NSMakeRange(0, 10)];
+    NSString *endDate = [mStrDate substringWithRange:NSMakeRange(13,10)];
+    NSDictionary *dicFilter = @{@"begin_date":startDate,
+                                @"end_date":endDate,
+                                @"city":mStrAddress
+                                };
+    [self getRequestListWithUrl:@"findItem" :dicFilter :^(NSDictionary *dictData) {
+        NSLog(@"%@",dictData);
+    }];
+            
 }
+
+- (void)getRequestListWithUrl:(NSString *)strUrl :(NSDictionary*)dicFilter :(void(^)(NSDictionary *dictData))showDataInView{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@functions%@",BASE_URL,[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
+    
+    NSData* data = [NSJSONSerialization dataWithJSONObject:dicFilter options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *bodyData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    [request setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
+    NSURLSession *session =[NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        //回到主线程 刷新数据 要是刷新就在这里面
+        dispatch_async(dispatch_get_main_queue(), ^{
+            showDataInView(dic);
+        });
+    }];
+    //启动任务
+    [dataTask resume];
+}
+
 #pragma mark - UI控件创建
 - (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
     UILabel *label = [[UILabel alloc]initWithFrame:frame];
@@ -145,7 +179,7 @@
         UIView *superView = [selectBtn superview];
         for (int i = 0; i < superView.subviews.count; i ++) {
             UIButton *subview = [superView.subviews objectAtIndex:i];
-            [selectBtn setBackgroundColor:[UIColor orangeColor]];
+            [selectBtn setBackgroundColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0]];
             if ([subview isKindOfClass:[UIButton class]] && ![selectBtn isEqual:subview]) {
                 [subview setBackgroundColor:[UIColor whiteColor]];
                 subview.selected = NO;
