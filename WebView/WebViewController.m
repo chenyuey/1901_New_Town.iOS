@@ -12,7 +12,7 @@
 #import "YZDUICService.h"
 #import "CommonHeader.h"
 #import "MapInfoViewController.h"
-#define BASE_URL @"http://192.168.124.104:1330/api/1/functions"
+#define BASE_URL @"http://192.168.124.104:1330/api/1/"
 
 @interface WebViewController () <YZWebViewDelegate, YZWebViewNoticeDelegate>
 @property (strong, nonatomic) YZWebView *webView;
@@ -709,6 +709,33 @@
 - (void)hideErrorLabel{
     mErrorLabel.hidden = YES;
 }
+
+- (NSString *)convertToJsonData:(NSDictionary *)dict
+{
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString;
+    
+    if (!jsonData) {
+        NSLog(@"%@",error);
+    } else {
+        jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    
+    NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
+    
+    NSRange range = {0,jsonString.length};
+    
+    //去掉字符串中的空格
+    [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
+    
+    NSRange range2 = {0,mutStr.length};
+    
+    //去掉字符串中的换行符
+    [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
+    
+    return mutStr;
+}
 #pragma mark - 显示房源详情
 - (void)showHotelInfo{
     if ([self.navTitleLabel.text isEqualToString:@"房源详情"]) {
@@ -717,17 +744,22 @@
         }
         Boolean isHidden = !mShowHotelDetailView.superview.hidden;
         mShowHotelDetailView.superview.hidden = isHidden;
+        
+        NSString *strGoodId = @"367rrfcmr4ucp";//[[self.webView.URL.path componentsSeparatedByString:@"/"]lastObject];
+        NSDictionary *dicValue = @{@"alias_id":strGoodId};
+        NSString *strFilterValue = [self convertToJsonData:dicValue];
+        NSString *strUTF8Url = [strFilterValue stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
         if (isHidden == NO) {
-            [self getRequestListWithUrl:@"/dome" :^(NSDictionary *dictData) {
+            [self getRequestListWithUrlGet:[NSString stringWithFormat:@"classes/Item?where=%@",strFilterValue] :^(NSDictionary *dictData) {
+                NSDictionary *itemInfo = [[dictData objectForKey:@"result"] objectAtIndex:0];
                 int houseTypeMapCode = [[[dictData objectForKey:@"result"] objectForKey:@"houseTypeMap"]intValue];
-                int leaseTypeCode = [[[dictData objectForKey:@"result"] objectForKey:@"leaseType"]intValue];
-                NSDictionary *bedList = [[dictData objectForKey:@"result"] objectForKey:@"bedList"];
-                int maxPeopleCnt = [[[dictData objectForKey:@"result"] objectForKey:@"maxPeopleCnt"]intValue];
-                int toiletTypeCode = [[[dictData objectForKey:@"result"] objectForKey:@"toiletType"]intValue];
-                NSDictionary *equipmentList1 = [[dictData objectForKey:@"result"] objectForKey:@"equipmentList"];
-                NSArray *noticeCodeArray = [[dictData objectForKey:@"result"] objectForKey:@"notice"];
-                
-                
+                int leaseTypeCode = [[itemInfo objectForKey:@"leaseType"]intValue];
+                NSDictionary *bedList = [itemInfo objectForKey:@"bedList"];
+                int maxPeopleCnt = [[itemInfo objectForKey:@"maxPeopleCnt"]intValue];
+                int toiletTypeCode = [[itemInfo objectForKey:@"toiletType"]intValue];
+                NSDictionary *equipmentList1 = [itemInfo objectForKey:@"equipmentList"];
+                NSArray *noticeCodeArray = [itemInfo objectForKey:@"notice"];
                 [self getRequestListWithUrl:@"/equipmentList" :^(NSDictionary *dictData) {
                     for (int i = 0; i < self->mShowHotelDetailView.equipmengListView.subviews.count; i ++) {
                         UIView *subviewTmp = [self->mShowHotelDetailView.equipmengListView.subviews objectAtIndex:i];
@@ -854,9 +886,25 @@
 }
 
 - (void)getRequestListWithUrl:(NSString *)strUrl :(void(^)(NSDictionary *dictData))showDataInView{
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BASE_URL,strUrl]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@functions%@",BASE_URL,[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
+    [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
+    NSURLSession *session =[NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        //回到主线程 刷新数据 要是刷新就在这里面
+        dispatch_async(dispatch_get_main_queue(), ^{
+            showDataInView(dic);
+        });
+    }];
+    //启动任务
+    [dataTask resume];
+}
+- (void)getRequestListWithUrlGet:(NSString *)strUrl :(void(^)(NSDictionary *dictData))showDataInView{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BASE_URL,[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
     [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
     NSURLSession *session =[NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
