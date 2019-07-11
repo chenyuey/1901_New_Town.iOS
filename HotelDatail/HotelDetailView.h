@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HotelDetailView : UIView
+@interface HotelDetailView : UIView<MKMapViewDelegate>
 @property (nonatomic,strong) UILabel *leaseTypeLabel;
 @property (nonatomic,strong) UILabel *bedLabel;
 @property (nonatomic,strong) UILabel *toiletLabel;
@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) MKMapView *mapView;
 
 - (id)initWithFrame:(CGRect)frame;
+-(MKPointAnnotation*)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude;
 @end
 
 NS_ASSUME_NONNULL_END

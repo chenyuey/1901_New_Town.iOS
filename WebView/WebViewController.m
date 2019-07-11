@@ -752,14 +752,30 @@
         
         if (isHidden == NO) {
             [self getRequestListWithUrlGet:[NSString stringWithFormat:@"classes/Item?where=%@",strFilterValue] :^(NSDictionary *dictData) {
-                NSDictionary *itemInfo = [[dictData objectForKey:@"result"] objectAtIndex:0];
-                int houseTypeMapCode = [[[dictData objectForKey:@"result"] objectForKey:@"houseTypeMap"]intValue];
+                NSDictionary *itemInfo = [[dictData objectForKey:@"results"] objectAtIndex:0];
+                int houseTypeMapCode = [[itemInfo objectForKey:@"houseTypeMap"]intValue];
                 int leaseTypeCode = [[itemInfo objectForKey:@"leaseType"]intValue];
                 NSDictionary *bedList = [itemInfo objectForKey:@"bedList"];
                 int maxPeopleCnt = [[itemInfo objectForKey:@"maxPeopleCnt"]intValue];
                 int toiletTypeCode = [[itemInfo objectForKey:@"toiletType"]intValue];
                 NSDictionary *equipmentList1 = [itemInfo objectForKey:@"equipmentList"];
                 NSArray *noticeCodeArray = [itemInfo objectForKey:@"notice"];
+                NSDictionary *coordinate = [itemInfo objectForKey:@"coordinate"];
+                
+                CLGeocoder *myGeocoder = [CLGeocoder new];
+                
+                // 坐标转地名
+                double latitude = [[coordinate objectForKey:@"latitude"]doubleValue];
+                double longitude = [[coordinate objectForKey:@"longitude"]doubleValue];
+                [myGeocoder reverseGeocodeLocation:[[CLLocation alloc]initWithLatitude:latitude longitude:longitude] completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+                    CLPlacemark *placeMark=[placemarks firstObject];
+                    self->mShowHotelDetailView.positionLabel.text = placeMark.name;
+                    [self->mShowHotelDetailView locateToLatitude:latitude longitude:longitude];
+                }];
+                
+                
+                
+                
                 [self getRequestListWithUrl:@"/equipmentList" :^(NSDictionary *dictData) {
                     for (int i = 0; i < self->mShowHotelDetailView.equipmengListView.subviews.count; i ++) {
                         UIView *subviewTmp = [self->mShowHotelDetailView.equipmengListView.subviews objectAtIndex:i];
