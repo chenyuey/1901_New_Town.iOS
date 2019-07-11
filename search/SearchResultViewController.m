@@ -20,12 +20,13 @@
 @end
 
 @implementation SearchResultViewController
-- (id)initWithAddress:(NSString *)address AndDate:(NSString *)strDate AndName:(NSString *)strName{
+- (id)initWithAddress:(NSString *)address AndDate:(NSString *)strDate AndName:(NSString *)strName AndLoction:(PFGeoPoint *)coordinate{
     self = [super init];
     if (self) {
         mStrAddress = address;
         mStrDate = strDate;
         mStrHomeName = strName;
+        mCoordinate = coordinate;
     }
     return self;
 }
@@ -68,17 +69,30 @@
     [self.view addSubview:mAllHotelTableview];
     [self createDropDownList];
     
-    mAllHotelList = @[@""];
+    mAllHotelList = @[];
     
     
     NSString *startDate = [mStrDate substringWithRange:NSMakeRange(0, 10)];
     NSString *endDate = [mStrDate substringWithRange:NSMakeRange(13,10)];
-    NSDictionary *dicFilter = @{@"begin_date":startDate,
-                                @"end_date":endDate,
-                                @"city":mStrAddress
-                                };
-    [self getRequestListWithUrl:@"findItem" :dicFilter :^(NSDictionary *dictData) {
+    
+    mDicFilter = [NSMutableDictionary new];
+    [mDicFilter setObject:startDate forKey:@"begin_date"];
+    [mDicFilter setObject:endDate forKey:@"end_date"];
+    [mDicFilter setObject:mStrAddress forKey:@"city"];
+//    [mDicFilter setObject:mCoordinate forKey:@"coordinate"];
+    
+//    @"coordinate":coordinate,
+//    @"limit":@(1) ,
+//    @"skip": @(0),
+//    @"order":@"-price",
+//    @"maxPeopleCnt": @[@(0),@(3)],
+//    @"price":@[@(0), @(1000)],
+    
+    
+    [self getRequestListWithUrl:@"/findItem" :mDicFilter :^(NSDictionary *dictData) {
         NSLog(@"%@",dictData);
+        self->mAllHotelList = [dictData objectForKey:@"result"];
+        [self->mAllHotelTableview reloadData];
     }];
             
 }
@@ -88,6 +102,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
     [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     NSData* data = [NSJSONSerialization dataWithJSONObject:dicFilter options:NSJSONWritingPrettyPrinted error:nil];
     NSString *bodyData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -400,12 +415,13 @@
     if (!cell) {
         cell = [[HotelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strIndentify];
     }
-    [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:@"https://img.yzcdn.cn/upload_files/2019/04/07/FqhbWHnpMzLaKgCxaV3sP5mShbEP.jpg"] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
+    NSString *imageUrl = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"cover_link"];
+    [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
     [cell.coverImageView layoutIfNeeded];
     cell.profileLabel.text = @"整套出租 双人床 2人";
-    cell.hotelNameLabel.text = @"浔龙河生态艺术小镇故湘民宿";
-    cell.remarksLabel.text = @"故湘客栈于2015年10月1日正式营业，客栈将浔龙河特有的民俗...";
-    cell.priceLabel.text = @"¥538";
+    cell.hotelNameLabel.text = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"title"];
+    cell.remarksLabel.text = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"desc"];
+    cell.priceLabel.text = [NSString stringWithFormat:@"¥%@",[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"price"]];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

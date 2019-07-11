@@ -101,7 +101,7 @@
         [alert show];
         return;
     }
-    SearchResultViewController *searchVC = [[SearchResultViewController alloc]initWithAddress:mAddressLocationLabel.text AndDate:mDateLabel.text AndName:mHomeNameLabel.text];
+    SearchResultViewController *searchVC = [[SearchResultViewController alloc]initWithAddress:mAddressLocationLabel.text AndDate:mDateLabel.text AndName:mHomeNameLabel.text AndLoction:coordinate];
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 #pragma mark - UITextFieldDelegate
@@ -114,7 +114,7 @@
 - (void)selectAddress:(id)sender{
     SelectAddressViewController *selectAddressVC = [[SelectAddressViewController alloc]init];
     selectAddressVC.selectValueBlock = ^(NSString *addressName){
-        self->mAddressLocationLabel.text = [NSString stringWithFormat:@" %@",addressName];
+        self->mAddressLocationLabel.text = [NSString stringWithFormat:@"%@",addressName];
         self->mAddressLocationLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
     };
     [self.navigationController pushViewController:selectAddressVC animated:YES];
@@ -129,9 +129,18 @@
 }
 - (void)selectHomeName:(id)sender{
     SearchNameViewController *vc = [[SearchNameViewController alloc] initWithCityName:self->mAddressLocationLabel.text];
-    [vc setSelectValueBlock:^(NSString *homeName) {
-        self->mHomeNameLabel.text = homeName;
-        self->mHomeNameLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
+    [vc setSelectValueBlock:^(CLPlacemark *placemark) {
+        if ([placemark isKindOfClass:[NSString class]]) {
+            self->mHomeNameLabel.text = placemark;
+            self->coordinate = [PFGeoPoint geoPoint];
+        }else{
+            self->mHomeNameLabel.text = placemark.name;
+            self->mHomeNameLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
+            PFGeoPoint *geopoint = [PFGeoPoint geoPoint];
+            geopoint.latitude = 38.016437;//placemark.location.coordinate.latitude;
+            geopoint.longitude = 114.491728;//placemark.location.coordinate.longitude;
+            self->coordinate = geopoint;
+        }
     }];
     [self.navigationController pushViewController:vc animated:YES];
 }

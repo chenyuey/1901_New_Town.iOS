@@ -13,6 +13,7 @@
 #import "YZNavigationMenuView.h"
 #import "HotelCell/HotelTableViewCell.h"
 #import "UIImageView+WebCache.h"
+#import <Parse/Parse.h>
 
 //NS_ASSUME_NONNULL_BEGIN
 
@@ -38,11 +39,13 @@
     
     UITableView *mAllHotelTableview;
     NSArray *mAllHotelList;
+    PFGeoPoint *mCoordinate;
+    NSMutableDictionary *mDicFilter;
 }
 //左侧返回按钮
 @property (nonatomic,strong) UIButton *backButton;
 
-- (id)initWithAddress:(NSString *)address AndDate:(NSString *)strDate AndName:(NSString *)strName;
+- (id)initWithAddress:(NSString *)address AndDate:(NSString *)strDate AndName:(NSString *)strName AndLoction:(PFGeoPoint *)coordinate;
 @end
 
 //NS_ASSUME_NONNULL_END

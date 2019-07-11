@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
     SFLabel *mHomeNameLabel;
     
     UIButton *mFindBtn;
+    PFGeoPoint *coordinate;
 }
 //页面标题
 //@property (nonatomic,strong) UILabel *navTitleLabel;

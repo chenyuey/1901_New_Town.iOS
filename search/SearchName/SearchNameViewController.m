@@ -159,7 +159,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CLPlacemark *mark = [mAddressList objectAtIndex:indexPath.row];
-    self.selectValueBlock(mark.name);
+    self.selectValueBlock(mark);
     //获取定位数据
     [self backToSelectVC];
 }

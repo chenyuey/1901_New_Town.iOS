@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  地理编码对象
  */
 @property (nonatomic, strong) CLGeocoder *geocoder;
-@property (nonatomic, copy) void(^selectValueBlock)(NSString * valueStr);
+@property (nonatomic, copy) void(^selectValueBlock)(CLPlacemark * valueStr);
 - (id)initWithCityName:(NSString *)strCityName;
 @end
 
