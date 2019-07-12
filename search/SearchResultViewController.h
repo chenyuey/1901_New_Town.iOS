@@ -27,11 +27,11 @@
     UILabel *mSearchNameView;
     
     UIView *mShowPeopleNumberView;
-    NSString *mStrSelectPeopleNumber;
+    NSString *mStrSelectPeopleNumber; // 选择人数的值
     
     UIView *mShowPriceView;
     YZNavigationMenuView *mShowSortView;
-    NSString *mStrSort;
+    NSString *mStrSort;       //选择排序的值
     
     UIButton *peopleNumberButton;//选择人数
     UIButton *priceButton;//选择价格

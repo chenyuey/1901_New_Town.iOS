@@ -79,7 +79,6 @@
     [mDicFilter setObject:startDate forKey:@"begin_date"];
     [mDicFilter setObject:endDate forKey:@"end_date"];
     [mDicFilter setObject:mStrAddress forKey:@"city"];
-//    [mDicFilter setObject:@{@"latitude":@(38.016437),@"longitude":@(114.491728)} forKey:@"coordinate"];
     [mDicFilter setObject:mCoordinate forKey:@"coordinate"];
 //    PFQuery *query;
     
@@ -97,6 +96,13 @@
         [self->mAllHotelTableview reloadData];
     }];
             
+}
+- (void)updateDataList{
+    [self getRequestListWithUrl:@"/findItem" :mDicFilter :^(NSDictionary *dictData) {
+        NSLog(@"%@",dictData);
+        self->mAllHotelList = [dictData objectForKey:@"result"];
+        [self->mAllHotelTableview reloadData];
+    }];
 }
 
 - (void)getRequestListWithUrl:(NSString *)strUrl :(NSDictionary*)dicFilter :(void(^)(NSDictionary *dictData))showDataInView{
@@ -193,6 +199,11 @@
     selectBtn.selected = !selectBtn.selected;
     if (selectBtn.selected) {
         mStrSelectPeopleNumber = selectBtn.titleLabel.text;
+        NSArray *arrValues = [[mStrSelectPeopleNumber substringToIndex:mStrSelectPeopleNumber.length - 1] componentsSeparatedByString:@"～"];
+        int min = [[arrValues objectAtIndex:0]intValue];
+        int max = [[arrValues objectAtIndex:1]intValue];
+        [mDicFilter setObject:@[@(min),@(max)] forKey:@"maxPeopleCnt"];
+        [self updateDataList];
         UIView *superView = [selectBtn superview];
         for (int i = 0; i < superView.subviews.count; i ++) {
             UIButton *subview = [superView.subviews objectAtIndex:i];
@@ -206,6 +217,8 @@
     }else{
         [selectBtn setBackgroundColor:[UIColor whiteColor]];
         mStrSelectPeopleNumber = @"";
+        [mDicFilter removeObjectForKey:@"maxPeopleCnt"];
+        [self updateDataList];
     }
 }
 //选择人数按钮设置
