@@ -20,7 +20,7 @@
 @end
 
 @implementation SearchResultViewController
-- (id)initWithAddress:(NSString *)address AndDate:(NSString *)strDate AndName:(NSString *)strName AndLoction:(PFGeoPoint *)coordinate{
+- (id)initWithAddress:(NSString *)address AndDate:(NSString *)strDate AndName:(NSString *)strName AndLoction:(NSDictionary *)coordinate{
     self = [super init];
     if (self) {
         mStrAddress = address;
@@ -79,7 +79,9 @@
     [mDicFilter setObject:startDate forKey:@"begin_date"];
     [mDicFilter setObject:endDate forKey:@"end_date"];
     [mDicFilter setObject:mStrAddress forKey:@"city"];
-//    [mDicFilter setObject:mCoordinate forKey:@"coordinate"];
+//    [mDicFilter setObject:@{@"latitude":@(38.016437),@"longitude":@(114.491728)} forKey:@"coordinate"];
+    [mDicFilter setObject:mCoordinate forKey:@"coordinate"];
+//    PFQuery *query;
     
 //    @"coordinate":coordinate,
 //    @"limit":@(1) ,

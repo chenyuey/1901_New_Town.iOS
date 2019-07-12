@@ -132,14 +132,15 @@
     [vc setSelectValueBlock:^(CLPlacemark *placemark) {
         if ([placemark isKindOfClass:[NSString class]]) {
             self->mHomeNameLabel.text = placemark;
-            self->coordinate = [PFGeoPoint geoPoint];
+            self->coordinate = @{@"latitude": @(38.016437),
+                                 @"longitude": @(114.491728)};
         }else{
             self->mHomeNameLabel.text = placemark.name;
             self->mHomeNameLabel.textColor = [UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0];
-            PFGeoPoint *geopoint = [PFGeoPoint geoPoint];
-            geopoint.latitude = 38.016437;//placemark.location.coordinate.latitude;
-            geopoint.longitude = 114.491728;//placemark.location.coordinate.longitude;
-            self->coordinate = geopoint;
+            double latitude = placemark.location.coordinate.latitude;
+            double longitude = placemark.location.coordinate.longitude;
+            self->coordinate = @{@"latitude": @(latitude),
+                                 @"longitude": @(longitude)};
         }
     }];
     [self.navigationController pushViewController:vc animated:YES];
