@@ -200,9 +200,14 @@
     if (selectBtn.selected) {
         mStrSelectPeopleNumber = selectBtn.titleLabel.text;
         NSArray *arrValues = [[mStrSelectPeopleNumber substringToIndex:mStrSelectPeopleNumber.length - 1] componentsSeparatedByString:@"～"];
-        int min = [[arrValues objectAtIndex:0]intValue];
-        int max = [[arrValues objectAtIndex:1]intValue];
-        [mDicFilter setObject:@[@(min),@(max)] forKey:@"maxPeopleCnt"];
+        if (arrValues.count > 1) {
+            int min = [[arrValues objectAtIndex:0]intValue];
+            int max = [[arrValues objectAtIndex:1]intValue];
+            [mDicFilter setObject:@[@(min),@(max)] forKey:@"maxPeopleCnt"];
+        }else{
+            [mDicFilter setObject:@[@(10),@(100)] forKey:@"maxPeopleCnt"];
+        }
+        
         [self updateDataList];
         UIView *superView = [selectBtn superview];
         for (int i = 0; i < superView.subviews.count; i ++) {
@@ -302,7 +307,7 @@
     view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
     self.ageTipsLabel = [self createLabelWithFrame:CGRectMake(18, 9, 63, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
-    self.ageTipsLabel.text = @"¥0 - 不限";
+    self.ageTipsLabel.text = @"¥0-不限";
     NSArray *arrPrice = @[@"¥0",@"¥100",@"¥200",@"¥300",@"¥400",@"¥500",@"¥600",@"不限"];
     float dis = (SCREEN_WIDTH - 18*2 - 30*8)/7;
     for (int i = 0; i < 8; i ++) {
