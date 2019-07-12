@@ -20,6 +20,7 @@
  */
 @property (nonatomic, copy) void (^clickedBlock)(NSInteger index);
 @property (nonatomic, strong) NSArray *titleArray;
+@property (nonatomic, strong) UITableView *tableView;
 
 - (instancetype)initWithFrame:(CGRect)frame titleArray:(NSArray *)titleArray;
 

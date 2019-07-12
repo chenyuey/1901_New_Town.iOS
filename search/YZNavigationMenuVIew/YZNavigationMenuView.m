@@ -10,7 +10,7 @@
 
 @interface YZNavigationMenuView ()
 
-@property (nonatomic, strong) UITableView *tableView;
+
 @property (nonatomic, strong) NSArray *imageArray;
 @property (nonatomic, assign) CGPoint point;
 @property (nonatomic, strong) UIView *shapeView;
@@ -64,6 +64,11 @@
     if (_delegate && [_delegate respondsToSelector:@selector(navigationMenuView:clickedAtIndex:)]) {
         [_delegate navigationMenuView:self clickedAtIndex:indexPath.row];
     }
+    cell.textLabel.textColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
+}
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.textLabel.textColor = [UIColor blackColor];
 }
 
 

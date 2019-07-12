@@ -46,7 +46,7 @@
     mShowPeopleNumberView.hidden = YES;
     mShowPriceView = [self createSelectPriceView];
     mShowPriceView.hidden = YES;
-    mShowSortView = [[YZNavigationMenuView alloc]initWithFrame:CGRectMake(0, mSearchShowView.frame.origin.y+mSearchShowView.frame.size.height+13 + 20 + 5, SCREEN_WIDTH, 176) titleArray:@[@"默认",@"低价优先",@"高价优先",@"距离优先"]];
+    mShowSortView = [[YZNavigationMenuView alloc]initWithFrame:CGRectMake(0, mSearchShowView.frame.origin.y+mSearchShowView.frame.size.height+13 + 20 + 5, SCREEN_WIDTH, 132) titleArray:@[@"默认",@"低价优先",@"高价优先"]];
     mShowSortView.hidden = YES;
     mShowSortView.delegate = self;
     [self.view addSubview:mShowSortView];
@@ -330,9 +330,18 @@
     return view;
 }
 - (void)confirmSelectPrice:(id)sender{
-    NSLog(@"%@",self.ageTipsLabel.text);
     mShowPriceView.hidden = YES;
     priceButton.selected = NO;
+    NSArray *arrValues = [self.ageTipsLabel.text componentsSeparatedByString:@"-"];
+    int min = [[[arrValues objectAtIndex:0]substringFromIndex:1]intValue];
+    int max;
+    if ([[arrValues objectAtIndex:1] isEqualToString:@"不限"]) {
+        max = 10000;
+    }else{
+        max = [[[arrValues objectAtIndex:1]substringFromIndex:1]intValue];
+    }
+    [mDicFilter setObject:@[@(min),@(max)] forKey:@"price"];
+    [self updateDataList];
 }
 #pragma mark - 选择价格
 #pragma mark - action
@@ -379,9 +388,9 @@
             self.ageTipsLabel.text = @"不限";
         }
     }else {
-        self.ageTipsLabel.text = [NSString stringWithFormat:@"¥%li~¥%li", self.curMinPrice, self.curMaxPrice];
+        self.ageTipsLabel.text = [NSString stringWithFormat:@"¥%li-¥%li", self.curMinPrice, self.curMaxPrice];
         if (self.curMaxPrice == 700) {
-            self.ageTipsLabel.text = [NSString stringWithFormat:@"¥%li~不限", self.curMinPrice];
+            self.ageTipsLabel.text = [NSString stringWithFormat:@"¥%li-不限", self.curMinPrice];
         }
     }
     [self.ageTipsLabel sizeToFit];
@@ -414,10 +423,25 @@
 #pragma mark - YZNavigationMenuViewDelegate
 - (void)navigationMenuView:(YZNavigationMenuView *)menuView clickedAtIndex:(NSInteger)index;
 {
-    NSLog(@"------我是第%ld栏",index + 1);
     mShowSortView.hidden = YES;
     mStrSort = [menuView.titleArray  objectAtIndex:index];
     sortButton.selected = NO;
+    switch (index) {
+        case 0:
+            [mDicFilter removeObjectForKey:@"order"];
+            [self updateDataList];
+            break;
+        case 1:
+            [mDicFilter setObject:@"price" forKey:@"order"];
+            [self updateDataList];
+            break;
+        case 2:
+            [mDicFilter setObject:@"-price" forKey:@"order"];
+            [self updateDataList];
+            break;
+        default:
+            break;
+    }
 }
 #pragma mark -  UITableViewDataSource
 
