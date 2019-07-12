@@ -462,11 +462,77 @@
     NSString *imageUrl = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"cover_link"];
     [cell.coverImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"image_placeholder"]];
     [cell.coverImageView layoutIfNeeded];
-    cell.profileLabel.text = @"整套出租 双人床 2人";
+    cell.profileLabel.text = @"";//整套出租 双人床 2人
     cell.hotelNameLabel.text = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"title"];
     cell.remarksLabel.text = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"desc"];
     cell.priceLabel.text = [NSString stringWithFormat:@"¥%@",[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"price"]];
+    int leaseType = [[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"leaseType"]intValue];
+    int maxPeopleCnt = [[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"maxPeopleCnt"]intValue];
+    
+    [self getRequestListWithUrl:@"/leaseType" :^(NSDictionary *dictData) {
+        NSArray *allLeaseList = [dictData objectForKey:@"result"];
+        for (int i = 0; i < allLeaseList.count; i ++) {
+            if ([[[allLeaseList objectAtIndex:i]objectForKey:@"code"]intValue] == leaseType) {
+                cell.profileLabel.text = [NSString stringWithFormat:@"%@ %@",cell.profileLabel.text,[[allLeaseList objectAtIndex:i]objectForKey:@"description"]];
+                break;
+            }
+        }
+    }];
+    NSDictionary *bedList = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"bedList"];
+    NSMutableArray *arrBedListInfo = [NSMutableArray new];
+    for (int i = 0; i < bedList.allKeys.count; i ++) {
+        NSString *key = [bedList.allKeys objectAtIndex:i];
+        if ([[bedList objectForKey:key]intValue]>0) {
+            [arrBedListInfo addObject:key];
+        }
+    }
+    [self getBedList:arrBedListInfo :^(NSString *strValue) {
+        cell.profileLabel.text = [NSString stringWithFormat:@"%@ %@ %d",cell.profileLabel.text,strValue,maxPeopleCnt];
+        
+    }];
+    
+    
     return cell;
+}
+- (void)getBedList:(NSArray *)arrBedListInfo :(void(^)(NSString *strValue))showDataInView{
+    if (arrBedListInfo.count > 0) {
+        NSMutableString *strBedInfo = [NSMutableString new];
+        [self getRequestListWithUrl:@"/bedList" :^(NSDictionary *dictData) {
+            NSArray *arrBedList = [dictData objectForKey:@"result"];
+            for (int i = 0; i < arrBedListInfo.count; i ++) {
+                for (int j = 0; j < arrBedList.count; j ++) {
+                    NSDictionary *bedInfo = [arrBedList objectAtIndex:j];
+                    if ([[bedInfo objectForKey:@"key"] isEqualToString:[arrBedListInfo objectAtIndex:i]]) {
+                        if (strBedInfo.length == 0) {
+                            [strBedInfo appendFormat:@"%@", [bedInfo objectForKey:@"description"]];
+                        }else{
+                            [strBedInfo appendFormat:@"/%@", [bedInfo objectForKey:@"description"]];
+                        }
+                        break;
+                    }
+                }
+            }
+            showDataInView(strBedInfo);
+        }];
+    }else{
+        showDataInView(@"");
+    }
+}
+- (void)getRequestListWithUrl:(NSString *)strUrl :(void(^)(NSDictionary *dictData))showDataInView{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@functions%@",BASE_URL,[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
+    NSURLSession *session =[NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        //回到主线程 刷新数据 要是刷新就在这里面
+        dispatch_async(dispatch_get_main_queue(), ^{
+            showDataInView(dic);
+        });
+    }];
+    //启动任务
+    [dataTask resume];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 274;

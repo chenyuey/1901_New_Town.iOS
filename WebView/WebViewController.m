@@ -839,7 +839,6 @@
                                 }else{
                                     [arrExistBed appendString:[NSString stringWithFormat:@"/%@*%d",[bedInfo objectForKey:@"description"],[[bedList objectForKey:strBedKey]intValue]]];
                                 }
-                                
                                 break;
                             }
                         }
