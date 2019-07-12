@@ -62,6 +62,23 @@
     [mFindBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     mFindBtn.layer.cornerRadius = 4;
     [self.view addSubview:mFindBtn];
+    
+    [self startLocate];
+    mDateLabel.text = [self converseDateToStringWithCurrent];
+}
+- (NSString *)converseDateToStringWithCurrent{
+    //获取系统当前时间
+    NSDate *currentDate = [NSDate date];
+    //用于格式化NSDate对象
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设置格式：zzz表示时区
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    //NSDate转NSString
+    NSString *currentDateString = [dateFormatter stringFromDate:currentDate];
+    //输出currentDateString
+    NSDate *nextDay = [NSDate dateWithTimeInterval:24*60*60 sinceDate:currentDate];
+    NSString *nextDateString = [dateFormatter stringFromDate:nextDay];
+    return [NSString stringWithFormat:@"%@ ~ %@ 1晚",currentDateString,nextDateString];
 }
 #pragma mark - UI控件创建
 - (SFLabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
@@ -145,14 +162,38 @@
     }];
     [self.navigationController pushViewController:vc animated:YES];
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - 开始定位
+- (void)startLocate{
+    // 判断定位操作是否被允许
+    if([CLLocationManager locationServicesEnabled]) {
+        self.locationManager = [[CLLocationManager alloc] init] ;
+        self.locationManager.delegate = self;
+        // 开始定位
+        [self.locationManager startUpdatingLocation];
+    }else {
+        //提示用户无法进行定位操作
+    }
+    //3.请求用户授权
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+        //请求用户授权
+        [_locationManager requestWhenInUseAuthorization];
+    }
 }
-*/
+#pragma mark - CoreLocation Delegate
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    //此处locations存储了持续更新的位置坐标值，取最后一个值为最新位置，如果不想让其持续更新位置，则在此方法中获取到一个值之后让locationManager stopUpdatingLocation
+    CLLocation *currentLocation = [locations lastObject];
+    // 获取当前所在的城市名
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    //根据经纬度反向地理编译出地址信息
+    CLLocation *loc = [[CLLocation alloc]initWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude];
+    [geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        CLPlacemark *mark = [placemarks objectAtIndex:0];
+        self->mAddressLocationLabel.text = mark.locality;
+//        [mAddressLocationLabel setTitle:mark.locality forState:UIControlStateNormal];
+    }];
+    //系统会一直更新数据，直到选择停止更新，因为我们只需要获得一次经纬度即可，所以获取之后就停止更新
+    [manager stopUpdatingLocation];
+}
 
 @end

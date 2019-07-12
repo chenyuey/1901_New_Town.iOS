@@ -12,7 +12,7 @@
 #import "YZDUICService.h"
 #import "CommonHeader.h"
 #import "MapInfoViewController.h"
-#define BASE_URL @"http://192.168.124.104:1330/api/1/"
+#define BASE_URL @"http://yzyj.1000q1000z.com/landlord/api/1/"
 
 @interface WebViewController () <YZWebViewDelegate, YZWebViewNoticeDelegate>
 @property (strong, nonatomic) YZWebView *webView;

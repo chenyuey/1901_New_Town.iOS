@@ -7,7 +7,9 @@
 //
 
 #import "SearchResultViewController.h"
-#define BASE_URL @"http://192.168.124.104:1330/api/1/"
+//#define BASE_URL @"http://192.168.124.104:1330/api/1/"
+#define BASE_URL @"http://yzyj.1000q1000z.com/landlord/api/1/"
+
 @interface SearchResultViewController ()
 @property (nonatomic, assign) NSInteger minAge;
 @property (nonatomic, assign) NSInteger maxAge;
@@ -79,7 +81,10 @@
     [mDicFilter setObject:startDate forKey:@"begin_date"];
     [mDicFilter setObject:endDate forKey:@"end_date"];
     [mDicFilter setObject:mStrAddress forKey:@"city"];
-    [mDicFilter setObject:mCoordinate forKey:@"coordinate"];
+    if (mCoordinate != nil) {
+        [mDicFilter setObject:mCoordinate forKey:@"coordinate"];
+    }
+    
 //    PFQuery *query;
     
 //    @"coordinate":coordinate,
@@ -477,8 +482,18 @@
                 break;
             }
         }
+        NSDictionary *bedList = [[self->mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"bedList"];
+        [self getBedList :bedList :^(NSString *strValue) {
+            cell.profileLabel.text = [NSString stringWithFormat:@"%@ %@ %d",cell.profileLabel.text,strValue,maxPeopleCnt];
+            
+        }];
     }];
-    NSDictionary *bedList = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"bedList"];
+    
+    
+    
+    return cell;
+}
+- (void)getBedList :(NSDictionary *)bedList :(void(^)(NSString *strValue))showDataInView{
     NSMutableArray *arrBedListInfo = [NSMutableArray new];
     for (int i = 0; i < bedList.allKeys.count; i ++) {
         NSString *key = [bedList.allKeys objectAtIndex:i];
@@ -486,15 +501,6 @@
             [arrBedListInfo addObject:key];
         }
     }
-    [self getBedList:arrBedListInfo :^(NSString *strValue) {
-        cell.profileLabel.text = [NSString stringWithFormat:@"%@ %@ %d",cell.profileLabel.text,strValue,maxPeopleCnt];
-        
-    }];
-    
-    
-    return cell;
-}
-- (void)getBedList:(NSArray *)arrBedListInfo :(void(^)(NSString *strValue))showDataInView{
     if (arrBedListInfo.count > 0) {
         NSMutableString *strBedInfo = [NSMutableString new];
         [self getRequestListWithUrl:@"/bedList" :^(NSDictionary *dictData) {

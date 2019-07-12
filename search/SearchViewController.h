@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 //页面标题
 //@property (nonatomic,strong) UILabel *navTitleLabel;
+@property(nonatomic,strong) CLLocationManager *locationManager;
 @end
 
 NS_ASSUME_NONNULL_END
