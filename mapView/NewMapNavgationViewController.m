@@ -203,6 +203,17 @@
     annotation.title = markerTitle;
     // 添加锚点
     [self.mapView addAnnotation:annotation];
+    
+    
+    CLLocationCoordinate2D center = {annotation.coordinate.latitude,annotation.coordinate.longitude};
+    // 设置地图显示的范围，地图显示范围越小，细节越清楚】
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.1,0.1);
+    // 创建MKCoordinateRegion对象，该对象代表地图的显示中心和显示范围
+    MKCoordinateRegion region =MKCoordinateRegionMake(center, span);
+    // 设置当前地图的显示中心和显示范围
+    [self.mapView setRegion:region animated:YES];
+    [self.mapView selectAnnotation:annotation animated:YES];
+    
     return annotation;
 }
 
@@ -248,10 +259,9 @@
     theSpan.latitudeDelta=0.05;
     theSpan.longitudeDelta=0.05;
     MKCoordinateRegion theRegion;
-    //    mCoordinateStart = [[_locationManager location] coordinate];
     theRegion.center=[[_locationManager location] coordinate];
     theRegion.span=theSpan;
-    [self.mapView setRegion:theRegion];
+    mCoordinateStart = [[_locationManager location] coordinate];
 }
 
 - (void)dealloc

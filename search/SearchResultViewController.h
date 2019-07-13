@@ -42,6 +42,8 @@
     NSArray *mAllHotelList;
     NSDictionary *mCoordinate;
     NSMutableDictionary *mDicFilter;
+    
+    UILabel *mNoResultLabel;
 }
 //左侧返回按钮
 @property (nonatomic,strong) UIButton *backButton;

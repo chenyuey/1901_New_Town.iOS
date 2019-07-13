@@ -98,14 +98,30 @@
     [self getRequestListWithUrl:@"/findItem" :mDicFilter :^(NSDictionary *dictData) {
         NSLog(@"%@",dictData);
         self->mAllHotelList = [dictData objectForKey:@"result"];
+        if (self->mAllHotelList.count == 0) {
+            self->mNoResultLabel.hidden = NO;
+            [self.view bringSubviewToFront:self->mNoResultLabel];
+        }else{
+            self->mNoResultLabel.hidden = YES;
+        }
         [self->mAllHotelTableview reloadData];
     }];
-            
+    
+    mNoResultLabel = [self createLabelWithFrame:CGRectMake(0, SCREEN_HEIGHT/2 - 70, SCREEN_WIDTH, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    mNoResultLabel.text = @"没有符合条件的结果";
+    mNoResultLabel.hidden = YES;
+    [self.view addSubview:mNoResultLabel];
 }
 - (void)updateDataList{
     [self getRequestListWithUrl:@"/findItem" :mDicFilter :^(NSDictionary *dictData) {
         NSLog(@"%@",dictData);
         self->mAllHotelList = [dictData objectForKey:@"result"];
+        if (self->mAllHotelList.count == 0) {
+            self->mNoResultLabel.hidden = NO;
+            [self.view bringSubviewToFront:self->mNoResultLabel];
+        }else{
+            self->mNoResultLabel.hidden = YES;
+        }
         [self->mAllHotelTableview reloadData];
     }];
 }
