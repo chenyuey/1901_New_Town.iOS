@@ -751,6 +751,9 @@
         
         if (isHidden == NO) {
             [self getRequestListWithUrlGet:[NSString stringWithFormat:@"classes/Item?where=%@",strFilterValue] :^(NSDictionary *dictData) {
+                if ([[dictData objectForKey:@"results"]count] == 0) {
+                    return ;
+                }
                 NSDictionary *itemInfo = [[dictData objectForKey:@"results"] objectAtIndex:0];
                 int houseTypeMapCode = [[itemInfo objectForKey:@"houseTypeMap"]intValue];
                 int leaseTypeCode = [[itemInfo objectForKey:@"leaseType"]intValue];
