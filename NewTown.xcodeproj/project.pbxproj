@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		079F1827BD91AC71C7E50E74 /* libPods-NewTown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */; };
 		521C612322D6D0FE00489BCD /* SFLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 521C612222D6D0FE00489BCD /* SFLabel.m */; };
+		521C612622D97C3800489BCD /* NewMapNavgationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 521C612522D97C3800489BCD /* NewMapNavgationViewController.m */; };
 		5221BC0F226EA96D00A78013 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5221BC0E226EA96D00A78013 /* loading.gif */; };
 		5221BC152270592000A78013 /* LYWNewfeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5221BC142270592000A78013 /* LYWNewfeatureViewController.m */; };
 		522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 522934A8227160E900B30E94 /* UIImage+LXExtension.m */; };
@@ -68,6 +69,8 @@
 		191FDF8BA6EE98F65C0D8615 /* libPods-NewTown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewTown.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		521C612122D6D0FE00489BCD /* SFLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFLabel.h; sourceTree = "<group>"; };
 		521C612222D6D0FE00489BCD /* SFLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFLabel.m; sourceTree = "<group>"; };
+		521C612422D97C3800489BCD /* NewMapNavgationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewMapNavgationViewController.h; sourceTree = "<group>"; };
+		521C612522D97C3800489BCD /* NewMapNavgationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewMapNavgationViewController.m; sourceTree = "<group>"; };
 		5221BC0E226EA96D00A78013 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		5221BC132270592000A78013 /* LYWNewfeatureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYWNewfeatureViewController.h; sourceTree = "<group>"; };
 		5221BC142270592000A78013 /* LYWNewfeatureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYWNewfeatureViewController.m; sourceTree = "<group>"; };
@@ -395,6 +398,8 @@
 				5299AFFD224A362800699683 /* BottomTownItemView.m */,
 				522E2D2F22AE50EE009F1224 /* MapNavgationViewController.h */,
 				522E2D3022AE50EE009F1224 /* MapNavgationViewController.m */,
+				521C612422D97C3800489BCD /* NewMapNavgationViewController.h */,
+				521C612522D97C3800489BCD /* NewMapNavgationViewController.m */,
 			);
 			path = mapView;
 			sourceTree = "<group>";
@@ -665,6 +670,7 @@
 				522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */,
 				527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */,
 				522E9F3E22D06AD200781502 /* YZNavigationMenuView.m in Sources */,
+				521C612622D97C3800489BCD /* NewMapNavgationViewController.m in Sources */,
 				5299AFFB2243AB8900699683 /* CollectTableViewCell.m in Sources */,
 				522E9F1F22CB457200781502 /* HotelCalendarViewController.m in Sources */,
 				522E9F4222D07EC900781502 /* SearchNameViewController.m in Sources */,

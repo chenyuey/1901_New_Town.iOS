@@ -19,6 +19,7 @@
 #import <WebKit/WebKit.h>
 #import "MapNavgationViewController.h"
 #import "HotelDetailView.h"
+#import "NewMapNavgationViewController.h"
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录

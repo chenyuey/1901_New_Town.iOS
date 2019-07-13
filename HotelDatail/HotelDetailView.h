@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UILabel *noticeLabel;
 @property (nonatomic,strong) UILabel *positionLabel;
 @property (nonatomic,strong) MKMapView *mapView;
+@property double latitude;
+@property double longitude;
 
 - (id)initWithFrame:(CGRect)frame;
 -(MKPointAnnotation*)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude;

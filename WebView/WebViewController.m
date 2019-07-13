@@ -770,9 +770,9 @@
                     CLPlacemark *placeMark=[placemarks firstObject];
                     self->mShowHotelDetailView.positionLabel.text = placeMark.name;
                     [self->mShowHotelDetailView locateToLatitude:latitude longitude:longitude];
+                    UITapGestureRecognizer *mTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterMapInfoWithNewNavgaiton)];
+                    [self->mShowHotelDetailView.mapView addGestureRecognizer:mTap];
                 }];
-                
-                
                 
                 
                 [self getRequestListWithUrl:@"/equipmentList" :^(NSDictionary *dictData) {
@@ -831,15 +831,15 @@
                     NSMutableString* arrExistBed = [NSMutableString new];
                     for (int i = 0; i < bedList.allKeys.count; i ++) {
                         NSString *strBedKey = [bedList.allKeys objectAtIndex:i];
-                        for (int j = 0; j < arrBedList.count; j ++) {
-                            NSDictionary *bedInfo = [arrBedList objectAtIndex:j];
-                            if ([[bedInfo objectForKey:@"key"] isEqualToString:strBedKey]) {
-                                if (arrExistBed.length == 0) {
-                                    [arrExistBed appendString:[NSString stringWithFormat:@"%@*%d",[bedInfo objectForKey:@"description"],[[bedList objectForKey:strBedKey]intValue]]];
-                                }else{
-                                    [arrExistBed appendString:[NSString stringWithFormat:@"/%@*%d",[bedInfo objectForKey:@"description"],[[bedList objectForKey:strBedKey]intValue]]];
+                        if ([[bedList objectForKey:strBedKey]intValue] > 0) {
+                            for (int j = 0; j < arrBedList.count; j ++) {
+                                NSDictionary *bedInfo = [arrBedList objectAtIndex:j];
+                                if ([[bedInfo objectForKey:@"key"] isEqualToString:strBedKey]) {
+                                    if (arrExistBed.length == 0) {
+                                        [arrExistBed appendString:[NSString stringWithFormat:@"%@*%d",[bedInfo objectForKey:@"description"],[[bedList objectForKey:strBedKey]intValue]]];
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
                     }
@@ -897,6 +897,10 @@
 }
 - (void)hideInfoView{
     mShowHotelDetailView.superview.hidden = YES;
+}
+- (void)enterMapInfoWithNewNavgaiton{
+    NewMapNavgationViewController *mapInfoVC =[[NewMapNavgationViewController alloc]initWithHomeName:mShowHotelDetailView.positionLabel.text :mShowHotelDetailView.latitude :mShowHotelDetailView.longitude];
+    [self.navigationController pushViewController:mapInfoVC animated:YES];
 }
 
 - (void)getRequestListWithUrl:(NSString *)strUrl :(void(^)(NSDictionary *dictData))showDataInView{

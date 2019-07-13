@@ -470,7 +470,7 @@
     cell.profileLabel.text = @"";//整套出租 双人床 2人
     cell.hotelNameLabel.text = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"title"];
     cell.remarksLabel.text = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"desc"];
-    cell.priceLabel.text = [NSString stringWithFormat:@"¥%@",[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"price"]];
+    cell.priceLabel.text = [NSString stringWithFormat:@"¥%d",[[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"price"]intValue]/100];
     int leaseType = [[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"leaseType"]intValue];
     int maxPeopleCnt = [[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"maxPeopleCnt"]intValue];
     
@@ -488,7 +488,7 @@
             
         }];
     }];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;  
     
     
     return cell;
@@ -542,5 +542,10 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 274;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *webLink = [[mAllHotelList objectAtIndex:indexPath.row] objectForKey:@"link"];
+    WebViewController *webInfo = [[WebViewController alloc]initWithURLString:webLink];
+    [self.navigationController pushViewController:webInfo animated:YES];
 }
 @end

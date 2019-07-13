@@ -91,6 +91,8 @@
 */
 
 -(MKPointAnnotation*)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude{
+    self.latitude = latitude;
+    self.longitude = longitude;
     // 创建MKPointAnnotation对象——代表一个锚点
     MKPointAnnotation* annotation = [[MKPointAnnotation alloc] init];
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude , longitude);
