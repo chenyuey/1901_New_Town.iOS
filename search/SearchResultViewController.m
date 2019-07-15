@@ -75,7 +75,7 @@
     
     
     NSString *startDate = [mStrDate substringWithRange:NSMakeRange(0, 10)];
-    NSString *endDate = [mStrDate substringWithRange:NSMakeRange(13,10)];
+    NSString *endDate = [self converseEndDateToStringWithString:[mStrDate substringWithRange:NSMakeRange(13,10)]];
     
     mDicFilter = [NSMutableDictionary new];
     [mDicFilter setObject:startDate forKey:@"begin_date"];
@@ -111,6 +111,18 @@
     mNoResultLabel.text = @"没有符合条件的结果";
     mNoResultLabel.hidden = YES;
     [self.view addSubview:mNoResultLabel];
+}
+- (NSString *)converseEndDateToStringWithString:(NSString *)strEndDate{
+    //用于格式化NSDate对象
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设置格式：zzz表示时区
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    //NSDate转NSString
+    NSDate *currentDate = [dateFormatter dateFromString:strEndDate];
+    //输出currentDateString
+    NSDate *nextDay = [NSDate dateWithTimeInterval:-24*60*60 sinceDate:currentDate];
+    NSString *nextDateString = [dateFormatter stringFromDate:nextDay];
+    return [NSString stringWithFormat:@"%@",nextDateString];
 }
 - (void)updateDataList{
     [self getRequestListWithUrl:@"/findItem" :mDicFilter :^(NSDictionary *dictData) {
@@ -500,7 +512,7 @@
         }
         NSDictionary *bedList = [[self->mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"bedList"];
         [self getBedList :bedList :^(NSString *strValue) {
-            cell.profileLabel.text = [NSString stringWithFormat:@"%@ %@ %d",cell.profileLabel.text,strValue,maxPeopleCnt];
+            cell.profileLabel.text = [NSString stringWithFormat:@"%@ %@ %d人",cell.profileLabel.text,strValue,maxPeopleCnt];
             
         }];
     }];

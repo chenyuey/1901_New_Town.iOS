@@ -840,6 +840,8 @@
                                 if ([[bedInfo objectForKey:@"key"] isEqualToString:strBedKey]) {
                                     if (arrExistBed.length == 0) {
                                         [arrExistBed appendString:[NSString stringWithFormat:@"%@*%d",[bedInfo objectForKey:@"description"],[[bedList objectForKey:strBedKey]intValue]]];
+                                    }else{
+                                        [arrExistBed appendString:[NSString stringWithFormat:@"/%@*%d",[bedInfo objectForKey:@"description"],[[bedList objectForKey:strBedKey]intValue]]];
                                     }
                                     break;
                                 }
