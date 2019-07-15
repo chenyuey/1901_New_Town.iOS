@@ -258,6 +258,12 @@
         [mDicFilter removeObjectForKey:@"maxPeopleCnt"];
         [self updateDataList];
     }
+    //修改选中高亮色
+    if (mStrSelectPeopleNumber.length > 0) {
+        [peopleNumberButton setTitleColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    }else{
+        [peopleNumberButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }
 }
 //选择人数按钮设置
 - (UIButton *)createSelectButtonWithFrame:(CGRect)frame :(NSString *)title{
@@ -380,6 +386,8 @@
     }
     [mDicFilter setObject:@[@(min),@(max)] forKey:@"price"];
     [self updateDataList];
+    //修改选中高亮色
+    [priceButton setTitleColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 }
 #pragma mark - 选择价格
 #pragma mark - action
@@ -464,6 +472,7 @@
     mShowSortView.hidden = YES;
     mStrSort = [menuView.titleArray  objectAtIndex:index];
     sortButton.selected = NO;
+    [sortButton setTitleColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     switch (index) {
         case 0:
             [mDicFilter removeObjectForKey:@"order"];
@@ -569,7 +578,7 @@
     [dataTask resume];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 274;
+    return 274+16;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *webLink = [[mAllHotelList objectAtIndex:indexPath.row] objectForKey:@"link"];
