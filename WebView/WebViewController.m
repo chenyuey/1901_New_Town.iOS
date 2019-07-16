@@ -112,7 +112,7 @@
     [self.view addSubview:self.mapButton];
     
     self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
-    self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44 + SafeStatusBarHeight);
+    self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight  - SafeAreaBottomHeight);
     self.tabBarController.tabBar.hidden=YES;
     self.webView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.webView];
@@ -293,11 +293,11 @@
     if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
         self.backButton.hidden = NO;
         self.tabBarController.tabBar.hidden=YES;
-        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight + SafeStatusBarHeight);
+        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeAreaBottomHeight);
     }else{
         self.backButton.hidden = YES;
         self.tabBarController.tabBar.hidden=NO;
-        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeStatusBarHeight - 44 + SafeStatusBarHeight);
+        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeAreaBottomHeight - 44);
     }
     self.edgesForExtendedLayout = UIRectEdgeNone;
     if (@available(iOS 11.0, *)) {
