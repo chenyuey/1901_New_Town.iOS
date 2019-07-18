@@ -90,7 +90,7 @@
     //出租类型
     [self getRequestListWithUrl:@"/leaseType" :^(NSDictionary *dictData) {
         NSArray *allLeaseList = [dictData objectForKey:@"result"];
-        self->mLeaseTypeView = [[UIView alloc]initWithFrame:CGRectMake(0, 25, SCREEN_WIDTH, 44*allLeaseList.count)];
+        self->mLeaseTypeView = [[UIView alloc]initWithFrame:CGRectMake(0, 35, SCREEN_WIDTH, 44*allLeaseList.count)];
         [self->mShowAllFilterView addSubview:self->mLeaseTypeView];
         for (int i = 0; i < allLeaseList.count; i ++) {
             LeaseTypeView *leaseTypeViewTmp = [[LeaseTypeView alloc]initWithFrame:CGRectMake(0, 44*i, SCREEN_WIDTH, 44)];
