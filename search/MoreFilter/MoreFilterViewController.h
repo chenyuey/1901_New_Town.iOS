@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CommonHeader.h"
 #import "LeaseTypeView.h"
+#import "EquipmentButton.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
     UIScrollView *mShowAllFilterView;
     UIView *mLeaseTypeView;
     UIView *mHouseTypeView;
+    UIView *mEquipmentTypeView;
 }
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;

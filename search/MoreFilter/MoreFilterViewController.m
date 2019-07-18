@@ -80,12 +80,12 @@
 - (void)houseTypeClick:(id)sender{
     
 }
+- (void)equipmentTypeClick:(id)sender{
+    
+}
 
 - (void)getAllData{
-    //设备类型
-    [self getRequestListWithUrl:@"/equipmentList" :^(NSDictionary *dictData) {
-        NSArray *allEquipmentList = [dictData objectForKey:@"result"];
-    }];
+    
     
     //出租类型
     [self getRequestListWithUrl:@"/leaseType" :^(NSDictionary *dictData) {
@@ -123,9 +123,42 @@
             UIButton *houseTypeBtn = [self createButtonWithFrameAndBorder:CGRectMake(15+(64+space)*(i%5), (30+8)*floor(i/5), 64, 30) :[houseTypeInfo objectForKey:@"description"] :[[houseTypeInfo objectForKey:@"code"]intValue] :@selector(houseTypeClick:)];
             [self->mHouseTypeView addSubview:houseTypeBtn];
         }
+        [self getEquipmentListView];
     }];
 }
-
+- (void)getEquipmentListView{
+    //设备类型
+    [self getRequestListWithUrl:@"/equipmentList" :^(NSDictionary *dictData) {
+        NSDictionary *allEquipmentList = [dictData objectForKey:@"result"];
+        int count = 0;
+        for (int i = 0; i < allEquipmentList.allKeys.count; i ++) {
+            NSDictionary *equipmentInfo = [allEquipmentList objectForKey:[allEquipmentList.allKeys objectAtIndex:i]];
+            count += [[equipmentInfo objectForKey:@"equipmentList"] count];
+        }
+        
+        UILabel *equipmentLabel = [self createLabelWithFrame:CGRectMake(18, self->mHouseTypeView.frame.origin.y + self->mHouseTypeView.frame.size.height + 18, 60, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        equipmentLabel.text = @"设施";
+        [self->mShowAllFilterView addSubview:equipmentLabel];
+        int rows = ceil(count*1.0/4.0);
+        self->mEquipmentTypeView = [[UIView alloc]initWithFrame:CGRectMake(0, equipmentLabel.frame.origin.y+equipmentLabel.frame.size.height+7, SCREEN_WIDTH, 7+30*rows+8*(rows-1))];
+        [self->mShowAllFilterView addSubview:self->mEquipmentTypeView];
+        double space = (SCREEN_WIDTH - 21 - 19 - 73*4)/4;
+        int m = 0;
+        for (int i = 0; i < allEquipmentList.allKeys.count; i ++) {
+            NSString *keyType = [allEquipmentList.allKeys objectAtIndex:i];
+            NSDictionary *equipmentTypeInfo = [allEquipmentList objectForKey:keyType];
+            NSArray *equipmentList = [equipmentTypeInfo objectForKey:@"equipmentList"] ;
+            for (int j = 0; j < equipmentList.count; j ++) {
+                EquipmentButton *houseTypeBtn = [[EquipmentButton alloc]initWithFrame:CGRectMake(21+(73+space)*(m%4), (30+8)*floor(m/4), 73, 30) :[[equipmentList objectAtIndex:m] objectForKey:@"description"] :[[[equipmentList objectAtIndex:i] objectForKey:@"code"]intValue] :@selector(equipmentTypeClick:)];
+                houseTypeBtn.keyType = keyType;
+                m++;
+                [self->mEquipmentTypeView addSubview:houseTypeBtn];
+            }
+        }
+        
+        
+    }];
+}
 - (UIScrollView *)createScrollViewWithFrame:(CGRect)frame{
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:frame];
     [self.view addSubview:scrollView];
