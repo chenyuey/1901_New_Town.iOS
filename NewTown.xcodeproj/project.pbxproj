@@ -27,6 +27,8 @@
 		522E9F4622D30E3100781502 /* HotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F4522D30E3100781502 /* HotelTableViewCell.m */; };
 		522E9F4A22D4868800781502 /* HotelDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F4922D4868800781502 /* HotelDetailView.m */; };
 		5233B337229D389900155B67 /* preloader_64.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5233B336229D389900155B67 /* preloader_64.gif */; };
+		525B227E22E05E8F001BA5C4 /* MoreFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525B227D22E05E8F001BA5C4 /* MoreFilterViewController.m */; };
+		525B228122E081DA001BA5C4 /* LeaseTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 525B228022E081DA001BA5C4 /* LeaseTypeView.m */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
 		527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 527071C2222CF1BC00B73769 /* NewTown.xcdatamodeld */; };
@@ -107,6 +109,10 @@
 		5256ACF9226D6ADA00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = ../../Downloads/Release/YZBaseSDK.framework; sourceTree = "<group>"; };
 		5256ACFC226D6B1A00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = Release/YZBaseSDK.framework; sourceTree = "<group>"; };
 		5256ACFD226D6B1A00AAFB77 /* YZSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZSDKCore.framework; path = Release/YZSDKCore.framework; sourceTree = "<group>"; };
+		525B227C22E05E8F001BA5C4 /* MoreFilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreFilterViewController.h; sourceTree = "<group>"; };
+		525B227D22E05E8F001BA5C4 /* MoreFilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreFilterViewController.m; sourceTree = "<group>"; };
+		525B227F22E081DA001BA5C4 /* LeaseTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaseTypeView.h; sourceTree = "<group>"; };
+		525B228022E081DA001BA5C4 /* LeaseTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaseTypeView.m; sourceTree = "<group>"; };
 		527071B6222CF1BC00B73769 /* NewTown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		527071B9222CF1BC00B73769 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		527071BA222CF1BC00B73769 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -273,6 +279,17 @@
 			path = HotelDatail;
 			sourceTree = "<group>";
 		};
+		525B227822E01D28001BA5C4 /* MoreFilter */ = {
+			isa = PBXGroup;
+			children = (
+				525B227C22E05E8F001BA5C4 /* MoreFilterViewController.h */,
+				525B227D22E05E8F001BA5C4 /* MoreFilterViewController.m */,
+				525B227F22E081DA001BA5C4 /* LeaseTypeView.h */,
+				525B228022E081DA001BA5C4 /* LeaseTypeView.m */,
+			);
+			path = MoreFilter;
+			sourceTree = "<group>";
+		};
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +435,7 @@
 		52BC542422C7479600E31B50 /* search */ = {
 			isa = PBXGroup;
 			children = (
+				525B227822E01D28001BA5C4 /* MoreFilter */,
 				521C612022D6D0E000489BCD /* SFLabel */,
 				522E9F4322D30DF000781502 /* HotelCell */,
 				522E9F3F22D07E9D00781502 /* SearchName */,
@@ -663,8 +681,10 @@
 				522E9F3922CF03F800781502 /* DoubleSliderView.m in Sources */,
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				522E9F2422CB4FFC00781502 /* SearchResultViewController.m in Sources */,
+				525B228122E081DA001BA5C4 /* LeaseTypeView.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
 				522E9F4A22D4868800781502 /* HotelDetailView.m in Sources */,
+				525B227E22E05E8F001BA5C4 /* MoreFilterViewController.m in Sources */,
 				521C612322D6D0FE00489BCD /* SFLabel.m in Sources */,
 				522E9F1E22CB457200781502 /* DayCollectionViewCell.m in Sources */,
 				522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */,
@@ -848,9 +868,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = SWGGTC62S7;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -865,7 +885,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bigegg.com.NewTownSpecial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = new_town_dis_lgs;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -879,9 +899,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = SWGGTC62S7;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -896,7 +916,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bigegg.com.NewTownSpecial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = new_town_dis_lgs;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

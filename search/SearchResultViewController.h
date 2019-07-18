@@ -15,6 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import <Parse/Parse.h>
 #import "WebViewController.h"
+#import "MoreFilter/MoreFilterViewController.h"
 
 //NS_ASSUME_NONNULL_BEGIN
 
@@ -37,6 +38,9 @@
     UIButton *peopleNumberButton;//选择人数
     UIButton *priceButton;//选择价格
     UIButton *sortButton;//选择排序
+    UIButton *mMoreButton ;//更多筛选
+    
+    
     
     UITableView *mAllHotelTableview;
     NSArray *mAllHotelList;

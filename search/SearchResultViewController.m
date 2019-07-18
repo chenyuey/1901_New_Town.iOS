@@ -40,9 +40,9 @@
     [dropDownView addSubview:peopleNumberButton];
     priceButton = [self createButtonWithTitleAndImage:@"价格" :CGRectMake(peopleNumberButton.frame.origin.x+peopleNumberButton.frame.size.width+distance, 0, 46, 20) :30];
     [dropDownView addSubview:priceButton];
-    UIButton *moreButton = [self createButtonWithTitleAndImage:@"更多筛选" :CGRectMake(priceButton.frame.origin.x+priceButton.frame.size.width+distance, 0, 84, 20) :66];
-    [dropDownView addSubview:moreButton];
-    sortButton = [self createButtonWithTitleAndImage:@"排序" :CGRectMake(moreButton.frame.origin.x+moreButton.frame.size.width+distance, 0, 46, 20) :30];
+    mMoreButton = [self createButtonWithTitleAndImage:@"更多筛选" :CGRectMake(priceButton.frame.origin.x+priceButton.frame.size.width+distance, 0, 84, 20) :66];
+    [dropDownView addSubview:mMoreButton];
+    sortButton = [self createButtonWithTitleAndImage:@"排序" :CGRectMake(mMoreButton.frame.origin.x+mMoreButton.frame.size.width+distance, 0, 46, 20) :30];
     [dropDownView addSubview:sortButton];
     mShowPeopleNumberView = [self createSelectPeopleView];
     mShowPeopleNumberView.hidden = YES;
@@ -150,11 +150,14 @@
     [request setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
     NSURLSession *session =[NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        //回到主线程 刷新数据 要是刷新就在这里面
-        dispatch_async(dispatch_get_main_queue(), ^{
-            showDataInView(dic);
-        });
+        if (error == nil) {
+            NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            //回到主线程 刷新数据 要是刷新就在这里面
+            dispatch_async(dispatch_get_main_queue(), ^{
+                showDataInView(dic);
+            });
+        }
+        
     }];
     //启动任务
     [dataTask resume];
@@ -223,7 +226,11 @@
         mShowSortView.hidden = !button.selected;
         
     }else {
-        
+        mShowPriceView.hidden = YES;
+        mShowPeopleNumberView.hidden = YES;
+        mShowSortView.hidden = YES;
+        MoreFilterViewController *moreFilterVC = [[MoreFilterViewController alloc]init];
+        [self presentViewController:moreFilterVC animated:YES completion:nil];
     }
     
 }
