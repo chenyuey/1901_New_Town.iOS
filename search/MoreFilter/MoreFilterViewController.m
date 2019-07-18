@@ -149,7 +149,7 @@
             NSDictionary *equipmentTypeInfo = [allEquipmentList objectForKey:keyType];
             NSArray *equipmentList = [equipmentTypeInfo objectForKey:@"equipmentList"] ;
             for (int j = 0; j < equipmentList.count; j ++) {
-                EquipmentButton *houseTypeBtn = [[EquipmentButton alloc]initWithFrame:CGRectMake(21+(73+space)*(m%4), (30+8)*floor(m/4), 73, 30) :[[equipmentList objectAtIndex:m] objectForKey:@"description"] :[[[equipmentList objectAtIndex:i] objectForKey:@"code"]intValue] :@selector(equipmentTypeClick:)];
+                EquipmentButton *houseTypeBtn = [[EquipmentButton alloc]initWithFrame:CGRectMake(21+(73+space)*(m%4), (30+8)*floor(m/4), 73, 30) :[[equipmentList objectAtIndex:j] objectForKey:@"description"] :[[[equipmentList objectAtIndex:i] objectForKey:@"code"]intValue] :@selector(equipmentTypeClick:)];
                 houseTypeBtn.keyType = keyType;
                 m++;
                 [self->mEquipmentTypeView addSubview:houseTypeBtn];
