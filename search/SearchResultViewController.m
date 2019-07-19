@@ -244,6 +244,7 @@
                 [self->mDicFilter removeObjectForKey:@"leaseType"];
             }
             [self->mDicFilter setValuesForKeysWithDictionary:allFilterDic];
+            [self updateDataList];
         };
         [self presentViewController:moreFilterVC animated:YES completion:nil];
     }
