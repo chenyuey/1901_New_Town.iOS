@@ -245,6 +245,13 @@
             }
             [self->mDicFilter setValuesForKeysWithDictionary:allFilterDic];
             [self updateDataList];
+            if (allFilterDic.allKeys.count > 0) {
+                [self->mMoreButton setTitleColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+            }else{
+                [self->mMoreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }
+            self->mMoreButton.selected = NO;
+            
         };
         [self presentViewController:moreFilterVC animated:YES completion:nil];
     }
@@ -252,6 +259,8 @@
 }
 - (void)selectPeopleNumber:(UIButton *)sender{
     UIButton *selectBtn = sender;
+    mShowPeopleNumberView.hidden = YES;
+    peopleNumberButton.selected = NO;
     selectBtn.selected = !selectBtn.selected;
     if (selectBtn.selected) {
         mStrSelectPeopleNumber = selectBtn.titleLabel.text;
@@ -295,6 +304,7 @@
     btn1.layer.borderWidth = 1.0;
     btn1.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
     [btn1 setTitleColor:[UIColor colorWithRed:58.0/255.0 green:60.0/255.0 blue:64.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [btn1 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     btn1.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [btn1 addTarget:self action:@selector(selectPeopleNumber:) forControlEvents:UIControlEventTouchUpInside];
     return btn1;
