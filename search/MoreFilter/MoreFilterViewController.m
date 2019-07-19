@@ -88,9 +88,89 @@
 }
 - (void)clearAllFilter{
     //删除所有的筛选选项
+    NSArray *allLeaseSubViews = mLeaseTypeView.subviews;
+    for (int i = 0; i < allLeaseSubViews.count; i ++) {
+        LeaseTypeView *tmp = [allLeaseSubViews objectAtIndex:i];
+        tmp.checkBoxBtn.selected = NO;
+    }
+    NSArray *allHouseSubView = mHouseTypeView.subviews;
+    for (int i = 0; i < allHouseSubView.count; i ++) {
+        UIButton *tmp = [allHouseSubView objectAtIndex:i];
+        tmp.selected = NO;
+        [tmp setBackgroundColor:[UIColor whiteColor]];
+        
+    }
+    NSArray *allEquipmentSubView = mEquipmentTypeView.subviews;
+    for (int i = 0; i < allEquipmentSubView.count; i ++) {
+        EquipmentButton *tmp = [allEquipmentSubView objectAtIndex:i];
+        tmp.selected = NO;
+        [tmp setBackgroundColor:[UIColor whiteColor]];
+    }
+    
+    NSArray *allNoticeSubView = mNoticeView.subviews;
+    for (int i = 0; i < allNoticeSubView.count; i ++) {
+        NoticeTypeView *tmp = [allNoticeSubView objectAtIndex:i];
+        tmp.checkBoxBtn.selected = NO;
+    }
 }
 - (void)confirmButtonPress{
+    NSMutableDictionary *allFilterDic = [NSMutableDictionary new];
+    //统计 出租类型
+    NSArray *allLeaseSubViews = mLeaseTypeView.subviews;
+    NSMutableArray *allSelectLease = [NSMutableArray new];
+    for (int i = 0; i < allLeaseSubViews.count; i ++) {
+        LeaseTypeView *tmp = [allLeaseSubViews objectAtIndex:i];
+        if (tmp.checkBoxBtn.selected == YES) {
+            [allSelectLease addObject:@(tmp.code)];
+        }
+    }
+    if (allSelectLease.count > 0) {
+        [allFilterDic setObject:allSelectLease forKey:@"leaseType"];
+    }
     
+    //统计 房源类型
+    NSMutableArray *allSelectHouse = [NSMutableArray new];
+    NSArray *allHouseSubView = mHouseTypeView.subviews;
+    for (int i = 0; i < allHouseSubView.count; i ++) {
+        UIButton *tmp = [allHouseSubView objectAtIndex:i];
+        if (tmp.selected == YES) {
+            [allSelectHouse addObject:@(tmp.tag)];
+        }
+    }
+    if (allSelectHouse.count > 0) {
+        [allFilterDic setObject:allSelectHouse forKey:@"houseType"];
+    }
+    
+    //统计 设施
+    NSMutableDictionary *dicSelectEquipments = [NSMutableDictionary new];
+    NSArray *allEquipmentSubView = mEquipmentTypeView.subviews;
+    for (int i = 0; i < allEquipmentSubView.count; i ++) {
+        EquipmentButton *tmp = [allEquipmentSubView objectAtIndex:i];
+        if (tmp.selected == YES) {
+            if (![dicSelectEquipments.allKeys containsObject:tmp.keyType]) {
+                [dicSelectEquipments setObject:[NSMutableArray new] forKey:tmp.keyType];
+            }
+            NSMutableArray *currentKeyEquips = [dicSelectEquipments objectForKey:tmp.keyType];
+            [currentKeyEquips addObject:@(tmp.code)];
+            [dicSelectEquipments setObject:currentKeyEquips forKey:tmp.keyType];
+        }
+    }
+    if (dicSelectEquipments.allKeys.count > 0) {
+        [allFilterDic setObject:dicSelectEquipments forKey:@"equipmentList"];
+    }
+    
+    //统计 守则
+    NSMutableArray *allSelectNotice = [NSMutableArray new];
+    NSArray *allNoticeSubView = mNoticeView.subviews;
+    for (int i = 0; i < allNoticeSubView.count; i ++) {
+        NoticeTypeView *tmp = [allNoticeSubView objectAtIndex:i];
+        if (tmp.checkBoxBtn.selected == YES) {
+            [allSelectNotice addObject:@(tmp.code)];
+        }
+    }
+    if (allSelectNotice.count > 0) {
+        [allFilterDic setObject:allSelectNotice forKey:@"notice"];
+    }
 }
 - (void)houseTypeClick:(UIButton*)sender{
     UIButton *button = sender;
@@ -112,8 +192,6 @@
 }
 
 - (void)getAllData{
-    
-    
     //出租类型
     [self getRequestListWithUrl:@"/leaseType" :^(NSDictionary *dictData) {
         NSArray *allLeaseList = [dictData objectForKey:@"result"];
@@ -144,7 +222,7 @@
         for (int i = 0; i < rows; i ++) {
             NoticeTypeView *noticeTypeViewTmp = [[NoticeTypeView alloc]initWithFrame:CGRectMake(0, i*27, SCREEN_WIDTH, 27)];
             noticeTypeViewTmp.descriptionLabel.text = [[arrNoticeList objectAtIndex:i]objectForKey:@"description"];
-            noticeTypeViewTmp.code = [[[arrNoticeList objectAtIndex:i]objectForKey:@"description"]intValue];
+            noticeTypeViewTmp.code = [[[arrNoticeList objectAtIndex:i]objectForKey:@"code"]intValue];
             [self->mNoticeView addSubview:noticeTypeViewTmp];
         }
         UIButton *confirmButton = [self createButtonWithFrame:CGRectMake(12, self->mNoticeView.frame.origin.y+self->mNoticeView.frame.size.height+37, SCREEN_WIDTH - 24, 36) :@"确定" :[UIColor whiteColor] :[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] :@selector(confirmButtonPress)];
@@ -194,7 +272,7 @@
             NSDictionary *equipmentTypeInfo = [allEquipmentList objectForKey:keyType];
             NSArray *equipmentList = [equipmentTypeInfo objectForKey:@"equipmentList"] ;
             for (int j = 0; j < equipmentList.count; j ++) {
-                EquipmentButton *houseTypeBtn = [[EquipmentButton alloc]initWithFrame:CGRectMake(21+(73+space)*(m%4), (30+8)*floor(m/4), 73, 30) :[[equipmentList objectAtIndex:j] objectForKey:@"description"] :[[[equipmentList objectAtIndex:i] objectForKey:@"code"]intValue] :self :@selector(equipmentTypeClick:)];
+                EquipmentButton *houseTypeBtn = [[EquipmentButton alloc]initWithFrame:CGRectMake(21+(73+space)*(m%4), (30+8)*floor(m/4), 73, 30) :[[equipmentList objectAtIndex:j] objectForKey:@"description"] :[[[equipmentList objectAtIndex:j] objectForKey:@"code"]intValue] :self :@selector(equipmentTypeClick:)];
                 houseTypeBtn.keyType = keyType;
                 m++;
                 [self->mEquipmentTypeView addSubview:houseTypeBtn];
