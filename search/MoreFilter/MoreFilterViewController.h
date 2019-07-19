@@ -21,9 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
     UIView *mHouseTypeView;
     UIView *mEquipmentTypeView;
     UIView *mNoticeView;
+    NSMutableDictionary *mDicFilterInfo;
 }
 //页面标题
 @property (nonatomic,strong) UILabel *navTitleLabel;
+@property (nonatomic, copy) void(^selectValueBlock)(NSDictionary * allFilterDic);
+- (id)initWithDicFilterInfo:(NSDictionary *)dicInfo;
 @end
 
 NS_ASSUME_NONNULL_END

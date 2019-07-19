@@ -63,6 +63,25 @@
     return button;
 }
 #pragma mark - 系统生命周期
+- (id)initWithDicFilterInfo:(NSDictionary *)dicInfo{
+    self = [super init];
+    if (self) {
+        mDicFilterInfo = [NSMutableDictionary new];
+        if ([dicInfo.allKeys containsObject:@"notice"]) {
+            [mDicFilterInfo setObject:[dicInfo objectForKey:@"notice"] forKey:@"notice"];
+        }
+        if ([dicInfo.allKeys containsObject:@"equipmentList"]) {
+            [mDicFilterInfo setObject:[dicInfo objectForKey:@"equipmentList"] forKey:@"equipmentList"];
+        }
+        if ([dicInfo.allKeys containsObject:@"houseType"]) {
+            [mDicFilterInfo setObject:[dicInfo objectForKey:@"houseType"] forKey:@"houseType"];
+        }
+        if ([dicInfo.allKeys containsObject:@"leaseType"]) {
+            [mDicFilterInfo setObject:[dicInfo objectForKey:@"leaseType"] forKey:@"leaseType"];
+        }
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //导航栏
@@ -171,6 +190,10 @@
     if (allSelectNotice.count > 0) {
         [allFilterDic setObject:allSelectNotice forKey:@"notice"];
     }
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        self.selectValueBlock(allFilterDic);
+    }];
 }
 - (void)houseTypeClick:(UIButton*)sender{
     UIButton *button = sender;
@@ -203,6 +226,9 @@
             leaseTypeViewTmp.extendLabel.text = [[allLeaseList objectAtIndex:i]objectForKey:@"extend"];
             leaseTypeViewTmp.code = [[[allLeaseList objectAtIndex:i]objectForKey:@"code"]intValue];
             [self->mLeaseTypeView addSubview:leaseTypeViewTmp];
+            if ([self->mDicFilterInfo.allKeys containsObject:@"leaseType"]&&[[self->mDicFilterInfo objectForKey:@"leaseType"]containsObject:@(leaseTypeViewTmp.code)]) {
+                leaseTypeViewTmp.checkBoxBtn.selected = YES;
+            }
         }
         [self getHouseTypeView];
         
@@ -224,6 +250,9 @@
             noticeTypeViewTmp.descriptionLabel.text = [[arrNoticeList objectAtIndex:i]objectForKey:@"description"];
             noticeTypeViewTmp.code = [[[arrNoticeList objectAtIndex:i]objectForKey:@"code"]intValue];
             [self->mNoticeView addSubview:noticeTypeViewTmp];
+            if ([self->mDicFilterInfo.allKeys containsObject:@"notice"]&&[[self->mDicFilterInfo objectForKey:@"notice"]containsObject:@(noticeTypeViewTmp.code)]) {
+                noticeTypeViewTmp.checkBoxBtn.selected = YES;
+            }
         }
         UIButton *confirmButton = [self createButtonWithFrame:CGRectMake(12, self->mNoticeView.frame.origin.y+self->mNoticeView.frame.size.height+37, SCREEN_WIDTH - 24, 36) :@"确定" :[UIColor whiteColor] :[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] :@selector(confirmButtonPress)];
         [self->mShowAllFilterView addSubview:confirmButton];
@@ -245,6 +274,10 @@
             NSDictionary *houseTypeInfo = [allHouseType objectAtIndex:i];
             UIButton *houseTypeBtn = [self createButtonWithFrameAndBorder:CGRectMake(15+(64+space)*(i%5), (30+8)*floor(i/5), 64, 30) :[houseTypeInfo objectForKey:@"description"] :[[houseTypeInfo objectForKey:@"code"]intValue] :@selector(houseTypeClick:)];
             [self->mHouseTypeView addSubview:houseTypeBtn];
+            if ([self->mDicFilterInfo.allKeys containsObject:@"houseType"]&&[[self->mDicFilterInfo objectForKey:@"houseType"]containsObject:@(houseTypeBtn.tag)]) {
+                houseTypeBtn.selected = YES;
+                houseTypeBtn.backgroundColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
+            }
         }
         [self getEquipmentListView];
     }];
@@ -276,6 +309,11 @@
                 houseTypeBtn.keyType = keyType;
                 m++;
                 [self->mEquipmentTypeView addSubview:houseTypeBtn];
+                
+                if ([self->mDicFilterInfo.allKeys containsObject:@"equipmentList"]&&[[[self->mDicFilterInfo objectForKey:@"equipmentList"]allKeys]containsObject:keyType] && [[[self->mDicFilterInfo objectForKey:@"equipmentList"]objectForKey:keyType] containsObject:@(houseTypeBtn.code)]) {
+                    houseTypeBtn.selected = YES;
+                    houseTypeBtn.backgroundColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
+                }
             }
         }
         [self getNoticeListView];

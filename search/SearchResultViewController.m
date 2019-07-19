@@ -229,7 +229,22 @@
         mShowPriceView.hidden = YES;
         mShowPeopleNumberView.hidden = YES;
         mShowSortView.hidden = YES;
-        MoreFilterViewController *moreFilterVC = [[MoreFilterViewController alloc]init];
+        MoreFilterViewController *moreFilterVC = [[MoreFilterViewController alloc]initWithDicFilterInfo:mDicFilter];
+        moreFilterVC.selectValueBlock = ^(NSDictionary *allFilterDic){
+            if ([self->mDicFilter.allKeys containsObject:@"notice"]) {
+                [self->mDicFilter removeObjectForKey:@"notice"];
+            }
+            if ([self->mDicFilter.allKeys containsObject:@"equipmentList"]) {
+                [self->mDicFilter removeObjectForKey:@"equipmentList"];
+            }
+            if ([self->mDicFilter.allKeys containsObject:@"houseType"]) {
+                [self->mDicFilter removeObjectForKey:@"houseType"];
+            }
+            if ([self->mDicFilter.allKeys containsObject:@"leaseType"]) {
+                [self->mDicFilter removeObjectForKey:@"leaseType"];
+            }
+            [self->mDicFilter setValuesForKeysWithDictionary:allFilterDic];
+        };
         [self presentViewController:moreFilterVC animated:YES completion:nil];
     }
     
