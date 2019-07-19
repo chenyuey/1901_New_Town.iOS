@@ -53,6 +53,7 @@
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [button addTarget:self action:event forControlEvents:UIControlEventTouchUpInside];
     button.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
     button.tag = code;
@@ -91,11 +92,23 @@
 - (void)confirmButtonPress{
     
 }
-- (void)houseTypeClick:(id)sender{
-    
+- (void)houseTypeClick:(UIButton*)sender{
+    UIButton *button = sender;
+    button.selected = !button.selected;
+    if (button.selected == YES) {
+        [button setBackgroundColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0]];
+    }else{
+        [button setBackgroundColor:[UIColor whiteColor]];
+    }
 }
-- (void)equipmentTypeClick:(id)sender{
-    
+- (void)equipmentTypeClick:(EquipmentButton *)sender{
+    EquipmentButton *button = sender;
+    button.selected = !button.selected;
+    if (button.selected == YES) {
+        [button setBackgroundColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0]];
+    }else{
+        [button setBackgroundColor:[UIColor whiteColor]];
+    }
 }
 
 - (void)getAllData{
@@ -181,7 +194,7 @@
             NSDictionary *equipmentTypeInfo = [allEquipmentList objectForKey:keyType];
             NSArray *equipmentList = [equipmentTypeInfo objectForKey:@"equipmentList"] ;
             for (int j = 0; j < equipmentList.count; j ++) {
-                EquipmentButton *houseTypeBtn = [[EquipmentButton alloc]initWithFrame:CGRectMake(21+(73+space)*(m%4), (30+8)*floor(m/4), 73, 30) :[[equipmentList objectAtIndex:j] objectForKey:@"description"] :[[[equipmentList objectAtIndex:i] objectForKey:@"code"]intValue] :@selector(equipmentTypeClick:)];
+                EquipmentButton *houseTypeBtn = [[EquipmentButton alloc]initWithFrame:CGRectMake(21+(73+space)*(m%4), (30+8)*floor(m/4), 73, 30) :[[equipmentList objectAtIndex:j] objectForKey:@"description"] :[[[equipmentList objectAtIndex:i] objectForKey:@"code"]intValue] :self :@selector(equipmentTypeClick:)];
                 houseTypeBtn.keyType = keyType;
                 m++;
                 [self->mEquipmentTypeView addSubview:houseTypeBtn];

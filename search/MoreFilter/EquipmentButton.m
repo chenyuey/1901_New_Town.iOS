@@ -9,12 +9,13 @@
 #import "EquipmentButton.h"
 
 @implementation EquipmentButton
--(id)initWithFrame:(CGRect)frame :(NSString *)title :(int)eqCode :(SEL)event{
+-(id)initWithFrame:(CGRect)frame :(NSString *)title :(int)eqCode :(id)target :(SEL)event{
     self = [super initWithFrame:frame];
     if (self) {
         [self setTitle:title forState:UIControlStateNormal];
         [self setTitleColor:[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-        [self addTarget:self action:event forControlEvents:UIControlEventTouchUpInside];
+        [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        [self addTarget:target action:event forControlEvents:UIControlEventTouchUpInside];
         self.layer.borderColor = [UIColor colorWithRed:187.0/255.0 green:187.0/255.0 blue:187.0/255.0 alpha:1.0].CGColor;
         self.layer.borderWidth = 1.0;
         //添加文字颜色

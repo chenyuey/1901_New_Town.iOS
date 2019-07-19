@@ -484,12 +484,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "search/MoreFilter/MoreFilterViewController.m"
-            timestampString = "585198766.83244"
+            timestampString = "585200636.2693321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "-getEquipmentListView"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "search/MoreFilter/MoreFilterViewController.m"
+            timestampString = "585200636.269632"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "-equipmentTypeClick:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

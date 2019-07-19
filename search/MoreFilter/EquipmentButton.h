@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) NSString *keyType;
 @property int code;
 @property (nonatomic,strong) NSString *descriptionValue;
--(id)initWithFrame:(CGRect)frame :(NSString *)title :(int)eqCode :(SEL)event;
+-(id)initWithFrame:(CGRect)frame :(NSString *)title :(int)eqCode :(id)target :(SEL)event;
 @end
 
 NS_ASSUME_NONNULL_END
