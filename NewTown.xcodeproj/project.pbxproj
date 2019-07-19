@@ -12,6 +12,7 @@
 		521C612622D97C3800489BCD /* NewMapNavgationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 521C612522D97C3800489BCD /* NewMapNavgationViewController.m */; };
 		5221BC0F226EA96D00A78013 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5221BC0E226EA96D00A78013 /* loading.gif */; };
 		5221BC152270592000A78013 /* LYWNewfeatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5221BC142270592000A78013 /* LYWNewfeatureViewController.m */; };
+		5227624A22E163F5003CFB3A /* NoticeTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5227624922E163F5003CFB3A /* NoticeTypeView.m */; };
 		522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 522934A8227160E900B30E94 /* UIImage+LXExtension.m */; };
 		5229691F2253549F00BA72A8 /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5229691E2253549F00BA72A8 /* CustomLabel.m */; };
 		522E2D3122AE50EE009F1224 /* MapNavgationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E2D3022AE50EE009F1224 /* MapNavgationViewController.m */; };
@@ -77,6 +78,8 @@
 		5221BC0E226EA96D00A78013 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		5221BC132270592000A78013 /* LYWNewfeatureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LYWNewfeatureViewController.h; sourceTree = "<group>"; };
 		5221BC142270592000A78013 /* LYWNewfeatureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LYWNewfeatureViewController.m; sourceTree = "<group>"; };
+		5227624822E163F5003CFB3A /* NoticeTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeTypeView.h; sourceTree = "<group>"; };
+		5227624922E163F5003CFB3A /* NoticeTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeTypeView.m; sourceTree = "<group>"; };
 		522934A7227160E900B30E94 /* UIImage+LXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+LXExtension.h"; sourceTree = "<group>"; };
 		522934A8227160E900B30E94 /* UIImage+LXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+LXExtension.m"; sourceTree = "<group>"; };
 		5229691D2253549F00BA72A8 /* CustomLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomLabel.h; sourceTree = "<group>"; };
@@ -211,6 +214,15 @@
 			path = StartupPage;
 			sourceTree = "<group>";
 		};
+		5227624722E163C8003CFB3A /* TypeView */ = {
+			isa = PBXGroup;
+			children = (
+				5227624822E163F5003CFB3A /* NoticeTypeView.h */,
+				5227624922E163F5003CFB3A /* NoticeTypeView.m */,
+			);
+			path = TypeView;
+			sourceTree = "<group>";
+		};
 		522934A6227160CE00B30E94 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +297,7 @@
 		525B227822E01D28001BA5C4 /* MoreFilter */ = {
 			isa = PBXGroup;
 			children = (
+				5227624722E163C8003CFB3A /* TypeView */,
 				525B227C22E05E8F001BA5C4 /* MoreFilterViewController.h */,
 				525B227D22E05E8F001BA5C4 /* MoreFilterViewController.m */,
 				525B227F22E081DA001BA5C4 /* LeaseTypeView.h */,
@@ -683,6 +696,7 @@
 				527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */,
 				522E9F4622D30E3100781502 /* HotelTableViewCell.m in Sources */,
 				52BC542722C9F0E300E31B50 /* SelectAddressViewController.m in Sources */,
+				5227624A22E163F5003CFB3A /* NoticeTypeView.m in Sources */,
 				522E9F3922CF03F800781502 /* DoubleSliderView.m in Sources */,
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				522E9F2422CB4FFC00781502 /* SearchResultViewController.m in Sources */,

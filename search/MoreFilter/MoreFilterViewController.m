@@ -38,6 +38,17 @@
     [button setFont:[UIFont systemFontOfSize:14.0f]];
     return button;
 }
+-(UIButton *)createButtonWithFrame:(CGRect)frame :(NSString *)title :(UIColor *)textColor :(UIColor *)bgColor :(SEL)event{
+    UIButton *button = [[UIButton alloc]initWithFrame:frame];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:textColor forState:UIControlStateNormal];
+    [button setBackgroundColor:bgColor];
+    [button addTarget:self action:event forControlEvents:UIControlEventTouchUpInside];
+    button.layer.cornerRadius = 4;
+    //添加文字颜色
+    [button setFont:[UIFont systemFontOfSize:14.0f]];
+    return button;
+}
 -(UIButton *)createButtonWithFrameAndBorder:(CGRect)frame :(NSString *)title :(int)code :(SEL)event{
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
     [button setTitle:title forState:UIControlStateNormal];
@@ -77,6 +88,9 @@
 - (void)clearAllFilter{
     //删除所有的筛选选项
 }
+- (void)confirmButtonPress{
+    
+}
 - (void)houseTypeClick:(id)sender{
     
 }
@@ -103,8 +117,26 @@
         
     }];
     //守则
+    
+}
+- (void)getNoticeListView{
     [self getRequestListWithUrl:@"/notice" :^(NSDictionary *dictData) {
         NSArray *arrNoticeList = [dictData objectForKey:@"result"];
+        UILabel *noticeLabel = [self createLabelWithFrame:CGRectMake(18, self->mEquipmentTypeView.frame.origin.y + self->mEquipmentTypeView.frame.size.height + 17, 60, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        noticeLabel.text = @"守则";
+        [self->mShowAllFilterView addSubview:noticeLabel];
+        int rows = (int)arrNoticeList.count;
+        self->mNoticeView = [[UIView alloc]initWithFrame:CGRectMake(0, noticeLabel.frame.origin.y+noticeLabel.frame.size.height+7, SCREEN_WIDTH, 20*rows+7*(rows-1))];
+        [self->mShowAllFilterView addSubview:self->mNoticeView];
+        for (int i = 0; i < rows; i ++) {
+            NoticeTypeView *noticeTypeViewTmp = [[NoticeTypeView alloc]initWithFrame:CGRectMake(0, i*27, SCREEN_WIDTH, 27)];
+            noticeTypeViewTmp.descriptionLabel.text = [[arrNoticeList objectAtIndex:i]objectForKey:@"description"];
+            noticeTypeViewTmp.code = [[[arrNoticeList objectAtIndex:i]objectForKey:@"description"]intValue];
+            [self->mNoticeView addSubview:noticeTypeViewTmp];
+        }
+        UIButton *confirmButton = [self createButtonWithFrame:CGRectMake(12, self->mNoticeView.frame.origin.y+self->mNoticeView.frame.size.height+37, SCREEN_WIDTH - 24, 36) :@"确定" :[UIColor whiteColor] :[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] :@selector(confirmButtonPress)];
+        [self->mShowAllFilterView addSubview:confirmButton];
+        self->mShowAllFilterView.contentSize = CGSizeMake(SCREEN_WIDTH, confirmButton.frame.origin.y+confirmButton.frame.size.height + 80);
     }];
 }
 - (void)getHouseTypeView{
@@ -155,8 +187,7 @@
                 [self->mEquipmentTypeView addSubview:houseTypeBtn];
             }
         }
-        
-        
+        [self getNoticeListView];
     }];
 }
 - (UIScrollView *)createScrollViewWithFrame:(CGRect)frame{

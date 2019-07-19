@@ -467,22 +467,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "search/MoreFilter/MoreFilterViewController.m"
-            timestampString = "585146016.595736"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "-getAllData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "search/SearchResultViewController.m"
             timestampString = "585146016.596226"
             startingColumnNumber = "9223372036854775807"
@@ -496,15 +480,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "search/MoreFilter/MoreFilterViewController.m"
-            timestampString = "585146016.596292"
+            timestampString = "585198766.83244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "-getEquipmentListView"
             landmarkType = "7">
          </BreakpointContent>
