@@ -20,6 +20,7 @@
 #import "MapNavgationViewController.h"
 #import "HotelDetailView.h"
 #import "NewMapNavgationViewController.h"
+#import "HouseManageViewController.h"
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录
@@ -55,6 +56,9 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 @property (nonatomic,strong) UIButton *mapButton;
 //分享按钮
 @property (nonatomic,strong) UIButton *shareButton;
+
+//切换为房东按钮
+@property (nonatomic,strong) UIButton *switchButton;
 
 @property BOOL isLoginYouZan;
 

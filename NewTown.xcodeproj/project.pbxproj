@@ -28,6 +28,7 @@
 		522E9F4622D30E3100781502 /* HotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F4522D30E3100781502 /* HotelTableViewCell.m */; };
 		522E9F4A22D4868800781502 /* HotelDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E9F4922D4868800781502 /* HotelDetailView.m */; };
 		5233B337229D389900155B67 /* preloader_64.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5233B336229D389900155B67 /* preloader_64.gif */; };
+		524D811822FAC0990021CF0C /* HouseManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 524D811722FAC0990021CF0C /* HouseManageViewController.m */; };
 		525B227E22E05E8F001BA5C4 /* MoreFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525B227D22E05E8F001BA5C4 /* MoreFilterViewController.m */; };
 		525B228122E081DA001BA5C4 /* LeaseTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 525B228022E081DA001BA5C4 /* LeaseTypeView.m */; };
 		525B228422E098EE001BA5C4 /* EquipmentButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 525B228322E098EE001BA5C4 /* EquipmentButton.m */; };
@@ -109,6 +110,8 @@
 		522E9F4822D4868800781502 /* HotelDetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotelDetailView.h; sourceTree = "<group>"; };
 		522E9F4922D4868800781502 /* HotelDetailView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotelDetailView.m; sourceTree = "<group>"; };
 		5233B336229D389900155B67 /* preloader_64.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = preloader_64.gif; sourceTree = "<group>"; };
+		524D811622FAC0990021CF0C /* HouseManageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HouseManageViewController.h; sourceTree = "<group>"; };
+		524D811722FAC0990021CF0C /* HouseManageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HouseManageViewController.m; sourceTree = "<group>"; };
 		5256ACF8226D6ADA00AAFB77 /* YZSDKCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZSDKCore.framework; path = ../../Downloads/Release/YZSDKCore.framework; sourceTree = "<group>"; };
 		5256ACF9226D6ADA00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = ../../Downloads/Release/YZBaseSDK.framework; sourceTree = "<group>"; };
 		5256ACFC226D6B1A00AAFB77 /* YZBaseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZBaseSDK.framework; path = Release/YZBaseSDK.framework; sourceTree = "<group>"; };
@@ -294,6 +297,15 @@
 			path = HotelDatail;
 			sourceTree = "<group>";
 		};
+		524D811522FAC0820021CF0C /* HouseManager */ = {
+			isa = PBXGroup;
+			children = (
+				524D811622FAC0990021CF0C /* HouseManageViewController.h */,
+				524D811722FAC0990021CF0C /* HouseManageViewController.m */,
+			);
+			path = HouseManager;
+			sourceTree = "<group>";
+		};
 		525B227822E01D28001BA5C4 /* MoreFilter */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,6 +323,7 @@
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
+				524D811522FAC0820021CF0C /* HouseManager */,
 				522E9F4722D4865B00781502 /* HotelDatail */,
 				52BC542422C7479600E31B50 /* search */,
 				522934A6227160CE00B30E94 /* Tools */,
@@ -700,6 +713,7 @@
 				522E9F3922CF03F800781502 /* DoubleSliderView.m in Sources */,
 				527071FB222E77AE00B73769 /* LoginViewController.m in Sources */,
 				522E9F2422CB4FFC00781502 /* SearchResultViewController.m in Sources */,
+				524D811822FAC0990021CF0C /* HouseManageViewController.m in Sources */,
 				525B228422E098EE001BA5C4 /* EquipmentButton.m in Sources */,
 				525B228122E081DA001BA5C4 /* LeaseTypeView.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
@@ -890,7 +904,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SWGGTC62S7;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -905,7 +919,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bigegg.com.NewTownSpecial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = new_town_dev_lgs;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -921,7 +935,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SWGGTC62S7;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -936,7 +950,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bigegg.com.NewTownSpecial;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = new_town_dev_lgs;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

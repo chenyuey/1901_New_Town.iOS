@@ -7,7 +7,6 @@
 //
 
 #import "SearchResultViewController.h"
-//#define BASE_URL @"http://192.168.124.104:1330/api/1/"
 #define BASE_URL @"http://yzyj.1000q1000z.com/landlord/api/1/"
 
 @interface SearchResultViewController ()
@@ -58,7 +57,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
-    self.tabBarController.tabBar.hidden=YES;
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     self.tabBarController.tabBar.hidden=YES;
     self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10+8, 24, 24) :@"back_btn" :@selector(backToSearch)];
@@ -142,7 +140,7 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@functions%@",BASE_URL,[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
-    [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
+    [request addValue:@"khYEI0xFyAnVCUpO" forHTTPHeaderField:@"X-Parse-Application-Id"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     NSData* data = [NSJSONSerialization dataWithJSONObject:dicFilter options:NSJSONWritingPrettyPrinted error:nil];
@@ -598,7 +596,7 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@functions%@",BASE_URL,[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
-    [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
+    [request addValue:@"khYEI0xFyAnVCUpO" forHTTPHeaderField:@"X-Parse-Application-Id"];
     NSURLSession *session =[NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];

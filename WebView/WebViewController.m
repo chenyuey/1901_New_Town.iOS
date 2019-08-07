@@ -14,6 +14,7 @@
 #import "MapInfoViewController.h"
 #define BASE_URL @"http://yzyj.1000q1000z.com/landlord/api/1/"
 
+
 @interface WebViewController () <YZWebViewDelegate, YZWebViewNoticeDelegate>
 @property (strong, nonatomic) YZWebView *webView;
 @end
@@ -50,6 +51,15 @@
     [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
+-(UIButton *)createButtonWithFrame:(CGRect)frame :(NSString *)title :(SEL)event{
+    UIButton *button = [[UIButton alloc]initWithFrame:frame];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button addTarget:self action:event forControlEvents:UIControlEventTouchUpInside];
+    //添加文字颜色
+    [button setFont:[UIFont systemFontOfSize:14.0f]];
+    return button;
+}
 #pragma mark - 页面事件
 - (BOOL)navigationShouldPopOnBackButton {
     if ([self.webView canGoBack]) {
@@ -63,6 +73,12 @@
     else{
         return YES;
     }
+}
+- (void)switchToHouseManager{
+    HouseManageViewController *houseManageVC = [[HouseManageViewController alloc]init];
+    [self presentViewController:houseManageVC animated:YES completion:^{
+        
+    }];
 }
 //收藏按钮点击事件
 - (void)addItemToMyCollections:(id)sender{
@@ -99,6 +115,9 @@
     self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(navigationShouldPopOnBackButton)];
     self.backButton.hidden = YES;
     [self.view addSubview:self.backButton];
+    
+    self.switchButton = [self createButtonWithFrame:CGRectMake(10, SafeStatusBarHeight+10, 70, 20) :@"切换为房东" :@selector(switchToHouseManager)];
+    [self.view addSubview:self.switchButton];
     //创建收藏按钮
     self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 8 - 10 - 24 -24, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
     self.collectButton.hidden = YES;
@@ -113,7 +132,6 @@
     
     self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
     self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight  - SafeAreaBottomHeight);
-    self.tabBarController.tabBar.hidden=YES;
     self.webView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.webView];
     self.webView.delegate = self;
@@ -292,12 +310,35 @@
 - (void)updateWebviewFrameAndTabbarHidden{
     if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
         self.backButton.hidden = NO;
-        self.tabBarController.tabBar.hidden=YES;
+        [UIView animateWithDuration:0.2 animations:^{
+            for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
+                UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
+                if ([tmpView isKindOfClass:[UITabBar class]]) {
+                    CGRect frame = tmpView.frame;
+                    frame.origin.y = SCREEN_HEIGHT;
+                    tmpView.frame = frame;
+                }else{
+                    [self.tabBarController.view bringSubviewToFront:tmpView];
+                }
+            }
+        }];
         self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeAreaBottomHeight);
+        [self.view bringSubviewToFront:self.webView];
     }else{
         self.backButton.hidden = YES;
-        self.tabBarController.tabBar.hidden=NO;
-        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeAreaBottomHeight - 44);
+        [UIView animateWithDuration:0.2 animations:^{
+            for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
+                UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
+                if ([tmpView isKindOfClass:[UITabBar class]]) {
+                    CGRect frame = tmpView.frame;
+                    frame.origin.y = SCREEN_HEIGHT - SafeAreaBottomHeight - 49;
+                    tmpView.frame = frame;
+                    [self.tabBarController.view bringSubviewToFront:tmpView];
+                    break;
+                }
+            }
+        }];
+        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeAreaBottomHeight - 49);
     }
     self.edgesForExtendedLayout = UIRectEdgeNone;
     if (@available(iOS 11.0, *)) {
@@ -912,7 +953,7 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@functions%@",BASE_URL,[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
-    [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
+    [request addValue:@"khYEI0xFyAnVCUpO" forHTTPHeaderField:@"X-Parse-Application-Id"];
     NSURLSession *session =[NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
@@ -928,7 +969,7 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BASE_URL,[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
-    [request addValue:@"auFfj_6MTBRLoLnvDr0vDreK" forHTTPHeaderField:@"X-Parse-Application-Id"];
+    [request addValue:@"khYEI0xFyAnVCUpO" forHTTPHeaderField:@"X-Parse-Application-Id"];
     NSURLSession *session =[NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
