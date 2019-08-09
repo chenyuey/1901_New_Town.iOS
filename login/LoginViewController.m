@@ -160,7 +160,10 @@
                                        };//chenyue 123456
         [PFCloud callFunctionInBackground:@"login" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable err) {
             if (resultInfo) {
-                [PFUser becomeInBackground:resultInfo[@"sessionToken"] block:^(PFUser * _Nullable user, NSError * _Nullable error) {
+                NSString *strSessionToken = resultInfo[@"sessionToken"];
+                NSDictionary *dicSessionToken = @{@"token":strSessionToken};
+                [self writeToPlist:dicSessionToken];
+                [PFUser becomeInBackground:strSessionToken block:^(PFUser * _Nullable user, NSError * _Nullable error) {
                     if (!error) {
                         if (self->currentType == 0) {
                             [self willMoveToParentViewController:nil];
@@ -189,7 +192,6 @@
             }
         }];
     }
-    
 }
 - (void)getValidCodePressd:(id)sender{
     if (self.phoneNumberTextField.text != nil && self.phoneNumberTextField.text.length > 0) {
@@ -264,6 +266,18 @@
 }
 - (void)hideErrorLabel{
     errLabel.hidden = YES;
+}
+
+/**
+ 写入数据到plist
+ */
+- (void)writeToPlist:(NSDictionary *)dicInfo{
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES).firstObject;
+    NSLog(@"写入数据地址%@",path);
+    NSString *fileName = [path stringByAppendingPathComponent:@"token.plist"];
+    //序列化，把数组存入plist文件
+    [dicInfo writeToFile:fileName atomically:YES];
+    NSLog(@"写入成功");
 }
 
 @end

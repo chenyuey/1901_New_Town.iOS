@@ -28,9 +28,12 @@
     mWebView.allowsBackForwardNavigationGestures = YES;
     //可返回的页面列表, 存储已打开过的网页
     WKBackForwardList * backForwardList = [mWebView backForwardList];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://m.house.xnngs.cn/"]];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://m.house.xnngs.cn/"]];
-    
+
+    NSString *strSessionToken = [self readFromPlist];
+    NSString *strUrl = [NSString stringWithFormat:@"http://192.168.124.237:9001?session_token=%@",strSessionToken];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:strUrl]];
     [mWebView loadRequest:request];
     [self.view addSubview:mWebView];
     
@@ -71,7 +74,7 @@
 //    WeakWebViewScriptMessageDelegate *weakScriptMessageDelegate = [[WeakWebViewScriptMessageDelegate alloc] initWithDelegate:self];
 //    //这个类主要用来做native与JavaScript的交互管理
 //    WKUserContentController * wkUController = [[WKUserContentController alloc] init];
-//    //注册一个name为jsToOcNoPrams的js方法
+    //注册一个name为jsToOcNoPrams的js方法
 //    [wkUController addScriptMessageHandler:weakScriptMessageDelegate  name:@"jsToOcNoPrams"];
 //    [wkUController addScriptMessageHandler:weakScriptMessageDelegate  name:@"jsToOcWithPrams"];
 //    config.userContentController = wkUController;
@@ -79,14 +82,40 @@
     return config;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+/**
+ 从plist读取数据
+ 
+ @return 读出数据
+ */
+- (NSString *)readFromPlist{
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES).firstObject;
+    NSLog(@"读取数据地址%@",path);
+    NSString *fileName = [path stringByAppendingPathComponent:@"token.plist"];
+    //反序列化，把plist文件数据读取出来，转为数组
+    NSDictionary *result = [NSDictionary dictionaryWithContentsOfFile:fileName];
+    if (result == nil) {
+        return @"";
+    }
+    NSLog(@"%@", result);
+    return [result objectForKey:@"token"];
 }
-*/
+//- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
+//
+//}
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    //    Decides whether to allow or cancel a navigation after its response is known.
+    
+    NSLog(@"知道返回内容之后，是否允许加载，允许加载");
+    if ([webView.URL.absoluteString isEqualToString:@"https://m.baidu.com/"]) {
+        decisionHandler(WKNavigationResponsePolicyCancel);
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+
+    }else{
+        decisionHandler(WKNavigationResponsePolicyAllow);
+    }
+    
+}
 
 @end

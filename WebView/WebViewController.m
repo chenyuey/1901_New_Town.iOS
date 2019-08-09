@@ -60,6 +60,18 @@
     [button setFont:[UIFont systemFontOfSize:14.0f]];
     return button;
 }
+- (UIButton *)createButtonWithTitleAndImage:(NSString *)title :(CGRect)frame :(int)edgeInsetLeft :(SEL)btnPress{
+    UIButton *peopleNumberButton = [[UIButton alloc]initWithFrame:frame];
+    [peopleNumberButton setTitle:title forState:UIControlStateNormal];
+    [peopleNumberButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [peopleNumberButton setImage:[UIImage imageNamed:@"switchIcon"] forState:UIControlStateNormal];
+    peopleNumberButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [peopleNumberButton.titleLabel sizeToFit];
+    peopleNumberButton.titleEdgeInsets = UIEdgeInsetsMake(0, edgeInsetLeft, 0, 0);
+    peopleNumberButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    [peopleNumberButton addTarget:self action:btnPress forControlEvents:UIControlEventTouchUpInside];
+    return peopleNumberButton;
+}
 #pragma mark - 页面事件
 - (BOOL)navigationShouldPopOnBackButton {
     if ([self.webView canGoBack]) {
@@ -116,7 +128,8 @@
     self.backButton.hidden = YES;
     [self.view addSubview:self.backButton];
     
-    self.switchButton = [self createButtonWithFrame:CGRectMake(10, SafeStatusBarHeight+10, 70, 20) :@"切换为房东" :@selector(switchToHouseManager)];
+    self.switchButton = [self createButtonWithTitleAndImage:@"切换为房东" :CGRectMake(10, SafeStatusBarHeight+10, 100, 20) :4 :@selector(switchToHouseManager)];
+    self.switchButton.hidden = YES;
     [self.view addSubview:self.switchButton];
     //创建收藏按钮
     self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 8 - 10 - 24 -24, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
@@ -300,6 +313,11 @@
                   }
                   if (self.webView.scrollView.mj_header != nil) {
                       [self.webView.scrollView.mj_header endRefreshing];
+                  }
+                  if ([self.webView.URL.path containsString:@"membercenter"]) {
+                      self.switchButton.hidden = NO;
+                  }else{
+                      self.switchButton.hidden = YES;
                   }
                   
               }];
@@ -981,6 +999,5 @@
     //启动任务
     [dataTask resume];
 }
-
 @end
 
