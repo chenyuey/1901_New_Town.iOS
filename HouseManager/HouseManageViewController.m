@@ -18,8 +18,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    self.tabBarController.tabBar.hidden=YES;
     WKWebViewConfiguration *config = [self createConfig];
-    mWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT-SafeStatusBarHeight) configuration:config];
+    
+    mWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight - SafeAreaBottomHeight) configuration:config];
     // UI代理
     mWebView.UIDelegate = self;
     // 导航代理
@@ -30,24 +32,13 @@
     WKBackForwardList * backForwardList = [mWebView backForwardList];
 //    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://m.house.xnngs.cn/"]];
     
-
     NSString *strSessionToken = [self readFromPlist];
+    strSessionToken = [strSessionToken stringByReplacingOccurrencesOfString:@":" withString:@"&"];
     NSString *strUrl = [NSString stringWithFormat:@"http://192.168.124.237:9001?session_token=%@",strSessionToken];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:strUrl]];
     [mWebView loadRequest:request];
     [self.view addSubview:mWebView];
     
-    //页面后退
-//    [mWebView goBack];
-//    //页面前进
-//    [mWebView goForward];
-//    //刷新当前页面
-//    [mWebView reload];
-//    
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"JStoOC.html" ofType:nil];
-//    NSString *htmlString = [[NSString alloc]initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-//    //加载本地html文件
-//    [mWebView loadHTMLString:htmlString baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
 }
 - (WKWebViewConfiguration*)createConfig{
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
@@ -70,14 +61,13 @@
     config.allowsPictureInPictureMediaPlayback = YES;
     //设置请求的User-Agent信息中应用程序名称 iOS9后可用
     config.applicationNameForUserAgent = @"ChinaDailyForiPad";
-    //自定义的WKScriptMessageHandler 是为了解决内存不释放的问题
-//    WeakWebViewScriptMessageDelegate *weakScriptMessageDelegate = [[WeakWebViewScriptMessageDelegate alloc] initWithDelegate:self];
-//    //这个类主要用来做native与JavaScript的交互管理
-//    WKUserContentController * wkUController = [[WKUserContentController alloc] init];
-    //注册一个name为jsToOcNoPrams的js方法
-//    [wkUController addScriptMessageHandler:weakScriptMessageDelegate  name:@"jsToOcNoPrams"];
-//    [wkUController addScriptMessageHandler:weakScriptMessageDelegate  name:@"jsToOcWithPrams"];
-//    config.userContentController = wkUController;
+    // 我们可以在WKScriptMessageHandler代理中接收到
+    
+    WKUserContentController *userContentController = [[WKUserContentController alloc] init];
+    
+    [userContentController addScriptMessageHandler:self name:@"iosModel"];
+    [userContentController addScriptMessageHandler:self name:@"Camera"];
+    config.userContentController = userContentController;
     
     return config;
 }
@@ -99,9 +89,6 @@
     NSLog(@"%@", result);
     return [result objectForKey:@"token"];
 }
-//- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
-//
-//}
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     //    Decides whether to allow or cancel a navigation after its response is known.
     
@@ -109,13 +96,35 @@
     if ([webView.URL.absoluteString isEqualToString:@"https://m.baidu.com/"]) {
         decisionHandler(WKNavigationResponsePolicyCancel);
         [self dismissViewControllerAnimated:YES completion:^{
-            
+
         }];
+//        [self.navigationController popViewControllerAnimated:YES];
 
     }else{
         decisionHandler(WKNavigationResponsePolicyAllow);
     }
     
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.tabBarController.tabBar.hidden=YES;
+    //禁用屏幕左滑返回手势
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)])
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.tabBarController.tabBar.hidden=NO;
+    //开启
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+}
+
+-(void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
+{
+    if (self.presentedViewController)
+    {
+        [super dismissViewControllerAnimated:flag completion:completion];
+    }
 }
 
 @end

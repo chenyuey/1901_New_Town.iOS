@@ -89,8 +89,9 @@
 - (void)switchToHouseManager{
     HouseManageViewController *houseManageVC = [[HouseManageViewController alloc]init];
     [self presentViewController:houseManageVC animated:YES completion:^{
-        
+
     }];
+//    [self.navigationController pushViewController:houseManageVC animated:YES];
 }
 //收藏按钮点击事件
 - (void)addItemToMyCollections:(id)sender{
