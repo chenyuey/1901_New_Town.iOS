@@ -52,6 +52,7 @@
 		52BC542322C7478C00E31B50 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BC542222C7478C00E31B50 /* SearchViewController.m */; };
 		52BC542722C9F0E300E31B50 /* SelectAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BC542622C9F0E300E31B50 /* SelectAddressViewController.m */; };
 		52BC542922CA02ED00E31B50 /* citydict.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52BC542822CA02ED00E31B50 /* citydict.plist */; };
+		52D57EBF230EB123007365CE /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D57EBE230EB123007365CE /* TestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +164,8 @@
 		52BC542522C9F0E300E31B50 /* SelectAddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectAddressViewController.h; sourceTree = "<group>"; };
 		52BC542622C9F0E300E31B50 /* SelectAddressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectAddressViewController.m; sourceTree = "<group>"; };
 		52BC542822CA02ED00E31B50 /* citydict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = citydict.plist; sourceTree = "<group>"; };
+		52D57EBD230EB123007365CE /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		52D57EBE230EB123007365CE /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		B18E784FDF957FFF7A65C809 /* Pods-NewTown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.release.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.release.xcconfig"; sourceTree = "<group>"; };
 		F854899CA6E759B27AD4D6C2 /* Pods-NewTown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewTown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NewTown/Pods-NewTown.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -307,6 +310,8 @@
 				524D811722FAC0990021CF0C /* HouseManageViewController.m */,
 				525026522301571E00DFFEA0 /* SaveImage_Util.h */,
 				525026532301571E00DFFEA0 /* SaveImage_Util.m */,
+				52D57EBD230EB123007365CE /* TestViewController.h */,
+				52D57EBE230EB123007365CE /* TestViewController.m */,
 			);
 			path = HouseManager;
 			sourceTree = "<group>";
@@ -726,6 +731,7 @@
 				522E9F4A22D4868800781502 /* HotelDetailView.m in Sources */,
 				525B227E22E05E8F001BA5C4 /* MoreFilterViewController.m in Sources */,
 				521C612322D6D0FE00489BCD /* SFLabel.m in Sources */,
+				52D57EBF230EB123007365CE /* TestViewController.m in Sources */,
 				522E9F1E22CB457200781502 /* DayCollectionViewCell.m in Sources */,
 				522934A9227160E900B30E94 /* UIImage+LXExtension.m in Sources */,
 				527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */,

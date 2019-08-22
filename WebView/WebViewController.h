@@ -21,6 +21,7 @@
 #import "HotelDetailView.h"
 #import "NewMapNavgationViewController.h"
 #import "HouseManageViewController.h"
+#import "TestViewController.h"
 
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录

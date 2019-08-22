@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
     
     int indextNumb;// 交替图片名字
     UIImage *getImage;//获取的图片
+    HouseManageViewController *target;
 
 }
 @end

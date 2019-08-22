@@ -120,6 +120,22 @@
     }
     SearchResultViewController *searchVC = [[SearchResultViewController alloc]initWithAddress:mAddressLocationLabel.text AndDate:mDateLabel.text AndName:mHomeNameLabel.text AndLoction:coordinate];
     [self.navigationController pushViewController:searchVC animated:YES];
+    
+}
+- (void)viewDidAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden=NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
+            UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
+            if ([tmpView isKindOfClass:[UITabBar class]]) {
+                CGRect frame = tmpView.frame;
+                frame.origin.y = SCREEN_HEIGHT - SafeAreaBottomHeight - 49;
+                tmpView.frame = frame;
+                [self.tabBarController.view bringSubviewToFront:tmpView];
+                break;
+            }
+        }
+    }];
 }
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{

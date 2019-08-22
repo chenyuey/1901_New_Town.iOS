@@ -18,7 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tabBarController.tabBar.hidden=YES;
+//    self.tabBarController.tabBar.hidden=YES;
     WKWebViewConfiguration *config = [self createConfig];
     
     mWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight - SafeAreaBottomHeight) configuration:config];
@@ -27,18 +27,18 @@
     // 导航代理
     mWebView.navigationDelegate = self;
     // 是否允许手势左滑返回上一级, 类似导航控制的左滑返回
-    mWebView.allowsBackForwardNavigationGestures = YES;
+//    mWebView.allowsBackForwardNavigationGestures = YES;
     //可返回的页面列表, 存储已打开过的网页
     WKBackForwardList * backForwardList = [mWebView backForwardList];
 //    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://m.house.xnngs.cn/"]];
     
     NSString *strSessionToken = [self readFromPlist];
     strSessionToken = [strSessionToken stringByReplacingOccurrencesOfString:@":" withString:@"&"];
-    NSString *strUrl = [NSString stringWithFormat:@"http://192.168.124.237:9001?session_token=%@",strSessionToken];
+    NSString *strUrl = [NSString stringWithFormat:@"http://m.house.xnngs.cn/#/login?session_token=%@",strSessionToken];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:strUrl]];
     [mWebView loadRequest:request];
     [self.view addSubview:mWebView];
-    
+    target = self;
 }
 - (WKWebViewConfiguration*)createConfig{
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
@@ -89,16 +89,15 @@
     NSLog(@"%@", result);
     return [result objectForKey:@"token"];
 }
+- (void)test{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     //    Decides whether to allow or cancel a navigation after its response is known.
-    
     NSLog(@"知道返回内容之后，是否允许加载，允许加载");
     if ([webView.URL.absoluteString isEqualToString:@"https://m.baidu.com/"]) {
         decisionHandler(WKNavigationResponsePolicyCancel);
-        [self dismissViewControllerAnimated:YES completion:^{
-
-        }];
-//        [self.navigationController popViewControllerAnimated:YES];
+        [self performSelectorOnMainThread:@selector(test) withObject:nil waitUntilDone:NO];
 
     }else{
         decisionHandler(WKNavigationResponsePolicyAllow);
@@ -107,24 +106,22 @@
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    self.tabBarController.tabBar.hidden=YES;
     //禁用屏幕左滑返回手势
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)])
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 }
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    self.tabBarController.tabBar.hidden=NO;
     //开启
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
--(void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
-{
-    if (self.presentedViewController)
-    {
-        [super dismissViewControllerAnimated:flag completion:completion];
-    }
-}
+//-(void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
+//{
+//    if (self.presentedViewController)
+//    {
+//        [super dismissViewControllerAnimated:flag completion:completion];
+//    }
+//}
 
 @end

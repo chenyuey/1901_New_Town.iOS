@@ -41,6 +41,21 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     self.tabBarController.tabBar.hidden=NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
+            UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
+            if ([tmpView isKindOfClass:[UITabBar class]]) {
+                CGRect frame = tmpView.frame;
+                frame.origin.y = SCREEN_HEIGHT - SafeAreaBottomHeight - 49;
+                tmpView.frame = frame;
+                [self.tabBarController.view bringSubviewToFront:tmpView];
+                break;
+            }
+        }
+    }];
+    
+    
+    
     if (![PFUser currentUser]) {
          [self showLoginViewControllerIfNeeded];
     }else{
@@ -56,7 +71,6 @@
         }
     }
 }
-
 #pragma mark -  登录页面的控制
 //children 添加到/移除 parent
 - (void)updateLoginInfo {

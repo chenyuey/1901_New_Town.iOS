@@ -52,7 +52,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.01</string>
+	<string>1.02</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>alipay</string>

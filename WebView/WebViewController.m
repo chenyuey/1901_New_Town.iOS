@@ -83,14 +83,15 @@
         return NO;
     }
     else{
+        self.tabBarController.tabBar.hidden=NO;
         return YES;
     }
 }
 - (void)switchToHouseManager{
     HouseManageViewController *houseManageVC = [[HouseManageViewController alloc]init];
-    [self presentViewController:houseManageVC animated:YES completion:^{
-
-    }];
+    [self presentViewController:houseManageVC animated:YES completion:nil];
+//    TestViewController *a = [[TestViewController alloc]init];
+//    [self presentViewController:a animated:YES completion:nil];
 //    [self.navigationController pushViewController:houseManageVC animated:YES];
 }
 //收藏按钮点击事件
@@ -345,6 +346,7 @@
         [self.view bringSubviewToFront:self.webView];
     }else{
         self.backButton.hidden = YES;
+        self.tabBarController.tabBar.hidden = NO;
         [UIView animateWithDuration:0.2 animations:^{
             for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
                 UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
