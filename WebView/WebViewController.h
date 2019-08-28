@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 //收藏按钮
 @property (nonatomic,strong) UIButton *collectButton;
 //地图按钮
-@property (nonatomic,strong) UIButton *mapButton;
+//@property (nonatomic,strong) UIButton *mapButton;
 //分享按钮
 @property (nonatomic,strong) UIButton *shareButton;
 

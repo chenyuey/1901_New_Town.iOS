@@ -141,9 +141,9 @@
     self.shareButton.hidden = YES;
     [self.view addSubview:self.shareButton];
     //创建地图按钮
-    self.mapButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 10, SafeStatusBarHeight+10, 24, 24) :@"mapIcon" :@selector(enterMapInfo:)];
-    self.mapButton.hidden = YES;
-    [self.view addSubview:self.mapButton];
+//    self.mapButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 10, SafeStatusBarHeight+10, 24, 24) :@"mapIcon" :@selector(enterMapInfo:)];
+//    self.mapButton.hidden = YES;
+//    [self.view addSubview:self.mapButton];
     
     self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
     self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight  - SafeAreaBottomHeight);
@@ -224,34 +224,34 @@
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     self.infoImageView.hidden = YES;
-    if ([request.URL.absoluteString containsString:@"www.bing.com"]) {
-        if (![self.navTitleLabel.text isEqualToString:@"加载中..."]) {
-            MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text andType:YES];
-            [self.navigationController pushViewController:mapInfoVC animated:YES];
-        }
-        return NO;
-    }
-    if ([request.URL.absoluteString containsString:@"http://hostlocation.com/"]) {
-        self->mErrorLabel = [self createErrorToastViewWithFrame:CGRectMake((SCREEN_WIDTH - 200)/2, (SCREEN_HEIGHT - SafeAreaBottomHeight - 40 - SafeAreaTopHeight)/2, 200, 40)];
-        self->mErrorLabel.text = @"未找到位置信息";
-        self->mErrorLabel.hidden = YES;
-        [self.view addSubview:self->mErrorLabel];
-        
-        PFQuery *query = [PFQuery queryWithClassName:@"HomeMap"];
-        [query whereKey:@"name" equalTo:self.navTitleLabel.text];
-        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable results, NSError * _Nullable error) {
-            if (results.count > 0) {
-                PFObject *homeItemInfo = [results objectAtIndex:0];
-                MapNavgationViewController *mapInfoVC = [[MapNavgationViewController alloc]initWithHomeName:self.navTitleLabel.text :homeItemInfo];
-                [self.navigationController pushViewController:mapInfoVC animated:YES];
-            }else{
-                self->mErrorLabel.hidden = NO;
-                [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
-            }
-        }];
-        
-        return NO;
-    }
+//    if ([request.URL.absoluteString containsString:@"www.bing.com"]) {
+//        if (![self.navTitleLabel.text isEqualToString:@"加载中..."]) {
+//            MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text andType:YES];
+//            [self.navigationController pushViewController:mapInfoVC animated:YES];
+//        }
+//        return NO;
+//    }
+//    if ([request.URL.absoluteString containsString:@"http://hostlocation.com/"]) {
+//        self->mErrorLabel = [self createErrorToastViewWithFrame:CGRectMake((SCREEN_WIDTH - 200)/2, (SCREEN_HEIGHT - SafeAreaBottomHeight - 40 - SafeAreaTopHeight)/2, 200, 40)];
+//        self->mErrorLabel.text = @"未找到位置信息";
+//        self->mErrorLabel.hidden = YES;
+//        [self.view addSubview:self->mErrorLabel];
+//        
+//        PFQuery *query = [PFQuery queryWithClassName:@"HomeMap"];
+//        [query whereKey:@"name" equalTo:self.navTitleLabel.text];
+//        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable results, NSError * _Nullable error) {
+//            if (results.count > 0) {
+//                PFObject *homeItemInfo = [results objectAtIndex:0];
+//                MapNavgationViewController *mapInfoVC = [[MapNavgationViewController alloc]initWithHomeName:self.navTitleLabel.text :homeItemInfo];
+//                [self.navigationController pushViewController:mapInfoVC animated:YES];
+//            }else{
+//                self->mErrorLabel.hidden = NO;
+//                [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
+//            }
+//        }];
+//        
+//        return NO;
+//    }
     if (loadingShadowView == nil) {
         loadingShadowView = [self createLoadingShadowView];
         [self.view bringSubviewToFront:loadingShadowView];
@@ -269,12 +269,12 @@
     }
     
     //地图按钮的显示和隐藏
-    if ([strPathURL isEqualToString:@"/v2/showcase/category"]) {
-        //显示地图按钮
-        self.mapButton.hidden = NO;
-    }else{
-        self.mapButton.hidden = YES;
-    }
+//    if ([strPathURL isEqualToString:@"/v2/showcase/category"]) {
+//        //显示地图按钮
+//        self.mapButton.hidden = NO;
+//    }else{
+//        self.mapButton.hidden = YES;
+//    }
     
     return YES;
 }
@@ -307,16 +307,17 @@
                       self.shareButton.hidden = YES;
                   }
                   [self showCollectionButtonStatus:response];
-                  if ([response isEqualToString:@"全部攻略"]) {
-                      self.mapButton.hidden = YES;
-                  }
+//                  if ([response isEqualToString:@"全部攻略"]) {
+//                      self.mapButton.hidden = YES;
+//                  }
                   if ([response isEqualToString:@"首页"] && self.webView.scrollView.mj_header == nil) {
                       self.webView.scrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshWebView)];
                   }
                   if (self.webView.scrollView.mj_header != nil) {
                       [self.webView.scrollView.mj_header endRefreshing];
                   }
-                  if ([self.webView.URL.path containsString:@"membercenter"]) {
+                  NSString *path = self.webView.URL.path;
+                  if ([self.webView.URL.path isEqualToString:@"/wscuser/membercenter"]) {
                       self.switchButton.hidden = NO;
                   }else{
                       self.switchButton.hidden = YES;

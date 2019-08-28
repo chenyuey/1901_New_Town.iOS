@@ -165,6 +165,7 @@
     [vc setSelectValueBlock:^(CLPlacemark *placemark) {
         if ([placemark isKindOfClass:[NSString class]]) {
             self->mHomeNameLabel.text = placemark;
+            self->coordinate = nil;
             self->coordinate = @{@"latitude": @(38.016437),
                                  @"longitude": @(114.491728)};
         }else{
