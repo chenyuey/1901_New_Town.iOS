@@ -29,6 +29,36 @@
     YZSDK.shared.delegate = self; // 必须设置代理方法，保证 SDK 在需要 token 的时候可以正常运行
     [YZSDK.shared preloadURLs:@[[NSURL URLWithString:@"https://h5.youzan.com/v2/showcase/homepage?alias=xrh79ni8"], [NSURL URLWithString:@"https://h5.youzan.com/v2/feature/XgA5YjWnWO"], [NSURL URLWithString:@"https://h5.youzan.com/v2/showcase/usercenter?alias=3hgmk8rs"]]];
     
+    NSArray *items = [self createAllViewControllerList];
+    self.tabBarC = [[UITabBarController alloc]init];
+    [self.tabBarC setViewControllers:items];
+    self.tabBarC.tabBar.backgroundColor = [UIColor whiteColor];
+    self.tabBarC.tabBar.unselectedItemTintColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
+    self.tabBarC.tabBar.tintColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
+    LYWNewfeatureViewController *startUpPage = [[LYWNewfeatureViewController alloc]init];
+    self.window.rootViewController = startUpPage;
+    //创建Parse服务链接
+    ParseClientConfiguration *parseConfig = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
+        configuration.server = @"http://yzyj.1000q1000z.com/app/api/1";
+        configuration.applicationId = @"khYEI0xFyAnVCUpO";
+        configuration.clientKey = @"iFPUdLm3yCPNnRVknBWHn4z5VDczgHOL";
+    }];
+    [Parse initializeWithConfiguration:parseConfig];
+    //加入微信分享sdk
+    [WXApi registerApp:@"wx185c740b0fdf8b55"];
+    //加入腾讯分享sdk
+    self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"101562763" andDelegate:self];
+    [WeiboSDK registerApp:@"1090985283"];
+    //设置WeiboSDK的调试模式
+    [WeiboSDK enableDebugMode:YES];
+    [self checkSaveImageWithUUID];
+    if (@available(ios 11.0,*)){
+        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
+    
+    return YES;
+}
+- (NSArray *)createAllViewControllerList{
     WebViewController *indexWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/showcase/homepage?alias=xrh79ni8"];
     UINavigationController *indexNavigationController = [[UINavigationController alloc]initWithRootViewController:indexWebVC];
     indexNavigationController.tabBarItem.title = @"首页";
@@ -54,72 +84,17 @@
     UINavigationController *searchNavigationController = [[UINavigationController alloc]initWithRootViewController:searchViewController];
     searchNavigationController.tabBarItem.title =@"搜索";
     searchNavigationController.tabBarItem.image = [UIImage imageNamed:@"searchIcon"];
-    
-    
     NSArray *items = [NSArray arrayWithObjects:indexNavigationController,newTownNavigationController,searchNavigationController,collectNavigationController,userCenterNavigationController, nil];
-    self.tabBarC = [[UITabBarController alloc]init];
-    [self.tabBarC setViewControllers:items];
-    self.tabBarC.tabBar.backgroundColor = [UIColor whiteColor];
-    self.tabBarC.tabBar.unselectedItemTintColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
-    self.tabBarC.tabBar.tintColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
-    
-    LYWNewfeatureViewController *startUpPage = [[LYWNewfeatureViewController alloc]init];
-    self.window.rootViewController = startUpPage;
-//    self.window.rootViewController = self.tabBarC;
-    
-    
-    //创建Parse服务链接
-//    ParseClientConfiguration *parseConfig = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
-//        configuration.server = @"http://yzyj.1000q1000z.com/app/api/1";
-//        configuration.applicationId = @"khYEI0xFyAnVCUpO";
-//        configuration.clientKey = @"iFPUdLm3yCPNnRVknBWHn4z5VDczgHOL";
-//    }];
-    ParseClientConfiguration *parseConfig = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
-        configuration.server = @"http://yzyj.1000q1000z.com/app/api/1";
-        configuration.applicationId = @"khYEI0xFyAnVCUpO";
-        configuration.clientKey = @"iFPUdLm3yCPNnRVknBWHn4z5VDczgHOL";
-    }];
-    [Parse initializeWithConfiguration:parseConfig];
-    //加入微信分享sdk
-//    [WXApi registerApp:@"wxba64cb9bbbbea771"];
-    [WXApi registerApp:@"wx185c740b0fdf8b55"];
-    //加入腾讯分享sdk
-    self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"101562763" andDelegate:self];
-    
-    [WeiboSDK registerApp:@"1090985283"];
-    //设置WeiboSDK的调试模式
-    [WeiboSDK enableDebugMode:YES];
-    
-    [self checkSaveImageWithUUID];
-    
-//    UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    if (@available(ios 11.0,*)){
-        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
-    
-    return YES;
+    return items;
 }
 - (void)yzsdk:(YZSDK *)sdk needInitToken:(void (^)(NSString * _Nullable))callback
 {
-    // 调用有赞云的 init Token 接口并返回 token. 见：https://www.youzanyun.com/docs/guide/3400/3466
-    // 最好由你的服务端来调用有赞的接口，客户端通过你的服务端间接调用有赞的接口获取 initToken 以保证安全性。
-//    [YZDUICService fetchInitTokenWithCompletionBlock:^(NSDictionary *info) {
-//        callback(info[@"access_token"]);
-//    }];
-    
     // 调用有赞云的初始化Token接口并返回 token. 见：https://www.youzanyun.com/docs/guide/3400/3466
     // 注意，下面的代码只是做为演示，请不要使用 UnsuggestMethod。
     [YZDUICService loginWithOpenUid:[UserModel sharedManage].userId
                       completionBlock:^(NSDictionary *info) {
                           callback(info[@"access_token"]);
                       }];
-    
-//    [YZAccountService fetchTokenWithCompletionBlock:^(NSString *token) {
-//        // token 为 nil 会让 SDK 取消当前操作
-//        // token 为有效，则 SDK 会正确地预加载资源
-//        // token 无效，则 SDK 会再次调用 needInitToken 方法。
-//        callback(token);
-//    }];
 }
 
 
@@ -233,7 +208,6 @@
         return [WeiboSDK handleOpenURL:url delegate:self];
     }
 }
-
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
             options:(NSDictionary<NSString *,id> *)options {
@@ -264,7 +238,7 @@
 - (void)didReceiveWeiboRequest:(WBBaseRequest *)request {
     
 }
-#pragma mark - 检查是否有f图片网络
+#pragma mark - 检查是否有图片网络
 - (void)checkSaveImageWithUUID{
     PFQuery *query = [PFQuery queryWithClassName:@"Advertisement"];
     [query whereKey:@"isOnline" equalTo:[NSNumber numberWithBool:true]];
@@ -275,22 +249,25 @@
             PFObject *advertisementInfo = [result objectAtIndex:0];
             NSMutableArray *updateUserList = [[NSMutableArray alloc]initWithArray:[advertisementInfo objectForKey:@"updateUserList"]];
             PFFileObject *userImageFile = [[result objectAtIndex:0]objectForKey:@"adImage"];
-            if (updateUserList == nil || updateUserList.count == 0 || ![updateUserList containsObject:uuid]) {
-                //下载图片保存到本地
-                [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
-                    if (!error) {
-                        UIImage *image = [UIImage imageWithData:imageData];
-                        NSString * path =NSHomeDirectory();
-                        NSString * PathImg =[path stringByAppendingString:@"/Documents/start_up.png"];
-                        [UIImagePNGRepresentation(image) writeToFile:PathImg atomically:YES];
-                        [updateUserList addObject:uuid];
-                        [advertisementInfo setObject:updateUserList forKey:@"updateUserList"];
-                        [advertisementInfo save];
-                    }
-                }];
-            }
-            
+            [self saveImageToLocal:updateUserList :userImageFile :uuid :advertisementInfo];
         }
     }];
+}
+- (void)saveImageToLocal:(NSMutableArray *)updateUserList :(PFFileObject *)userImageFile :(NSString *)uuid :(PFObject *)advertisementInfo{
+    
+    if (updateUserList == nil || updateUserList.count == 0 || ![updateUserList containsObject:uuid]) {
+        //下载图片保存到本地
+        [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+            if (!error) {
+                UIImage *image = [UIImage imageWithData:imageData];
+                NSString * path =NSHomeDirectory();
+                NSString * PathImg =[path stringByAppendingString:@"/Documents/start_up.png"];
+                [UIImagePNGRepresentation(image) writeToFile:PathImg atomically:YES];
+                [updateUserList addObject:uuid];
+                [advertisementInfo setObject:updateUserList forKey:@"updateUserList"];
+                [advertisementInfo save];
+            }
+        }];
+    }
 }
 @end

@@ -34,7 +34,7 @@
     
     NSString *strSessionToken = [self readFromPlist];
     strSessionToken = [strSessionToken stringByReplacingOccurrencesOfString:@":" withString:@"&"];
-    NSString *strUrl = [NSString stringWithFormat:@"http://m.house.xnngs.cn/#/login?session_token=%@",strSessionToken];
+    NSString *strUrl = [NSString stringWithFormat:@"http://yzyj.1000q1000z.com/mobile/#/login?session_token=%@",strSessionToken];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:strUrl]];
     [mWebView loadRequest:request];
     [self.view addSubview:mWebView];
