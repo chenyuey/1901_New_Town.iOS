@@ -49,6 +49,7 @@
 		5299AFF82243912D00699683 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFF72243912C00699683 /* CollectionViewController.m */; };
 		5299AFFB2243AB8900699683 /* CollectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFFA2243AB8900699683 /* CollectTableViewCell.m */; };
 		5299AFFE224A362900699683 /* BottomTownItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299AFFD224A362800699683 /* BottomTownItemView.m */; };
+		52A120B6231CE302002715D3 /* CustomizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A120B5231CE302002715D3 /* CustomizeView.m */; };
 		52BC542322C7478C00E31B50 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BC542222C7478C00E31B50 /* SearchViewController.m */; };
 		52BC542722C9F0E300E31B50 /* SelectAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BC542622C9F0E300E31B50 /* SelectAddressViewController.m */; };
 		52BC542922CA02ED00E31B50 /* citydict.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52BC542822CA02ED00E31B50 /* citydict.plist */; };
@@ -159,6 +160,8 @@
 		5299AFFA2243AB8900699683 /* CollectTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectTableViewCell.m; sourceTree = "<group>"; };
 		5299AFFC224A362800699683 /* BottomTownItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BottomTownItemView.h; sourceTree = "<group>"; };
 		5299AFFD224A362800699683 /* BottomTownItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BottomTownItemView.m; sourceTree = "<group>"; };
+		52A120B4231CE302002715D3 /* CustomizeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomizeView.h; sourceTree = "<group>"; };
+		52A120B5231CE302002715D3 /* CustomizeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomizeView.m; sourceTree = "<group>"; };
 		52BC542122C7478C00E31B50 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		52BC542222C7478C00E31B50 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		52BC542522C9F0E300E31B50 /* SelectAddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectAddressViewController.h; sourceTree = "<group>"; };
@@ -405,6 +408,8 @@
 			children = (
 				527071F2222E76A300B73769 /* WebViewController.h */,
 				527071F1222E76A200B73769 /* WebViewController.m */,
+				52A120B4231CE302002715D3 /* CustomizeView.h */,
+				52A120B5231CE302002715D3 /* CustomizeView.m */,
 			);
 			path = WebView;
 			sourceTree = "<group>";
@@ -741,6 +746,7 @@
 				522E9F1F22CB457200781502 /* HotelCalendarViewController.m in Sources */,
 				522E9F4222D07EC900781502 /* SearchNameViewController.m in Sources */,
 				5299AFF82243912D00699683 /* CollectionViewController.m in Sources */,
+				52A120B6231CE302002715D3 /* CustomizeView.m in Sources */,
 				5229691F2253549F00BA72A8 /* CustomLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -918,7 +924,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SWGGTC62S7;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Release",
@@ -949,7 +955,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SWGGTC62S7;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Release",

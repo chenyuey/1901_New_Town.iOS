@@ -28,55 +28,12 @@
     }
     return self;
 }
-#pragma mark - UI控件创建
-- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
-    label.textColor = fontColor;
-    label.textAlignment = alignment;
-    return label;
-}
-- (CustomLabel *)createLabelWithFrameCustom:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    CustomLabel *label = [[CustomLabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
-    label.textColor = fontColor;
-    label.textAlignment = alignment;
-    return label;
-}
-- (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    UIImage *image = [UIImage imageNamed:imageName];
-    [image setAccessibilityIdentifier:@"uncollect"];
-    [button setImage:image forState:UIControlStateNormal];
-    [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
-    return button;
-}
--(UIButton *)createButtonWithFrame:(CGRect)frame :(NSString *)title :(SEL)event{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button addTarget:self action:event forControlEvents:UIControlEventTouchUpInside];
-    //添加文字颜色
-    [button setFont:[UIFont systemFontOfSize:14.0f]];
-    return button;
-}
-- (UIButton *)createButtonWithTitleAndImage:(NSString *)title :(CGRect)frame :(int)edgeInsetLeft :(SEL)btnPress{
-    UIButton *peopleNumberButton = [[UIButton alloc]initWithFrame:frame];
-    [peopleNumberButton setTitle:title forState:UIControlStateNormal];
-    [peopleNumberButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [peopleNumberButton setImage:[UIImage imageNamed:@"switchIcon"] forState:UIControlStateNormal];
-    peopleNumberButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [peopleNumberButton.titleLabel sizeToFit];
-    peopleNumberButton.titleEdgeInsets = UIEdgeInsetsMake(0, edgeInsetLeft, 0, 0);
-    peopleNumberButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    [peopleNumberButton addTarget:self action:btnPress forControlEvents:UIControlEventTouchUpInside];
-    return peopleNumberButton;
-}
+
 #pragma mark - 页面事件
 - (BOOL)navigationShouldPopOnBackButton {
     if ([self.webView canGoBack]) {
         [self.webView goBack];
-        mShowHotelDetailView.superview.hidden = YES;
+        [self hideInfoView];
         return NO;
     } else if (self.navigationController.childViewControllers.count > 1){
         [self.navigationController popViewControllerAnimated:YES];
@@ -119,25 +76,28 @@
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     
     //修改导航栏样式
-    self.navTitleLabel = [self createLabelWithFrame:CGRectMake(50, SafeStatusBarHeight, SCREEN_WIDTH - 100, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
+    self.navTitleLabel = [CustomizeView createLabelWithFrame:CGRectMake(50, SafeStatusBarHeight, SCREEN_WIDTH - 100, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
     self.infoImageView = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - 100)/2+45, 12, 20, 20)];
     self.infoImageView.image = [UIImage imageNamed:@"info_icon"];
+    self.infoImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapDate = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showHotelInfo)];
+    [self.infoImageView addGestureRecognizer:tapDate];
     self.infoImageView.hidden = YES;
     [self.navTitleLabel addSubview:self.infoImageView];
     
     [self.view addSubview:self.navTitleLabel];
-    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(navigationShouldPopOnBackButton)];
+    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :self :@selector(navigationShouldPopOnBackButton)];
     self.backButton.hidden = YES;
     [self.view addSubview:self.backButton];
     
-    self.switchButton = [self createButtonWithTitleAndImage:@"切换为房东" :CGRectMake(10, SafeStatusBarHeight+10, 100, 20) :4 :@selector(switchToHouseManager)];
+    self.switchButton = [CustomizeView createButtonWithTitleAndImage:@"切换为房东" :CGRectMake(10, SafeStatusBarHeight+10, 100, 20) :4  :self :@selector(switchToHouseManager)];
     self.switchButton.hidden = YES;
     [self.view addSubview:self.switchButton];
     //创建收藏按钮
-    self.collectButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 8 - 10 - 24 -24, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :@selector(addItemToMyCollections:)];
+    self.collectButton = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH - 8 - 10 - 24 -24, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :self :@selector(addItemToMyCollections:)];
     self.collectButton.hidden = YES;
     [self.view addSubview:self.collectButton];
-    self.shareButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 10, SafeStatusBarHeight+8, 24, 24) :@"shareIcon" :@selector(shareToYourFriend:)];
+    self.shareButton = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 10, SafeStatusBarHeight+8, 24, 24) :@"shareIcon"  :self :@selector(shareToYourFriend:)];
     self.shareButton.hidden = YES;
     [self.view addSubview:self.shareButton];
     //创建地图按钮
@@ -642,18 +602,18 @@
     UIView *shareView = [[UIView alloc]initWithFrame:frame];
     [shadowView addSubview:shareView];
     shareView.backgroundColor = [UIColor whiteColor];
-    UILabel *titleTabel = [self createLabelWithFrame:CGRectMake(0, 16, SCREEN_WIDTH, 21) :15 :@"PingFangSC-Regular" :[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    UILabel *titleTabel = [CustomizeView createLabelWithFrame:CGRectMake(0, 16, SCREEN_WIDTH, 21) :15 :@"PingFangSC-Regular" :[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0] :NSTextAlignmentCenter];
     titleTabel.text = @"分享给好友";
     [shareView addSubview:titleTabel];
-    UIButton *wechat = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH/4+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatRound" :@selector(shareToWechat:)];
+    UIButton *wechat = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH/4+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatRound" :self :@selector(shareToWechat:)];
     wechat.tag = 1;
     [shareView addSubview:wechat];
-    UIButton *friends = [self createButtonWithImage:CGRectMake((SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatFriends" :@selector(shareToWechat:)];
+    UIButton *friends = [CustomizeView createButtonWithImage:CGRectMake((SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"wechatFriends" :self :@selector(shareToWechat:)];
     friends.tag = 2;
     [shareView addSubview:friends];
-    UIButton *qq = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH/2+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"qq" :@selector(shareToQQ:)];
+    UIButton *qq = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH/2+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"qq" :self :@selector(shareToQQ:)];
     [shareView addSubview:qq];
-    UIButton *sina = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH*0.75+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"sinaIcon" :@selector(shareToSina:)];
+    UIButton *sina = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH*0.75+(SCREEN_WIDTH/4 - 55)/2, 53, 55, 55) :@"sinaIcon" :self :@selector(shareToSina:)];
     [shareView addSubview:sina];
     
     UIView *splitLine = [[UIView alloc]initWithFrame:CGRectMake(0, 126, SCREEN_WIDTH, 1)];
@@ -757,7 +717,7 @@
     [WeiboSDK sendRequest:request];
 }
 -(UILabel *)createErrorToastViewWithFrame:(CGRect)frame{
-    CustomLabel *subscribeSuccessView = [self createLabelWithFrameCustom:frame :14 :@"Arial" :[UIColor whiteColor] :NSTextAlignmentCenter];
+    CustomLabel *subscribeSuccessView = [CustomizeView createLabelWithFrameCustom:frame :14 :@"Arial" :[UIColor whiteColor] :NSTextAlignmentCenter];
     subscribeSuccessView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
     subscribeSuccessView.layer.borderWidth = 1;
     subscribeSuccessView.layer.borderColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8].CGColor;
@@ -805,7 +765,11 @@
         if (mShowHotelDetailView == nil) {
             mShowHotelDetailView = [self createHotelDetailView];
         }
-        Boolean isHidden = !mShowHotelDetailView.superview.hidden;
+        Boolean isHidden = YES;
+        [self.view bringSubviewToFront:mShowHotelDetailView.superview];
+        if (mShowHotelDetailView.superview.hidden == YES) {
+            isHidden = NO;
+        }
         mShowHotelDetailView.superview.hidden = isHidden;
         
         NSString *strGoodId =[[self.webView.URL.path componentsSeparatedByString:@"/"]lastObject];// @"367rrfcmr4ucp";//
@@ -875,7 +839,7 @@
                                 break;
                             }
                         }
-                        UILabel *tmpLabel = [self createLabelWithFrame:CGRectMake(76.5*(i%4), 29*floor(i/4.0), 76.5, 29) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0]  :NSTextAlignmentLeft];
+                        UILabel *tmpLabel = [CustomizeView createLabelWithFrame:CGRectMake(76.5*(i%4), 29*floor(i/4.0), 76.5, 29) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0]  :NSTextAlignmentLeft];
                         tmpLabel.text = [[allEquipmentList objectAtIndex:i]objectForKey:@"description"];
                         [self->mShowHotelDetailView.equipmengListView addSubview:tmpLabel];
                         if (!isExist) {
