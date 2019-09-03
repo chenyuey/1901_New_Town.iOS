@@ -2,11 +2,12 @@
 //  NewMapNavgationViewController.m
 //  NewTown
 //
-//  Created by macbookpro on 2019/7/13.
-//  Copyright © 2019 macbookpro. All rights reserved.
+//  Created by cy on 2019/7/13.
+//  Copyright © 2019 cy. All rights reserved.
 //
 
 #import "NewMapNavgationViewController.h"
+#import "CustomizeView.h"
 
 @interface NewMapNavgationViewController ()
 
@@ -148,20 +149,18 @@
     [self.view addSubview:self.mapView];
     
     mCoordinateStart = CLLocationCoordinate2DMake(0, 0);
-    
-    
-    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(back:)];
+    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :self :@selector(back:)];
     [self.view addSubview:self.backButton];
     
     [self addUpdateLoactionManager];
     
-    mHotelLabel = [self createLabelWithFrame:CGRectMake(20, self.mapView.frame.origin.y + self.mapView.frame.size.height + 5, SCREEN_WIDTH - 40 - 50, 30) :14 :@"Arial" :[UIColor blackColor] :NSTextAlignmentLeft];
+    mHotelLabel = [CustomizeView createLabelWithFrame:CGRectMake(20, self.mapView.frame.origin.y + self.mapView.frame.size.height + 5, SCREEN_WIDTH - 40 - 50, 30) :14 :@"Arial" :[UIColor blackColor] :NSTextAlignmentLeft];
     [self.view addSubview:mHotelLabel];
-    mAddressDetailLabel = [self createLabelWithFrame:CGRectMake(20, mHotelLabel.frame.origin.y + mHotelLabel.frame.size.height + 5, SCREEN_WIDTH - 40 - 50, 30) :12 :@"Arial" :[UIColor blackColor] :NSTextAlignmentLeft];
+    mAddressDetailLabel = [CustomizeView createLabelWithFrame:CGRectMake(20, mHotelLabel.frame.origin.y + mHotelLabel.frame.size.height + 5, SCREEN_WIDTH - 40 - 50, 30) :12 :@"Arial" :[UIColor blackColor] :NSTextAlignmentLeft];
     mAddressDetailLabel.numberOfLines = 0;
     [self.view addSubview:mAddressDetailLabel];
     
-    UIButton *navigationImageBtn = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 40 - 20 , self.mapView.frame.origin.y + self.mapView.frame.size.height + 20, 40, 40) :@"navigation" :@selector(creatActionSheet)];
+    UIButton *navigationImageBtn = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH - 40 - 20 , self.mapView.frame.origin.y + self.mapView.frame.size.height + 20, 40, 40) :@"navigation" :self :@selector(creatActionSheet)];
     [self.view addSubview:navigationImageBtn];
     
     self.geocoder = [[CLGeocoder alloc]init];
@@ -178,22 +177,6 @@
     }];
 }
 
-#pragma mark - UI控件创建
-- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
-    label.textColor = fontColor;
-    label.textAlignment = alignment;
-    return label;
-}
-- (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    UIImage *image = [UIImage imageNamed:imageName];
-    [image setAccessibilityIdentifier:@"uncollect"];
-    [button setImage:image forState:UIControlStateNormal];
-    [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
-    return button;
-}
 //添加位置定位图标
 -(MKPointAnnotation*)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude :(NSString *)markerTitle{
     // 创建MKPointAnnotation对象——代表一个锚点

@@ -2,8 +2,8 @@
 //  TestViewController.m
 //  NewTown
 //
-//  Created by macbookpro on 2019/8/22.
-//  Copyright © 2019 macbookpro. All rights reserved.
+//  Created by cy on 2019/8/22.
+//  Copyright © 2019 cy. All rights reserved.
 //
 
 #import "TestViewController.h"

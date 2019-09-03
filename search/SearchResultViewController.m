@@ -2,11 +2,13 @@
 //  SearchResultViewController.m
 //  NewTown
 //
-//  Created by macbookpro on 2019/7/2.
-//  Copyright © 2019 macbookpro. All rights reserved.
+//  Created by cy on 2019/7/2.
+//  Copyright © 2019 cy. All rights reserved.
 //
 
 #import "SearchResultViewController.h"
+#import "CustomizeView.h"
+
 #define BASE_URL @"http://yzyj.1000q1000z.com/landlord/api/1/"
 
 @interface SearchResultViewController ()
@@ -59,7 +61,7 @@
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     self.tabBarController.tabBar.hidden=YES;
-    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10+8, 24, 24) :@"back_btn" :@selector(backToSearch)];
+    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10+8, 24, 24) :@"back_btn" :self :@selector(backToSearch)];
     [self.view addSubview:self.backButton];
     mSearchShowView = [self createSearchShowViewWithFrame:CGRectMake(35, SafeStatusBarHeight + 10, SCREEN_WIDTH - 35 - 11, 40) :mStrDate :mStrAddress];
     mAllHotelTableview = [[UITableView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+109, SCREEN_HEIGHT, SCREEN_HEIGHT - SafeStatusBarHeight - 109) style:UITableViewStylePlain];//274
@@ -109,7 +111,7 @@
         [self->mAllHotelTableview reloadData];
     }];
     
-    mNoResultLabel = [self createLabelWithFrame:CGRectMake(0, SCREEN_HEIGHT/2 - 70, SCREEN_WIDTH, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    mNoResultLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, SCREEN_HEIGHT/2 - 70, SCREEN_WIDTH, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     mNoResultLabel.text = @"没有符合条件的结果";
     mNoResultLabel.hidden = YES;
     [self.view addSubview:mNoResultLabel];
@@ -163,32 +165,6 @@
     }];
     //启动任务
     [dataTask resume];
-}
-
-#pragma mark - UI控件创建
-- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
-    label.textColor = fontColor;
-    label.textAlignment = alignment;
-    return label;
-}
-- (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    UIImage *image = [UIImage imageNamed:imageName];
-    [image setAccessibilityIdentifier:@"uncollect"];
-    [button setImage:image forState:UIControlStateNormal];
-    [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
-    return button;
-}
--(UIButton *)createButtonWithFrame:(CGRect)frame :(NSString *)title :(SEL)event{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button addTarget:self action:event forControlEvents:UIControlEventTouchUpInside];
-    //添加文字颜色
-    [button setFont:[UIFont systemFontOfSize:14.0f]];
-    return button;
 }
 - (UIButton *)createButtonWithTitleAndImage:(NSString *)title :(CGRect)frame :(int)edgeInsetLeft{
     UIButton *peopleNumberButton = [[UIButton alloc]initWithFrame:frame];
@@ -335,20 +311,20 @@
     showSearchItemView.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     mDateView = [[UIView alloc]initWithFrame:CGRectMake(15, 5, 50, 30)];
     [showSearchItemView addSubview:mDateView];
-    UILabel *startDateLabel = [self createLabelWithFrame:CGRectMake(0, 0, mDateView.frame.size.width, 15) :14 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    UILabel *startDateLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, 0, mDateView.frame.size.width, 15) :14 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     
     [mDateView addSubview:startDateLabel];
-    UILabel *endDateLabel = [self createLabelWithFrame:CGRectMake(0, 15, mDateView.frame.size.width, 15) :14 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    UILabel *endDateLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, 15, mDateView.frame.size.width, 15) :14 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     [mDateView addSubview:endDateLabel];
     if (strDate.length > 10) {
         startDateLabel.text = [NSString stringWithFormat:@"入%@",[strDate substringWithRange:NSMakeRange(5, 5)]];
         endDateLabel.text = [NSString stringWithFormat:@"离%@",[strDate substringWithRange:NSMakeRange(18, 5)]];
     }
-    mAddressLabel = [self createLabelWithFrame:CGRectMake(mDateView.frame.origin.x + mDateView.frame.size.width+10, 10, 40, 20) : 14:@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    mAddressLabel = [CustomizeView createLabelWithFrame:CGRectMake(mDateView.frame.origin.x + mDateView.frame.size.width+10, 10, 40, 20) : 14:@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     mAddressLabel.text = strAddress;
     [mAddressLabel sizeToFit];
     [showSearchItemView addSubview:mAddressLabel];
-    mSearchNameView = [self createLabelWithFrame:CGRectMake(mAddressLabel.frame.origin.x + mAddressLabel.frame.size.width+10, 10, 40, 20) :14 :@"Arial" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+    mSearchNameView = [CustomizeView createLabelWithFrame:CGRectMake(mAddressLabel.frame.origin.x + mAddressLabel.frame.size.width+10, 10, 40, 20) :14 :@"Arial" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
     mSearchNameView.text = @"房源/地标/房源名称";
     [showSearchItemView addSubview:mSearchNameView];
     if (![mStrHomeName isEqualToString:@""]) {
@@ -380,12 +356,12 @@
     UIView *view  = [[UIView alloc]initWithFrame:CGRectMake(0, mSearchShowView.frame.origin.y+mSearchShowView.frame.size.height+13 + 20 + 5, SCREEN_WIDTH, 160)];
     view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
-    self.ageTipsLabel = [self createLabelWithFrame:CGRectMake(18, 9, 63, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+    self.ageTipsLabel = [CustomizeView createLabelWithFrame:CGRectMake(18, 9, 63, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
     self.ageTipsLabel.text = @"¥0-不限";
     NSArray *arrPrice = @[@"¥0",@"¥100",@"¥200",@"¥300",@"¥400",@"¥500",@"¥600",@"不限"];
     float dis = (SCREEN_WIDTH - 18*2 - 30*8)/7;
     for (int i = 0; i < 8; i ++) {
-        UILabel *priceLabelTmp = [self createLabelWithFrame:CGRectMake(18+30*i+dis*i, self.ageTipsLabel.frame.origin.y+self.ageTipsLabel.frame.size.height + 4, 30, 17) :12 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+        UILabel *priceLabelTmp = [CustomizeView createLabelWithFrame:CGRectMake(18+30*i+dis*i, self.ageTipsLabel.frame.origin.y+self.ageTipsLabel.frame.size.height + 4, 30, 17) :12 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
         [view addSubview:priceLabelTmp];
         priceLabelTmp.text = [arrPrice objectAtIndex:i];
     }
@@ -402,7 +378,7 @@
     self.doubleSliderView.x = 18;
     self.doubleSliderView.y = self.ageTipsLabel.frame.origin.y + self.ageTipsLabel.frame.size.height+17+12;
     
-    UIButton *confirmBtn = [self createButtonWithFrame:CGRectMake(12, view.frame.size.height - 36 - 13, SCREEN_WIDTH - 24, 36) :@"确定" :@selector(confirmSelectPrice:)];
+    UIButton *confirmBtn = [CustomizeView createButtonWithFrame:CGRectMake(12, view.frame.size.height - 36 - 13, SCREEN_WIDTH - 24, 36) :@"确定" :self :@selector(confirmSelectPrice:)];
     [confirmBtn setBackgroundColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0]];
     [confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [view addSubview:confirmBtn];

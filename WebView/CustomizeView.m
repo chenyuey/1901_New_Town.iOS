@@ -2,14 +2,13 @@
 //  CustomizeView.m
 //  NewTown
 //
-//  Created by macbookpro on 2019/9/2.
-//  Copyright © 2019 macbookpro. All rights reserved.
+//  Created by cy on 2019/9/2.
+//  Copyright © 2019 cy. All rights reserved.
 //
 
 #import "CustomizeView.h"
 
 @implementation CustomizeView
-
 + (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
     UILabel *label = [[UILabel alloc]initWithFrame:frame];
     label.font = [UIFont fontWithName:fontName size:fontSize];
@@ -32,6 +31,7 @@
     [button addTarget:target action:pressEvent forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
+
 + (UIButton *)createButtonWithFrame:(CGRect)frame :(NSString *)title :(id)target :(SEL)event{
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
     [button setTitle:title forState:UIControlStateNormal];

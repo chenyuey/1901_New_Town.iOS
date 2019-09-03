@@ -2,11 +2,12 @@
 //  LYWNewfeatureViewController.m
 //  NewTown
 //
-//  Created by macbookpro on 2019/4/24.
-//  Copyright © 2019年 macbookpro. All rights reserved.
+//  Created by cy on 2019/4/24.
+//  Copyright © 2019年 cy. All rights reserved.
 //
 
 #import "LYWNewfeatureViewController.h"
+#import "CustomizeView.h"
 
 #define NewfeatureCount 1
 @interface LYWNewfeatureViewController ()<UIScrollViewDelegate>
@@ -14,18 +15,11 @@
 @end
 
 @implementation LYWNewfeatureViewController
-- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
-    label.textColor = fontColor;
-    label.textAlignment = alignment;
-    return label;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupScrollView];
     
-    versionLabel = [self createLabelWithFrame:CGRectMake(0, SCREEN_HEIGHT - SafeAreaBottomHeight - 50, SCREEN_WIDTH, 50) :16 :@"Arial" :[UIColor grayColor] :NSTextAlignmentCenter];
+    versionLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, SCREEN_HEIGHT - SafeAreaBottomHeight - 50, SCREEN_WIDTH, 50) :16 :@"Arial" :[UIColor grayColor] :NSTextAlignmentCenter];
     versionLabel.text = @"版本信息：1.05beta";
     [self.view addSubview:versionLabel];
 }

@@ -2,43 +2,18 @@
 //  CollectionViewController.m
 //  NewTown
 //
-//  Created by macbookpro on 2019/3/21.
-//  Copyright © 2019年 macbookpro. All rights reserved.
+//  Created by cy on 2019/3/21.
+//  Copyright © 2019年 cy. All rights reserved.
 //
 
 #import "CollectionViewController.h"
+#import "CustomizeView.h"
 
 @interface CollectionViewController ()
 
 @end
 
 @implementation CollectionViewController
-#pragma mark - UI控件创建
-- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
-    label.textColor = fontColor;
-    label.textAlignment = alignment;
-    return label;
-}
-
--(UIButton *)createButtonWithFrame:(CGRect)frame :(NSString *)title :(SEL)event{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button addTarget:self action:event forControlEvents:UIControlEventTouchUpInside];
-    //添加文字颜色
-    [button setFont:[UIFont systemFontOfSize:14.0f]];
-    return button;
-}
-- (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    UIImage *image = [UIImage imageNamed:imageName];
-    [image setAccessibilityIdentifier:@"uncollect"];
-    [button setImage:image forState:UIControlStateNormal];
-    [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
-    return button;
-}
 - (void)viewWillAppear:(BOOL)animated{
     self.tabBarController.tabBar.hidden=NO;
     [UIView animateWithDuration:0.2 animations:^{
@@ -91,7 +66,7 @@
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     //修改导航栏样式
-    self.navTitleLabel = [self createLabelWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
+    self.navTitleLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
     self.navTitleLabel.text = @"我的收藏";
     [self.view addSubview:self.navTitleLabel];
     
@@ -112,7 +87,7 @@
     
     collectionDataSource = @[];
     mCollectTableView.tableFooterView = [[UIView alloc]init];
-    noDataTintLabel = [self createLabelWithFrame:CGRectMake(0, (contentView.frame.size.height-60)/2, SCREEN_WIDTH, 40) :16 :@"Arial" :[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    noDataTintLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, (contentView.frame.size.height-60)/2, SCREEN_WIDTH, 40) :16 :@"Arial" :[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     noDataTintLabel.hidden = YES;
     noDataTintLabel.text = @"你还没有收藏呢～";
     [contentView addSubview:noDataTintLabel];
@@ -140,9 +115,9 @@
 }
 - (UIView *)cteateNavViewWithFrame:(CGRect)frame{
     UIView *navView = [[UIView alloc]initWithFrame:frame];
-    townButton = [self createButtonWithFrame:CGRectMake(0, 0, 60, 45) :@"小镇" :@selector(townButtonPressed:)];
+    townButton = [CustomizeView createButtonWithFrame:CGRectMake(0, 0, 60, 45) :@"小镇" :self :@selector(townButtonPressed:)];
     [navView addSubview:townButton];
-    categoryButton = [self createButtonWithFrame:CGRectMake(navView.frame.size.width - 60, 0, 60, 45) :@"攻略" :@selector(townButtonPressed:)];
+    categoryButton = [CustomizeView createButtonWithFrame:CGRectMake(navView.frame.size.width - 60, 0, 60, 45) :@"攻略" :self :@selector(townButtonPressed:)];
     [navView addSubview:categoryButton];
     
     self.slideBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, 60, 3)];

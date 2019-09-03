@@ -2,8 +2,8 @@
 //  CollectionViewController.h
 //  NewTown
 //
-//  Created by macbookpro on 2019/3/21.
-//  Copyright © 2019年 macbookpro. All rights reserved.
+//  Created by cy on 2019/3/21.
+//  Copyright © 2019年 cy. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

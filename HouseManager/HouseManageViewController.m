@@ -2,8 +2,8 @@
 //  HouseManageViewController.m
 //  NewTown
 //
-//  Created by macbookpro on 2019/8/7.
-//  Copyright © 2019 macbookpro. All rights reserved.
+//  Created by cy on 2019/8/7.
+//  Copyright © 2019 cy. All rights reserved.
 //
 
 #import "HouseManageViewController.h"
@@ -18,20 +18,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-//    self.tabBarController.tabBar.hidden=YES;
     WKWebViewConfiguration *config = [self createConfig];
-    
     mWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeStatusBarHeight - SafeAreaBottomHeight) configuration:config];
-    // UI代理
     mWebView.UIDelegate = self;
     // 导航代理
     mWebView.navigationDelegate = self;
-    // 是否允许手势左滑返回上一级, 类似导航控制的左滑返回
-//    mWebView.allowsBackForwardNavigationGestures = YES;
     //可返回的页面列表, 存储已打开过的网页
     WKBackForwardList * backForwardList = [mWebView backForwardList];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://m.house.xnngs.cn/"]];
-    
     NSString *strSessionToken = [self readFromPlist];
     strSessionToken = [strSessionToken stringByReplacingOccurrencesOfString:@":" withString:@"&"];
     NSString *strUrl = [NSString stringWithFormat:@"http://yzyj.1000q1000z.com/mobile/#/login?session_token=%@",strSessionToken];

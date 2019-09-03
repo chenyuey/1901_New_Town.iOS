@@ -2,8 +2,8 @@
 //  SearchResultViewController.h
 //  NewTown
 //
-//  Created by macbookpro on 2019/7/2.
-//  Copyright © 2019 macbookpro. All rights reserved.
+//  Created by cy on 2019/7/2.
+//  Copyright © 2019 cy. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

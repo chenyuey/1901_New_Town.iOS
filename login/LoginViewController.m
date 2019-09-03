@@ -10,6 +10,7 @@
 #import <YZBaseSDK/YZBaseSDK.h>
 #import "YZDUICService.h"
 #import "CustomLabel.h"
+#import "CustomizeView.h"
 
 @interface LoginViewController ()
 
@@ -22,22 +23,6 @@
         currentType = type;
     }
     return self;
-}
-#pragma mark - UI控件创建
-- (CustomLabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    CustomLabel *label = [[CustomLabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
-    label.textColor = fontColor;
-    label.textAlignment = alignment;
-    return label;
-}
-- (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    UIImage *image = [UIImage imageNamed:imageName];
-    [image setAccessibilityIdentifier:@"uncollect"];
-    [button setImage:image forState:UIControlStateNormal];
-    [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
-    return button;
 }
 - (void)createLoginViewWithFrame:(CGRect)frame :(UIColor *)lineColor{
     UIView *loginView = [[UIView alloc]initWithFrame:frame];
@@ -71,7 +56,7 @@
     loginBtn.layer.cornerRadius = 5;
     [loginView addSubview:loginBtn];
     
-    UILabel *tintLabel = [self createLabelWithFrame:CGRectMake(0, loginBtn.frame.origin.y+loginBtn.frame.size.height + 10, loginView.frame.size.width, 40) :16 :@"Arial" :[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    UILabel *tintLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, loginBtn.frame.origin.y+loginBtn.frame.size.height + 10, loginView.frame.size.width, 40) :16 :@"Arial" :[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     tintLabel.text = @"新用户登录将直接创建账号";
     [loginView addSubview:tintLabel];
 }
@@ -84,7 +69,7 @@
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     //修改导航栏样式
-    self.navTitleLabel = [self createLabelWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
+    self.navTitleLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
     self.navTitleLabel.text = @"登录";
     [self.view addSubview:self.navTitleLabel];
     UIColor *splitLineColor = [UIColor colorWithRed:213.0/255.0 green:214.0/255.0 blue:224.0/255.0 alpha:1.0];
@@ -92,7 +77,7 @@
     spitLineView.backgroundColor = splitLineColor;
     [self.view addSubview:spitLineView];
     
-    closeButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :@selector(close:)];
+    closeButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :self :@selector(close:)];
     [self.view addSubview:closeButton];
     
     UIImageView *logoImageView = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-80)/2, SafeStatusBarHeight + 44 + 20 , 80, 80)];
@@ -251,7 +236,7 @@
 
 #pragma mark - 创建登录失败弹框
 -(UILabel *)createErrorToastViewWithFrame:(CGRect)frame{
-    CustomLabel *subscribeSuccessView = [self createLabelWithFrame:frame :14 :@"Arial" :[UIColor whiteColor] :NSTextAlignmentCenter];
+    CustomLabel *subscribeSuccessView = [CustomizeView createLabelWithFrame:frame :14 :@"Arial" :[UIColor whiteColor] :NSTextAlignmentCenter];
     subscribeSuccessView.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8];
     subscribeSuccessView.layer.borderWidth = 1;
     subscribeSuccessView.layer.borderColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.8].CGColor;

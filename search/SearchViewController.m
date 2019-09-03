@@ -2,11 +2,12 @@
 //  SearchViewController.m
 //  NewTown
 //
-//  Created by macbookpro on 2019/6/29.
-//  Copyright © 2019 macbookpro. All rights reserved.
+//  Created by cy on 2019/6/29.
+//  Copyright © 2019 cy. All rights reserved.
 //
 
 #import "SearchViewController.h"
+#import "CustomizeView.h"
 
 @interface SearchViewController ()
 
@@ -57,7 +58,7 @@
     //设置显示模式为永远显示(默认不显示 必须设置 否则没有效果)
     [self.view addSubview:mHomeNameLabel];
     
-    mFindBtn = [self createButtonWithFrame:CGRectMake(16, mHomeNameLabel.frame.origin.y + mHomeNameLabel.frame.size.height + 11, SCREEN_WIDTH - 16*2, 44) :@"查找" :@selector(findButtonClick:)];
+    mFindBtn = [CustomizeView createButtonWithFrame:CGRectMake(16, mHomeNameLabel.frame.origin.y + mHomeNameLabel.frame.size.height + 11, SCREEN_WIDTH - 16*2, 44) :@"查找" :self :@selector(findButtonClick:)];
     mFindBtn.backgroundColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
     [mFindBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     mFindBtn.layer.cornerRadius = 4;
@@ -87,24 +88,6 @@
     label.textColor = fontColor;
     label.textAlignment = alignment;
     return label;
-}
-
--(UIButton *)createButtonWithFrame:(CGRect)frame :(NSString *)title :(SEL)event{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button addTarget:self action:event forControlEvents:UIControlEventTouchUpInside];
-    //添加文字颜色
-    [button setFont:[UIFont systemFontOfSize:14.0f]];
-    return button;
-}
-- (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    UIImage *image = [UIImage imageNamed:imageName];
-    [image setAccessibilityIdentifier:@"uncollect"];
-    [button setImage:image forState:UIControlStateNormal];
-    [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
-    return button;
 }
 #pragma mark - 动态事件
 - (void)findButtonClick:(id)sender{

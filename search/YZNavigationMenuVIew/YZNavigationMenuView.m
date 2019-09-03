@@ -2,8 +2,8 @@
 //  YZNavigationMenuView.m
 //  YZNavigationMenuView
 //
-//  Created by holden on 2016/12/25.
-//  Copyright © 2016年 holden. All rights reserved.
+//  Created by cy on 2016/12/25.
+//  Copyright © 2016年 cy. All rights reserved.
 //
 
 #import "YZNavigationMenuView.h"

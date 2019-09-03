@@ -2,17 +2,18 @@
 //  NoticeTypeView.m
 //  NewTown
 //
-//  Created by macbookpro on 2019/7/19.
-//  Copyright © 2019 macbookpro. All rights reserved.
+//  Created by cy on 2019/7/19.
+//  Copyright © 2019 cy. All rights reserved.
 //
 
 #import "NoticeTypeView.h"
+#import "CustomizeView.h"
 
 @implementation NoticeTypeView
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame: frame];
     if (self) {
-        self.descriptionLabel = [self createLabelWithFrame:CGRectMake(17, 4, SCREEN_WIDTH - 45 - 17, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        self.descriptionLabel = [CustomizeView createLabelWithFrame:CGRectMake(17, 4, SCREEN_WIDTH - 45 - 17, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         [self addSubview:self.descriptionLabel];
         self.checkBoxBtn = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 45, 0, 20, 20) :@"check_box_off" :@"check_box_on" :@selector(selectLeaseTypePress)];
         [self addSubview:self.checkBoxBtn];
@@ -23,13 +24,6 @@
     self.checkBoxBtn.selected = !self.checkBoxBtn.selected;
 }
 #pragma mark - UI控件创建
-- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
-    label.textColor = fontColor;
-    label.textAlignment = alignment;
-    return label;
-}
 - (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageNameNormal :(NSString *)imageNameSelected :(SEL)pressEvent{
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
     [button setImage:[UIImage imageNamed:imageNameNormal] forState:UIControlStateNormal];

@@ -2,8 +2,8 @@
 //  NoticeTypeView.h
 //  NewTown
 //
-//  Created by macbookpro on 2019/7/19.
-//  Copyright © 2019 macbookpro. All rights reserved.
+//  Created by cy on 2019/7/19.
+//  Copyright © 2019 cy. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

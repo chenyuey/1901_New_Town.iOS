@@ -9,6 +9,7 @@
 #import "HotelCalendarViewController.h"
 #import "MonthModel.h"
 #import "MonthTableViewCell.h"
+#import "CustomizeView.h"
 
 @interface HotelCalendarViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView *tableView;
@@ -24,10 +25,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.tabBarController.tabBar.hidden=YES;
     //返回按钮
-    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(backToSearch)];
+    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :self :@selector(backToSearch)];
     [self.view addSubview:self.backButton];
     //确定按钮
-    self.confirmButton = [self createButtonWithFrame:CGRectMake(SCREEN_WIDTH - 20 - 40, SafeStatusBarHeight+10, 40, 24) :@"确定" :@selector(selectedCheckDate)];
+    self.confirmButton = [CustomizeView createButtonWithFrame:CGRectMake(SCREEN_WIDTH - 20 - 40, SafeStatusBarHeight+10, 40, 24) :@"确定" :self :@selector(selectedCheckDate)];
     [self.view addSubview:self.confirmButton];
     [self.view addSubview:self.weekView];
     [self.view addSubview:self.tableView];
@@ -35,21 +36,6 @@
 }
 
 #pragma mark - UI控件创建
-- (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
-    UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
-    label.textColor = fontColor;
-    label.textAlignment = alignment;
-    return label;
-}
-- (UIButton *)createButtonWithImage:(CGRect)frame :(NSString *)imageName :(SEL)pressEvent{
-    UIButton *button = [[UIButton alloc]initWithFrame:frame];
-    UIImage *image = [UIImage imageNamed:imageName];
-    [image setAccessibilityIdentifier:@"uncollect"];
-    [button setImage:image forState:UIControlStateNormal];
-    [button addTarget:self action:pressEvent forControlEvents:UIControlEventTouchUpInside];
-    return button;
-}
 -(UIButton *)createButtonWithFrame:(CGRect)frame :(NSString *)title :(SEL)event{
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
     [button setTitle:title forState:UIControlStateNormal];
