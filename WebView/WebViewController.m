@@ -81,19 +81,8 @@
     self.shareButton = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 10, SafeStatusBarHeight+8, 24, 24) :@"shareIcon"  :self :@selector(shareToYourFriend:)];
     self.shareButton.hidden = YES;
     [self.view addSubview:self.shareButton];
-    //创建地图按钮
-//    self.mapButton = [self createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 10, SafeStatusBarHeight+10, 24, 24) :@"mapIcon" :@selector(enterMapInfo:)];
-//    self.mapButton.hidden = YES;
-//    [self.view addSubview:self.mapButton];
     
-    self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
-    self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight  - SafeAreaBottomHeight);
-    self.webView.backgroundColor = [UIColor redColor];
-    [self.view addSubview:self.webView];
-    self.webView.delegate = self;
-    self.webView.noticeDelegate = self;
-    [self.webView setNeedsLayout];
-    [self.webView layoutIfNeeded];
+    [self createYZWebView];
     self.navigationItem.rightBarButtonItem.enabled = NO;//默认分享按钮不可用
     // 加载链接
     [self loginAndloadUrl:self.loadUrl];
@@ -102,6 +91,16 @@
     shareView = [self createShareViewWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 166)];
     
     mArrTitles = [[NSMutableArray alloc]initWithCapacity:0];
+}
+- (void)createYZWebView{
+    self.webView = [[YZWebView alloc]initWithWebViewType:YZWebViewTypeWKWebView];
+    self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight  - SafeAreaBottomHeight);
+    self.webView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.webView];
+    self.webView.delegate = self;
+    self.webView.noticeDelegate = self;
+    [self.webView setNeedsLayout];
+    [self.webView layoutIfNeeded];
 }
 - (void)dealloc {
     //Demo中 退出当前controller就清除用户登录信息
