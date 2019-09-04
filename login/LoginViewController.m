@@ -143,40 +143,46 @@
         NSDictionary *dicLoginInfo = @{@"mobile":self.phoneNumberTextField.text,
                                        @"smsCode":self.passwordTextField.text
                                        };//chenyue 123456
-        [PFCloud callFunctionInBackground:@"login" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable err) {
-            if (resultInfo) {
-                NSString *strSessionToken = resultInfo[@"sessionToken"];
-                NSDictionary *dicSessionToken = @{@"token":strSessionToken};
-                [self writeToPlist:dicSessionToken];
-                [PFUser becomeInBackground:strSessionToken block:^(PFUser * _Nullable user, NSError * _Nullable error) {
-                    if (!error) {
-                        if (self->currentType == 0) {
-                            [self willMoveToParentViewController:nil];
-                            [self.view removeFromSuperview];
-                            [self removeFromParentViewController];
-                            [self callBlockWithResult:YES];
-                        }else{
-                            [self dismissViewControllerAnimated:YES completion:^{
-                                [self callBlockWithResult:YES];
-                            }];
-                        }
-                    }
-                }];
-                if (resultInfo[@"yz_user"][@"data"] != [NSNull null]) {
-                    [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]
-                                               cookieKey:resultInfo[@"yz_user"][@"data"][@"cookie_key"]
-                                             cookieValue:resultInfo[@"yz_user"][@"data"][@"cookie_value"]];
-                }
-                
-            }else{
-                if (err.code == 141) {
-                    self->errLabel.text = @"验证码错误/超时";
-                    self->errLabel.hidden = NO;
-                    [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
-                }
-            }
-        }];
+        [self loginInWithParseServerWithLoginInfo:dicLoginInfo];
     }
+}
+- (void)loginInWithParseServerWithLoginInfo:(NSDictionary *)dicLoginInfo{
+    [PFCloud callFunctionInBackground:@"login" withParameters:dicLoginInfo block:^(id  _Nullable resultInfo, NSError * _Nullable err) {
+        if (resultInfo) {
+            NSString *strSessionToken = resultInfo[@"sessionToken"];
+            NSDictionary *dicSessionToken = @{@"token":strSessionToken};
+            [self writeToPlist:dicSessionToken];
+            [self loginInWithParseServerWithLoginInfo:strSessionToken];
+            if (resultInfo[@"yz_user"][@"data"] != [NSNull null]) {
+                [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]
+                                           cookieKey:resultInfo[@"yz_user"][@"data"][@"cookie_key"]
+                                         cookieValue:resultInfo[@"yz_user"][@"data"][@"cookie_value"]];
+            }
+            
+        }else{
+            if (err.code == 141) {
+                self->errLabel.text = @"验证码错误/超时";
+                self->errLabel.hidden = NO;
+                [self performSelector:@selector(hideErrorLabel) withObject:nil afterDelay:2.0];
+            }
+        }
+    }];
+}
+- (void)loginWithSessionToken:(NSString *)strSessionToken{
+    [PFUser becomeInBackground:strSessionToken block:^(PFUser * _Nullable user, NSError * _Nullable error) {
+        if (!error) {
+            if (self->currentType == 0) {
+                [self willMoveToParentViewController:nil];
+                [self.view removeFromSuperview];
+                [self removeFromParentViewController];
+                [self callBlockWithResult:YES];
+            }else{
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self callBlockWithResult:YES];
+                }];
+            }
+        }
+    }];
 }
 - (void)getValidCodePressd:(id)sender{
     if (self.phoneNumberTextField.text != nil && self.phoneNumberTextField.text.length > 0) {

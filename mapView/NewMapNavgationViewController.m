@@ -28,8 +28,6 @@
         }];
     }
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    
     [action1 setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"用Apple地图导航" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self enterAppleMapNavgation];
@@ -70,18 +68,6 @@
     [_locationManager stopUpdatingLocation];
     self.mapView = nil;
 }
-//进入apple地图导航
-- (void)enterAppleMapNavgation{
-    //当前的位置
-    MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
-    //目的地的位置
-    MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:mCoordinateDestination addressDictionary:nil]];
-    toLocation.name = mHotelLabel.text;
-    NSArray *items = [NSArray arrayWithObjects:currentLocation, toLocation, nil];
-    NSDictionary *options = @{ MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving, MKLaunchOptionsMapTypeKey: [NSNumber numberWithInteger:MKMapTypeStandard], MKLaunchOptionsShowsTrafficKey:@YES };
-    //打开苹果自身地图应用，并呈现特定的item
-    [MKMapItem openMapsWithItems:items launchOptions:options];
-}
 //查看路线
 - (void)showTheRoute{
     MKPlacemark *fromPlacemark = [[MKPlacemark alloc] initWithCoordinate:mCoordinateStart addressDictionary:nil];
@@ -104,6 +90,18 @@
              [self.mapView addOverlay:self->mCurrentOverLay];
          }
      }];
+}
+//进入apple地图导航
+- (void)enterAppleMapNavgation{
+    //当前的位置
+    MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
+    //目的地的位置
+    MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:mCoordinateDestination addressDictionary:nil]];
+    toLocation.name = mHotelLabel.text;
+    NSArray *items = [NSArray arrayWithObjects:currentLocation, toLocation, nil];
+    NSDictionary *options = @{ MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving, MKLaunchOptionsMapTypeKey: [NSNumber numberWithInteger:MKMapTypeStandard], MKLaunchOptionsShowsTrafficKey:@YES };
+    //打开苹果自身地图应用，并呈现特定的item
+    [MKMapItem openMapsWithItems:items launchOptions:options];
 }
 - (void)hideTheRoute{
     [self.mapView removeOverlay:mCurrentOverLay];
@@ -167,7 +165,9 @@
     
     //解析房屋信息
     mHotelLabel.text = strHomeName;
-    PFGeoPoint *coordinate = [mHomeItemInfo objectForKey:@"coordinate"];
+    [self parseHomeInfo];
+}
+- (void)parseHomeInfo{
     [self locateToLatitude:mLatitude longitude:mLongitude :self->strHomeName];
     self->mCoordinateDestination = CLLocationCoordinate2DMake(mLatitude,mLongitude);
     CLLocation *loc = [[CLLocation alloc]initWithLatitude:mLatitude longitude:mLongitude];
@@ -186,8 +186,6 @@
     annotation.title = markerTitle;
     // 添加锚点
     [self.mapView addAnnotation:annotation];
-    
-    
     CLLocationCoordinate2D center = {annotation.coordinate.latitude,annotation.coordinate.longitude};
     // 设置地图显示的范围，地图显示范围越小，细节越清楚】
     MKCoordinateSpan span = MKCoordinateSpanMake(0.1,0.1);
@@ -253,16 +251,4 @@
         self.mapView = nil;
     }
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end
