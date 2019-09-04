@@ -27,8 +27,6 @@
         }];
     }
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    
     [action1 setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"用Apple地图导航" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self enterAppleMapNavgation];
@@ -38,7 +36,6 @@
         NSLog(@"取消");
     }];
     [action3 setValue:[UIColor blackColor] forKey:@"titleTextColor"];
-    
     //把action添加到actionSheet里
     [actionSheet addAction:action1];
     [actionSheet addAction:action2];
@@ -82,19 +79,9 @@
     request.source = fromItem;
     request.destination = toItem;
     request.requestsAlternateRoutes = YES;
-    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
-    [directions calculateDirectionsWithCompletionHandler:
-     ^(MKDirectionsResponse *response, NSError *error) {
-         if (error) {
-             NSLog(@"error:%@", error);
-         }
-         else {
-             MKRoute *route = response.routes[0];
-             self->mCurrentOverLay = route.polyline;
-             [self.mapView addOverlay:self->mCurrentOverLay];
-         }
-     }];
+    [self calculateRouteWithRequest:request];
 }
+
 - (void)hideTheRoute{
     [self.mapView removeOverlay:mCurrentOverLay];
 }
@@ -118,6 +105,9 @@
         [_locationManager requestWhenInUseAuthorization];
     }
     //4.重要,让地图显示当前用户的位置
+    [self showCurrentLocation];
+}
+- (void)showCurrentLocation{
     self.mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
     self.mapView.showsUserLocation = YES;
     _locationManager.delegate = self;
@@ -234,6 +224,19 @@
         self.mapView = nil;
     }
 }
-
+- (void)calculateRouteWithRequest:(MKDirectionsRequest *)request{
+    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+    [directions calculateDirectionsWithCompletionHandler:
+     ^(MKDirectionsResponse *response, NSError *error) {
+         if (error) {
+             NSLog(@"error:%@", error);
+         }
+         else {
+             MKRoute *route = response.routes[0];
+             self->mCurrentOverLay = route.polyline;
+             [self.mapView addOverlay:self->mCurrentOverLay];
+         }
+     }];
+}
 
 @end

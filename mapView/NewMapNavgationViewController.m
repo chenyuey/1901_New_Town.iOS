@@ -167,15 +167,6 @@
     mHotelLabel.text = strHomeName;
     [self parseHomeInfo];
 }
-- (void)parseHomeInfo{
-    [self locateToLatitude:mLatitude longitude:mLongitude :self->strHomeName];
-    self->mCoordinateDestination = CLLocationCoordinate2DMake(mLatitude,mLongitude);
-    CLLocation *loc = [[CLLocation alloc]initWithLatitude:mLatitude longitude:mLongitude];
-    [self.geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-        CLPlacemark *mark = [placemarks objectAtIndex:0];
-        self->mAddressDetailLabel.text = [NSString stringWithFormat:@"%@ %@",[[mark.addressDictionary objectForKey:@"FormattedAddressLines"]objectAtIndex:0],self->strHomeName];
-    }];
-}
 
 //添加位置定位图标
 -(MKPointAnnotation*)locateToLatitude:(CGFloat)latitude longitude:(CGFloat)longitude :(NSString *)markerTitle{
@@ -250,5 +241,14 @@
     if (self.mapView != nil) {
         self.mapView = nil;
     }
+}
+- (void)parseHomeInfo{
+    [self locateToLatitude:mLatitude longitude:mLongitude :self->strHomeName];
+    self->mCoordinateDestination = CLLocationCoordinate2DMake(mLatitude,mLongitude);
+    CLLocation *loc = [[CLLocation alloc]initWithLatitude:mLatitude longitude:mLongitude];
+    [self.geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        CLPlacemark *mark = [placemarks objectAtIndex:0];
+        self->mAddressDetailLabel.text = [NSString stringWithFormat:@"%@ %@",[[mark.addressDictionary objectForKey:@"FormattedAddressLines"]objectAtIndex:0],self->strHomeName];
+    }];
 }
 @end
