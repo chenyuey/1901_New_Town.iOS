@@ -5,7 +5,7 @@
 	<key>Application CategoryNSThirdPartyExceptionRequiresForwardSecrecy</key>
 	<true/>
 	<key>CFBundleDisplayName</key>
-	<string>优镇优家</string>
+	<string>美镇美家</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
