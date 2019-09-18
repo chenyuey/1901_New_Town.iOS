@@ -101,7 +101,12 @@
         [alert show];
         return;
     }
-    SearchResultViewController *searchVC = [[SearchResultViewController alloc]initWithAddress:mAddressLocationLabel.text AndDate:mDateLabel.text AndName:mHomeNameLabel.text AndLoction:coordinate];
+//    mHomeNameLabel.text
+    NSString *strHomeAddressName = mHomeNameLabel.text;
+    if ([strHomeAddressName isEqualToString:@"位置/地标/房源名称"]) {
+        strHomeAddressName = @"";
+    }
+    SearchResultViewController *searchVC = [[SearchResultViewController alloc]initWithAddress:mAddressLocationLabel.text AndDate:mDateLabel.text AndName:strHomeAddressName AndLoction:coordinate];
     [self.navigationController pushViewController:searchVC animated:YES];
     
 }

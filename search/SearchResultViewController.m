@@ -87,8 +87,6 @@
     if (![mStrHomeName isEqualToString:@""]) {
         [mDicFilter setObject:mStrHomeName forKey:@"addressName"];
     }
-    
-    
 //    PFQuery *query;
     
 //    @"coordinate":coordinate,

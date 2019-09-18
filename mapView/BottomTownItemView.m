@@ -14,7 +14,6 @@
 - (id)initTownInfoWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-//        float scale = SCREEN_WIDTH/375;
         self.coverImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 83, 83)];
         self.coverImageView.layer.cornerRadius = 6;
         [self addSubview:self.coverImageView];

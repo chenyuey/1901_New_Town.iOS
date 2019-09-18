@@ -13,7 +13,6 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/QQApiInterfaceObject.h>
-//#import "WBMessageObject.h"
 #import "WeiboSDK.h"
 #import "MJRefresh.h"
 #import <WebKit/WebKit.h>
@@ -53,8 +52,6 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 @property (nonatomic,strong) UIButton *backButton;
 //收藏按钮
 @property (nonatomic,strong) UIButton *collectButton;
-//地图按钮
-//@property (nonatomic,strong) UIButton *mapButton;
 //分享按钮
 @property (nonatomic,strong) UIButton *shareButton;
 

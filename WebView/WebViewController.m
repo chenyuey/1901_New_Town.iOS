@@ -947,9 +947,9 @@
     isCollecting = NO;
     [self.webView share];
 }
-- (void)enterMapInfo:(id)sender{
-    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
-    [self.navigationController pushViewController:mapInfoVC animated:YES];
-}
+//- (void)enterMapInfo:(id)sender{
+//    MapInfoViewController *mapInfoVC = [[MapInfoViewController alloc]initWithTitle:self.navTitleLabel.text];
+//    [self.navigationController pushViewController:mapInfoVC animated:YES];
+//}
 @end
 

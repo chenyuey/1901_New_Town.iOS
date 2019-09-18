@@ -152,7 +152,7 @@
             NSString *strSessionToken = resultInfo[@"sessionToken"];
             NSDictionary *dicSessionToken = @{@"token":strSessionToken};
             [self writeToPlist:dicSessionToken];
-            [self loginInWithParseServerWithLoginInfo:strSessionToken];
+            [self loginWithSessionToken:strSessionToken];
             if (resultInfo[@"yz_user"][@"data"] != [NSNull null]) {
                 [YZSDK.shared synchronizeAccessToken:resultInfo[@"yz_user"][@"data"][@"access_token"]
                                            cookieKey:resultInfo[@"yz_user"][@"data"][@"cookie_key"]
@@ -249,7 +249,7 @@
     subscribeSuccessView.clipsToBounds = YES;
     subscribeSuccessView.layer.cornerRadius = 12;
     subscribeSuccessView.numberOfLines = 0;
-    subscribeSuccessView.textInsets = UIEdgeInsetsMake(10, 0, 10, 0);
+//    subscribeSuccessView.textInsets = UIEdgeInsetsMake(10, 0, 10, 0);
     
     subscribeSuccessView.hidden = YES;
     [self.view addSubview:subscribeSuccessView];
