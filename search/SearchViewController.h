@@ -26,8 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
     NSDictionary *coordinate;
 }
 //页面标题
-//@property (nonatomic,strong) UILabel *navTitleLabel;
+@property (nonatomic,strong) UILabel *navTitleLabel;
 @property(nonatomic,strong) CLLocationManager *locationManager;
+//左侧返回按钮
+@property (nonatomic,strong) UIButton *backButton;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

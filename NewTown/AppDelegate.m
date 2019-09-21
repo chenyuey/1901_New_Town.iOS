@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "WebViewController.h"
 #import "CollectionViewController.h"
-#import "SearchViewController.h"
+//#import "SearchViewController.h"
 #import "WeiboSDK.h"
 
 @interface AppDelegate ()

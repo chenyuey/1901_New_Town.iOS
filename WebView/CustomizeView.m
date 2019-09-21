@@ -11,7 +11,8 @@
 @implementation CustomizeView
 + (UILabel *)createLabelWithFrame:(CGRect)frame :(CGFloat)fontSize :(NSString *)fontName :(UIColor *)fontColor :(NSTextAlignment)alignment{
     UILabel *label = [[UILabel alloc]initWithFrame:frame];
-    label.font = [UIFont fontWithName:fontName size:fontSize];
+//    label.font = [UIFont fontWithName:fontName size:fontSize];
+    label.font = [UIFont systemFontOfSize:fontSize];
     label.textColor = fontColor;
     label.textAlignment = alignment;
     return label;

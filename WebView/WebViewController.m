@@ -12,6 +12,7 @@
 #import "YZDUICService.h"
 #import "CommonHeader.h"
 #import "MapInfoViewController.h"
+#import "SearchViewController.h"
 #define BASE_URL @"http://yzyj.1000q1000z.com/landlord/api/1/"
 
 
@@ -174,6 +175,14 @@
 }
 - (BOOL)webView:(YZWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    if ([request.URL.absoluteString containsString:@"search.host"]) {
+        if (![self.navTitleLabel.text isEqualToString:@"加载中..."]) {
+            SearchViewController *searchViewController = [[SearchViewController alloc]init];
+            [self.navigationController pushViewController:searchViewController animated:YES];
+        }
+        return NO;
+    }
+    
     self.infoImageView.hidden = YES;
     if (loadingShadowView == nil) {
         loadingShadowView = [self createLoadingShadowView];
