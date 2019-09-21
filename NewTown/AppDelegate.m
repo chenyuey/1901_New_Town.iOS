@@ -20,6 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     YZConfig *config = [[YZConfig alloc] initWithClientId:CLIENT_ID];
     NSString* scheme = [[[NSBundle mainBundle].infoDictionary[@"CFBundleURLTypes"] firstObject][@"CFBundleURLSchemes"] firstObject];
     config.scheme = scheme;
@@ -33,7 +34,7 @@
     [self.tabBarC setViewControllers:items];
     self.tabBarC.tabBar.backgroundColor = [UIColor whiteColor];
     self.tabBarC.tabBar.unselectedItemTintColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
-    self.tabBarC.tabBar.tintColor = [UIColor colorWithRed:122.0/255.0 green:187.0/255.0 blue:121.0/255.0 alpha:1];
+    self.tabBarC.tabBar.tintColor = THEMECOLOR;
     LYWNewfeatureViewController *startUpPage = [[LYWNewfeatureViewController alloc]init];
     self.window.rootViewController = startUpPage;
     //创建Parse服务链接
@@ -65,25 +66,25 @@
     
     WebViewController *newTownWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/feature/XgA5YjWnWO"];
     UINavigationController *newTownNavigationController = [[UINavigationController alloc]initWithRootViewController:newTownWebVC];
-    newTownNavigationController.tabBarItem.title =@"全部民宿";
+    newTownNavigationController.tabBarItem.title =@"民宿";
     newTownNavigationController.tabBarItem.image = [UIImage imageNamed:@"hotelBarIcon"];
     
-    CollectionViewController *collectWebVC = [[CollectionViewController alloc]init];
-    UINavigationController *collectNavigationController = [[UINavigationController alloc]initWithRootViewController:collectWebVC];
-    collectNavigationController.tabBarItem.title =@"收藏";
-    collectNavigationController.tabBarItem.image = [UIImage imageNamed:@"collection_default"];
+//    CollectionViewController *collectWebVC = [[CollectionViewController alloc]init];
+//    UINavigationController *collectNavigationController = [[UINavigationController alloc]initWithRootViewController:collectWebVC];
+//    collectNavigationController.tabBarItem.title =@"收藏";
+//    collectNavigationController.tabBarItem.image = [UIImage imageNamed:@"collection_default"];
     
     WebViewController *userCenterWebVC = [[WebViewController alloc]initWithURLString:@"https://h5.youzan.com/v2/showcase/usercenter?alias=3hgmk8rs"];
     UINavigationController *userCenterNavigationController = [[UINavigationController alloc]initWithRootViewController:userCenterWebVC];
-    userCenterNavigationController.tabBarItem.title =@"个人中心";
+    userCenterNavigationController.tabBarItem.title =@"我的";
     userCenterNavigationController.tabBarItem.image = [UIImage imageNamed:@"userCenterBarIcon"];
     
     //添加搜索页面
-    SearchViewController *searchViewController = [[SearchViewController alloc]init];
-    UINavigationController *searchNavigationController = [[UINavigationController alloc]initWithRootViewController:searchViewController];
-    searchNavigationController.tabBarItem.title =@"搜索";
-    searchNavigationController.tabBarItem.image = [UIImage imageNamed:@"searchIcon"];
-    NSArray *items = [NSArray arrayWithObjects:indexNavigationController,newTownNavigationController,searchNavigationController,collectNavigationController,userCenterNavigationController, nil];
+//    SearchViewController *searchViewController = [[SearchViewController alloc]init];
+//    UINavigationController *searchNavigationController = [[UINavigationController alloc]initWithRootViewController:searchViewController];
+//    searchNavigationController.tabBarItem.title =@"搜索";
+//    searchNavigationController.tabBarItem.image = [UIImage imageNamed:@"searchIcon"];
+    NSArray *items = [NSArray arrayWithObjects:indexNavigationController,newTownNavigationController,userCenterNavigationController, nil];
     return items;
 }
 - (void)yzsdk:(YZSDK *)sdk needInitToken:(void (^)(NSString * _Nullable))callback

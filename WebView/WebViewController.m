@@ -48,6 +48,12 @@
     HouseManageViewController *houseManageVC = [[HouseManageViewController alloc]init];
     [self presentViewController:houseManageVC animated:YES completion:nil];
 }
+- (void)setStatusBarBackgroundColor:(UIColor *)color {
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+        statusBar.backgroundColor = color;
+    }
+}
 
 #pragma mark - 视图加载
 - (void)viewDidLoad {
@@ -57,7 +63,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     
     UIView *navBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44)];
-    navBackgroundView.backgroundColor = [UIColor colorWithRed:0 green:206.0/255.0 blue:148.0/255.0 alpha:1.0];
+    navBackgroundView.backgroundColor = THEMECOLOR;
     [self.view addSubview:navBackgroundView];
     //修改导航栏样式
     self.navTitleLabel = [CustomizeView createLabelWithFrame:CGRectMake(50, 0, SCREEN_WIDTH - 100, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
@@ -68,6 +74,7 @@
     [self.infoImageView addGestureRecognizer:tapDate];
     self.infoImageView.hidden = YES;
     [self.navTitleLabel addSubview:self.infoImageView];
+    self.navTitleLabel.textColor = [UIColor whiteColor];
     self.navTitleLabel.backgroundColor = [UIColor clearColor];
     [navBackgroundView addSubview:self.navTitleLabel];
     
@@ -336,6 +343,7 @@
     }
 }
 - (void)viewWillAppear:(BOOL)animated{
+    [self setStatusBarBackgroundColor:THEMECOLOR];
     if (self.navTitleLabel.text != nil && ![self.navTitleLabel.text isEqualToString: @"首页"]) {
         [self reloadButtonAction];//首页不刷 别的页面刷
     }
