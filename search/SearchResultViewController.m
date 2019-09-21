@@ -516,7 +516,8 @@
     cell.profileLabel.text = @"";//整套出租 双人床 2人
     cell.hotelNameLabel.text = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"title"];
     cell.remarksLabel.text = [[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"desc"];
-    cell.priceLabel.text = [NSString stringWithFormat:@"¥%d",[[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"price"]intValue]/100];
+//    cell.priceLabel.text = [NSString stringWithFormat:@"¥%d",[[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"price"]intValue]/100];
+    cell.priceLabel.text = [NSString stringWithFormat:@"¥%.2f",[[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"price"]doubleValue]/100.0];
     int leaseType = [[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"leaseType"]intValue];
     int maxPeopleCnt = [[[mAllHotelList objectAtIndex:indexPath.row]objectForKey:@"maxPeopleCnt"]intValue];
     

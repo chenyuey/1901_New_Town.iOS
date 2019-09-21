@@ -56,8 +56,11 @@
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     
+    UIView *navBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44)];
+    navBackgroundView.backgroundColor = [UIColor colorWithRed:0 green:206.0/255.0 blue:148.0/255.0 alpha:1.0];
+    [self.view addSubview:navBackgroundView];
     //修改导航栏样式
-    self.navTitleLabel = [CustomizeView createLabelWithFrame:CGRectMake(50, SafeStatusBarHeight, SCREEN_WIDTH - 100, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
+    self.navTitleLabel = [CustomizeView createLabelWithFrame:CGRectMake(50, 0, SCREEN_WIDTH - 100, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
     self.infoImageView = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - 100)/2+45, 12, 20, 20)];
     self.infoImageView.image = [UIImage imageNamed:@"info_icon"];
     self.infoImageView.userInteractionEnabled = YES;
@@ -65,8 +68,9 @@
     [self.infoImageView addGestureRecognizer:tapDate];
     self.infoImageView.hidden = YES;
     [self.navTitleLabel addSubview:self.infoImageView];
+    self.navTitleLabel.backgroundColor = [UIColor clearColor];
+    [navBackgroundView addSubview:self.navTitleLabel];
     
-    [self.view addSubview:self.navTitleLabel];
     self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :self :@selector(navigationShouldPopOnBackButton)];
     self.backButton.hidden = YES;
     [self.view addSubview:self.backButton];
