@@ -541,8 +541,8 @@
     tmpView.layer.shadowRadius = 5;
     
     
-    UIWebView *webViewTmp = [[UIWebView alloc] initWithFrame:CGRectMake((tmpView.frame.size.width - 48)/2,(tmpView.frame.size.height - 48)/2 ,48,48)];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"loading" ofType:@"gif"];
+    UIWebView *webViewTmp = [[UIWebView alloc] initWithFrame:CGRectMake((tmpView.frame.size.width - 64)/2,(tmpView.frame.size.height - 64)/2 ,64,64)];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"loading_1" ofType:@"gif"];
     NSURL *url = [NSURL URLWithString:path];
     [webViewTmp loadRequest:[NSURLRequest requestWithURL:url]];
     [tmpView addSubview:webViewTmp];
