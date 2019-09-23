@@ -45,7 +45,7 @@
 + (UIButton *)createButtonWithTitleAndImage:(NSString *)title :(CGRect)frame :(int)edgeInsetLeft :(id)target :(SEL)btnPress{
     UIButton *peopleNumberButton = [[UIButton alloc]initWithFrame:frame];
     [peopleNumberButton setTitle:title forState:UIControlStateNormal];
-    [peopleNumberButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [peopleNumberButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [peopleNumberButton setImage:[UIImage imageNamed:@"switchIcon"] forState:UIControlStateNormal];
     peopleNumberButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [peopleNumberButton.titleLabel sizeToFit];
