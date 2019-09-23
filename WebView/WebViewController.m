@@ -87,9 +87,9 @@
     self.switchButton.hidden = YES;
     [self.view addSubview:self.switchButton];
     //创建收藏按钮
-    self.collectButton = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH - 8 - 10 - 24 -24, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :self :@selector(addItemToMyCollections:)];
-    self.collectButton.hidden = YES;
-    [self.view addSubview:self.collectButton];
+//    self.collectButton = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH - 8 - 10 - 24 -24, SafeStatusBarHeight+10, 24, 24) :@"collection_default" :self :@selector(addItemToMyCollections:)];
+//    self.collectButton.hidden = YES;
+//    [self.view addSubview:self.collectButton];
     self.shareButton = [CustomizeView createButtonWithImage:CGRectMake(SCREEN_WIDTH - 24 - 10, SafeStatusBarHeight+8, 24, 24) :@"shareIcon"  :self :@selector(shareToYourFriend:)];
     self.shareButton.hidden = YES;
     [self.view addSubview:self.shareButton];
@@ -198,6 +198,9 @@
         self.navTitleLabel.text = [mArrTitles objectAtIndex:(mArrTitles.count - 1)];
         [self updateWebviewFrameAndTabbarHidden];
         [self updateCollectBtnAndShareBtnHidden:strPathURL];
+        if ([self.navTitleLabel.text isEqualToString:@"全部民宿"]) {
+            self.shareButton.hidden = YES;
+        }
     }
     return YES;
 }
@@ -226,10 +229,9 @@
                   [self->mArrTitles addObject:response];
                   //全部民宿不添加 收藏按钮 功能
                   if ([response isEqualToString:@"全部民宿"]) {
-                      self.collectButton.hidden = YES;
                       self.shareButton.hidden = YES;
                   }
-                  [self showCollectionButtonStatus:response];
+//                  [self showCollectionButtonStatus:response];
                   if ([response isEqualToString:@"首页"] && self.webView.scrollView.mj_header == nil) {
                       self.webView.scrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshWebView)];
                   }
@@ -294,18 +296,6 @@
     }];
 }
 - (void)updateCollectBtnAndShareBtnHidden:(NSString *)strPathURL{
-    //收藏按钮
-    if ([strPathURL containsString:@"feature"] && ![strPathURL containsString:@"search"]) {
-        //显示收藏
-        self.collectButton.hidden = NO;
-        UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
-        [imageTmp setAccessibilityIdentifier:@"uncollect"];
-        [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-    }
-    else{
-        //隐藏收藏
-        self.collectButton.hidden = YES;
-    }
     //分享按钮显示和隐藏
     if (([strPathURL containsString:@"feature"] || [strPathURL containsString:@"goods"]) && ![strPathURL containsString:@"search"]) {
         self.shareButton.hidden = NO;
@@ -457,82 +447,83 @@
     
     shareInfo = (NSDictionary *)data;
     if (isCollecting == YES) {
-        [self collectItemInfoToServer:shareInfo];
+//        [self collectItemInfoToServer:shareInfo];
     }else{
         //弹框
         [self shareWithFriend];
     }
 }
-- (void)addCollectionWithTitle:(NSString *)title :(NSDictionary *)shareDic :(NSNumber *)type{
-    PFObject *collectionObject = [PFObject objectWithClassName:@"Collection"];
-    [collectionObject setObject:title forKey:@"name"];
-    [collectionObject setObject:[PFUser currentUser] forKey:@"user"];
-    [collectionObject setObject:[shareDic objectForKey:@"imgUrl"] forKey:@"cover_link"];
-    [collectionObject setObject:[shareDic objectForKey:@"link"] forKey:@"link"];
-    if ([shareDic objectForKey:@"desc"] != nil) {
-        [collectionObject setObject:[shareDic objectForKey:@"desc"] forKey:@"description"];
-    }
-    
-    [collectionObject setObject:type forKey:@"type"];
-    [collectionObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (succeeded) {
-            UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
-            [imageTmp setAccessibilityIdentifier:@"collected"];
-            [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-        }
-    }];
-}
+//- (void)addCollectionWithTitle:(NSString *)title :(NSDictionary *)shareDic :(NSNumber *)type{
+//    PFObject *collectionObject = [PFObject objectWithClassName:@"Collection"];
+//    [collectionObject setObject:title forKey:@"name"];
+//    [collectionObject setObject:[PFUser currentUser] forKey:@"user"];
+//    [collectionObject setObject:[shareDic objectForKey:@"imgUrl"] forKey:@"cover_link"];
+//    [collectionObject setObject:[shareDic objectForKey:@"link"] forKey:@"link"];
+//    if ([shareDic objectForKey:@"desc"] != nil) {
+//        [collectionObject setObject:[shareDic objectForKey:@"desc"] forKey:@"description"];
+//    }
+//
+//    [collectionObject setObject:type forKey:@"type"];
+//    [collectionObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+//        if (succeeded) {
+//            UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
+//            [imageTmp setAccessibilityIdentifier:@"collected"];
+////            [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+//        }
+//    }];
+//}
 - (void)cancelCollect:(NSArray *)objects{
     [PFObject deleteAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
             UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
             [imageTmp setAccessibilityIdentifier:@"uncollect"];
-            [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+//            [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
         }
     }];
 }
-- (void)collectItemInfoToServer:(NSDictionary *)shareDic{
-    NSString *title = [shareDic objectForKey:@"title"];
-    NSNumber *type = [NSNumber numberWithInt:1];
-    //收藏接口调用的数据
-    if ([title containsString:@"🏠"]){
-        type = [NSNumber numberWithInt:0];
-    }
-    PFQuery *collectQuery = [PFQuery queryWithClassName:@"Collection"];
-    [collectQuery whereKey:@"name" equalTo:title];
-    [collectQuery whereKey:@"user" equalTo:[PFUser currentUser]];
-    [collectQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (objects.count > 0) {
-            //取消收藏
-            [self cancelCollect:objects];
-        }else{
-            //添加收藏
-            [self addCollectionWithTitle:title :shareDic :type];
-        }
-    }];
-}
-- (void)showCollectionButtonStatus:(NSString *)title{
-    if (self.collectButton.hidden == NO && [PFUser currentUser]) {
-        PFQuery *collectQuery = [PFQuery queryWithClassName:@"Collection"];
-        [collectQuery whereKey:@"name" equalTo:title];
-        [collectQuery whereKey:@"user" equalTo:[PFUser currentUser]];
-        [collectQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            if (objects.count > 0) {
-                UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
-                [imageTmp setAccessibilityIdentifier:@"collected"];
-                [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-            }else{
-                UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
-                [imageTmp setAccessibilityIdentifier:@"uncollect"];
-                [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
-            }
-        }];
-    }
-}
+//- (void)collectItemInfoToServer:(NSDictionary *)shareDic{
+//    NSString *title = [shareDic objectForKey:@"title"];
+//    NSNumber *type = [NSNumber numberWithInt:1];
+//    //收藏接口调用的数据
+//    if ([title containsString:@"🏠"]){
+//        type = [NSNumber numberWithInt:0];
+//    }
+//    PFQuery *collectQuery = [PFQuery queryWithClassName:@"Collection"];
+//    [collectQuery whereKey:@"name" equalTo:title];
+//    [collectQuery whereKey:@"user" equalTo:[PFUser currentUser]];
+//    [collectQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+//        if (objects.count > 0) {
+//            //取消收藏
+//            [self cancelCollect:objects];
+//        }else{
+//            //添加收藏
+////            [self addCollectionWithTitle:title :shareDic :type];
+//        }
+//    }];
+//}
+//- (void)showCollectionButtonStatus:(NSString *)title{
+//    if (self.collectButton.hidden == NO && [PFUser currentUser]) {
+//        PFQuery *collectQuery = [PFQuery queryWithClassName:@"Collection"];
+//        [collectQuery whereKey:@"name" equalTo:title];
+//        [collectQuery whereKey:@"user" equalTo:[PFUser currentUser]];
+//        [collectQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+//            if (objects.count > 0) {
+//                UIImage *imageTmp = [UIImage imageNamed:@"collection_high_light"];
+//                [imageTmp setAccessibilityIdentifier:@"collected"];
+//                [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+//            }else{
+//                UIImage *imageTmp = [UIImage imageNamed:@"collection_default"];
+//                [imageTmp setAccessibilityIdentifier:@"uncollect"];
+//                [self.collectButton setImage:imageTmp forState:UIControlStateNormal];
+//            }
+//        }];
+//    }
+//}
 #pragma mark - 显示隐藏分享框
 - (void)shareWithFriend{
     //显示分享的页面
     self->shareView.superview.hidden = NO;
+    [self.view bringSubviewToFront:self->shareView.superview];
     [UIView animateWithDuration:0.5 animations:^{
         CGPoint point = self->shareView.center;
         point.y -= 166+SafeAreaBottomHeight;
@@ -956,14 +947,14 @@
     [dataTask resume];
 }
 //收藏按钮点击事件
-- (void)addItemToMyCollections:(id)sender{
-    isCollecting = YES;
-    if ([PFUser currentUser]) {
-        [self.webView share];
-    }else{
-        [self showLoginViewControllerIfNeeded];
-    }
-}
+//- (void)addItemToMyCollections:(id)sender{
+//    isCollecting = YES;
+//    if ([PFUser currentUser]) {
+//        [self.webView share];
+//    }else{
+//        [self showLoginViewControllerIfNeeded];
+//    }
+//}
 - (void)shareToYourFriend:(id)sender{
     isCollecting = NO;
     [self.webView share];

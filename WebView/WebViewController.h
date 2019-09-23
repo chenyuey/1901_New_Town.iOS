@@ -51,7 +51,7 @@ typedef NS_ENUM(NSUInteger, loginTime) {
 //左侧返回按钮
 @property (nonatomic,strong) UIButton *backButton;
 //收藏按钮
-@property (nonatomic,strong) UIButton *collectButton;
+//@property (nonatomic,strong) UIButton *collectButton;
 //分享按钮
 @property (nonatomic,strong) UIButton *shareButton;
 
