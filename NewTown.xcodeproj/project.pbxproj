@@ -31,6 +31,7 @@
 		525B227E22E05E8F001BA5C4 /* MoreFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525B227D22E05E8F001BA5C4 /* MoreFilterViewController.m */; };
 		525B228122E081DA001BA5C4 /* LeaseTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 525B228022E081DA001BA5C4 /* LeaseTypeView.m */; };
 		525B228422E098EE001BA5C4 /* EquipmentButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 525B228322E098EE001BA5C4 /* EquipmentButton.m */; };
+		526EF98C23387A76006D889C /* UIImage+LXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 526EF98B23387A76006D889C /* UIImage+LXExtension.m */; };
 		527071BB222CF1BC00B73769 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527071BA222CF1BC00B73769 /* AppDelegate.m */; };
 		527071C1222CF1BC00B73769 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527071BF222CF1BC00B73769 /* Main.storyboard */; };
 		527071C4222CF1BC00B73769 /* NewTown.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 527071C2222CF1BC00B73769 /* NewTown.xcdatamodeld */; };
@@ -124,6 +125,8 @@
 		525B228022E081DA001BA5C4 /* LeaseTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaseTypeView.m; sourceTree = "<group>"; };
 		525B228222E098EE001BA5C4 /* EquipmentButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EquipmentButton.h; sourceTree = "<group>"; };
 		525B228322E098EE001BA5C4 /* EquipmentButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EquipmentButton.m; sourceTree = "<group>"; };
+		526EF98A23387A75006D889C /* UIImage+LXExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+LXExtension.h"; sourceTree = "<group>"; };
+		526EF98B23387A76006D889C /* UIImage+LXExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+LXExtension.m"; sourceTree = "<group>"; };
 		527071B6222CF1BC00B73769 /* NewTown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewTown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		527071B9222CF1BC00B73769 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		527071BA222CF1BC00B73769 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -331,9 +334,19 @@
 			path = MoreFilter;
 			sourceTree = "<group>";
 		};
+		526EF98923387A01006D889C /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				526EF98A23387A75006D889C /* UIImage+LXExtension.h */,
+				526EF98B23387A76006D889C /* UIImage+LXExtension.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
 		527071AD222CF1BC00B73769 = {
 			isa = PBXGroup;
 			children = (
+				526EF98923387A01006D889C /* Tool */,
 				524D811522FAC0820021CF0C /* HouseManager */,
 				522E9F4722D4865B00781502 /* HotelDatail */,
 				52BC542422C7479600E31B50 /* search */,
@@ -730,6 +743,7 @@
 				525B228122E081DA001BA5C4 /* LeaseTypeView.m in Sources */,
 				527071CC222CF1BE00B73769 /* main.m in Sources */,
 				522E9F4A22D4868800781502 /* HotelDetailView.m in Sources */,
+				526EF98C23387A76006D889C /* UIImage+LXExtension.m in Sources */,
 				525B227E22E05E8F001BA5C4 /* MoreFilterViewController.m in Sources */,
 				521C612322D6D0FE00489BCD /* SFLabel.m in Sources */,
 				52D57EBF230EB123007365CE /* TestViewController.m in Sources */,

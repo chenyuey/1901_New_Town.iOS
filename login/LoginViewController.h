@@ -11,6 +11,7 @@
 #import "CommonHeader.h"
 #import <Parse/Parse.h>
 #import "WebViewController.h"
+#import "UIImage+LXExtension.h"
 
 typedef void (^LoginResultBlock)(BOOL success);
 

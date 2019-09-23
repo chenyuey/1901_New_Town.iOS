@@ -27,36 +27,50 @@
 - (void)createLoginViewWithFrame:(CGRect)frame :(UIColor *)lineColor{
     UIView *loginView = [[UIView alloc]initWithFrame:frame];
     [self.view addSubview:loginView];
-    self.phoneNumberTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, frame.size.width - 72, 39)];
-    [loginView addSubview:self.phoneNumberTextField];
-    [self.phoneNumberTextField setPlaceholder:@"请输入手机号"];
-    UIView *phoneNumberDownLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 39, frame.size.width, 1)];
-    phoneNumberDownLineView.backgroundColor = lineColor;
-    [loginView addSubview:phoneNumberDownLineView];
-    self.passwordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, 40+16, frame.size.width, 39)];
-    [self.passwordTextField setPlaceholder:@"请输入验证码"];
-//    self.passwordTextField.secureTextEntry = YES;
-    [loginView addSubview:self.passwordTextField];
-    UIView *passwordDownLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 40+16+39, frame.size.width, 1)];
-    passwordDownLineView.backgroundColor = lineColor;
-    [loginView addSubview:passwordDownLineView];
+    UIView *phoneNumberView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, 40)];
+    phoneNumberView.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0].CGColor;
+    phoneNumberView.layer.borderWidth = 1;
+    phoneNumberView.layer.cornerRadius = 20;
+    [loginView addSubview:phoneNumberView];
     
-    _getValidCodeBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 72, 10, 72, 20)];
+    UIImageView *mobileImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 11, 15, 18)];
+    mobileImageView.image = [UIImage imageNamed:@"mobile_icon"];
+    [phoneNumberView addSubview:mobileImageView];
+    
+    self.phoneNumberTextField = [[UITextField alloc]initWithFrame:CGRectMake(50, 0, frame.size.width - 50, 39)];
+    [phoneNumberView addSubview:self.phoneNumberTextField];
+    [self.phoneNumberTextField setPlaceholder:@"请输入手机号"];
+    UIView *passwordView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, frame.size.width, 40)];
+    passwordView.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0].CGColor;
+    passwordView.layer.borderWidth = 1;
+    passwordView.layer.cornerRadius = 20;
+    passwordView.clipsToBounds = YES;
+    [loginView addSubview:passwordView];
+    self.passwordTextField = [[UITextField alloc]initWithFrame:CGRectMake(50, 0, frame.size.width-50-80, 39)];
+    [self.passwordTextField setPlaceholder:@"请输入验证码"];
+    self.passwordTextField.secureTextEntry = YES;
+    [passwordView addSubview:self.passwordTextField];
+    UIImageView *passwordImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 11, 15, 18)];
+    passwordImageView.image = [UIImage imageNamed:@"password_icon"];
+    [passwordView addSubview:passwordImageView];
+    
+    _getValidCodeBtn = [[UIButton alloc]initWithFrame:CGRectMake(frame.size.width - 80, 0, 80, 40)];
     [_getValidCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [_getValidCodeBtn setTitleColor:[UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    _getValidCodeBtn.backgroundColor = THEMECOLOR;
+    [_getValidCodeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_getValidCodeBtn addTarget:self action:@selector(getValidCodePressd:) forControlEvents:UIControlEventTouchUpInside];
     [_getValidCodeBtn setFont:[UIFont systemFontOfSize:14]];
-    [loginView addSubview:_getValidCodeBtn];
+    [passwordView addSubview:_getValidCodeBtn];
     
-    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 40+16+39+19, frame.size.width - 20, 50)];
-    loginBtn.backgroundColor = [UIColor colorWithRed:99.0/255.0 green:190.0/255.0 blue:114.0/255.0 alpha:1.0];
+    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, passwordView.frame.origin.y+passwordView.frame.size.height+75 ,frame.size.width, 40)];
+    loginBtn.backgroundColor = THEMECOLOR;
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [loginBtn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    loginBtn.layer.cornerRadius = 5;
+    loginBtn.layer.cornerRadius = 20;
     [loginView addSubview:loginBtn];
     
-    UILabel *tintLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, loginBtn.frame.origin.y+loginBtn.frame.size.height + 10, loginView.frame.size.width, 40) :16 :@"Arial" :[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+    UILabel *tintLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, loginBtn.frame.origin.y+loginBtn.frame.size.height + 10, loginView.frame.size.width, 40) :16 :@"Arial" :[UIColor colorWithRed:170.0/255.0 green:170.0/255.0 blue:170.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     tintLabel.text = @"新用户登录将直接创建账号";
     [loginView addSubview:tintLabel];
 }
@@ -69,16 +83,18 @@
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     //修改导航栏样式
-    self.navTitleLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
-    self.navTitleLabel.text = @"登录";
-    [self.view addSubview:self.navTitleLabel];
+//    self.navTitleLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
+//    self.navTitleLabel.backgroundColor = THEMECOLOR;
+//    self.navTitleLabel.text = @"登录";
+//    self.navTitleLabel.textColor = [UIColor whiteColor];
+//    [self.view addSubview:self.navTitleLabel];
     UIColor *splitLineColor = [UIColor colorWithRed:213.0/255.0 green:214.0/255.0 blue:224.0/255.0 alpha:1.0];
-    UIView *spitLineView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight + 44, SCREEN_WIDTH, 1)];
-    spitLineView.backgroundColor = splitLineColor;
-    [self.view addSubview:spitLineView];
-    
-    closeButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :self :@selector(close:)];
-    [self.view addSubview:closeButton];
+//    UIView *spitLineView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight + 44, SCREEN_WIDTH, 1)];
+//    spitLineView.backgroundColor = splitLineColor;
+//    [self.view addSubview:spitLineView];
+//
+//    closeButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :self :@selector(close:)];
+//    [self.view addSubview:closeButton];
     
     UIImageView *logoImageView = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-80)/2, SafeStatusBarHeight + 44 + 20 , 80, 80)];
     logoImageView.image = [UIImage imageNamed:@"logo192"];
@@ -86,14 +102,21 @@
     logoImageView.layer.masksToBounds = YES;
     [self.view addSubview:logoImageView];
     
-    [self createLoginViewWithFrame:CGRectMake(17, SafeStatusBarHeight + 44 + 80 + 46, SCREEN_WIDTH - 17 - 15, 240) :splitLineColor];
+    
+    UIImage *loginBGImage = [UIImage imageNamed:@"loginTopBGImage"];
+    UIImage *scaleLoginBGImage = [UIImage scaleImage:loginBGImage toScale:SCREEN_WIDTH/375.0];
+    UIImageView *loginBGImageView= [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, scaleLoginBGImage.size.width, scaleLoginBGImage.size.height)];
+    loginBGImageView.image = scaleLoginBGImage;
+    [self.view addSubview:loginBGImageView];
+    
+    [self createLoginViewWithFrame:CGRectMake(30, scaleLoginBGImage.size.height+45, SCREEN_WIDTH - 60, SCREEN_HEIGHT - (scaleLoginBGImage.size.height+45)) :splitLineColor];
     [self.view setUserInteractionEnabled:YES];
     
-    if (currentType == 0) {
-        closeButton.hidden = YES;
-    }else{
-        closeButton.hidden = NO;
-    }
+//    if (currentType == 0) {
+//        closeButton.hidden = YES;
+//    }else{
+//        closeButton.hidden = NO;
+//    }
     
     errLabel = [self createErrorToastViewWithFrame:CGRectMake((SCREEN_WIDTH-150)/2, SafeStatusBarHeight + 44 + 96 + 180, 150, 60)];
 }
