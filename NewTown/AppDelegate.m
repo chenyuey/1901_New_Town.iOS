@@ -33,7 +33,7 @@
     self.tabBarC = [[UITabBarController alloc]init];
     [self.tabBarC setViewControllers:items];
     self.tabBarC.tabBar.backgroundColor = [UIColor whiteColor];
-    self.tabBarC.tabBar.unselectedItemTintColor = [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
+    self.tabBarC.tabBar.unselectedItemTintColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
     self.tabBarC.tabBar.tintColor = THEMECOLOR;
     LYWNewfeatureViewController *startUpPage = [[LYWNewfeatureViewController alloc]init];
     self.window.rootViewController = startUpPage;
