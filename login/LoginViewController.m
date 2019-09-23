@@ -82,20 +82,7 @@
     //导航栏
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
-    //修改导航栏样式
-//    self.navTitleLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44) :20 :@"Arial-BoldM" :[UIColor blackColor] :NSTextAlignmentCenter];
-//    self.navTitleLabel.backgroundColor = THEMECOLOR;
-//    self.navTitleLabel.text = @"登录";
-//    self.navTitleLabel.textColor = [UIColor whiteColor];
-//    [self.view addSubview:self.navTitleLabel];
     UIColor *splitLineColor = [UIColor colorWithRed:213.0/255.0 green:214.0/255.0 blue:224.0/255.0 alpha:1.0];
-//    UIView *spitLineView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight + 44, SCREEN_WIDTH, 1)];
-//    spitLineView.backgroundColor = splitLineColor;
-//    [self.view addSubview:spitLineView];
-//
-//    closeButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 20, 20) :@"back_btn" :self :@selector(close:)];
-//    [self.view addSubview:closeButton];
-    
     UIImageView *logoImageView = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-80)/2, SafeStatusBarHeight + 44 + 20 , 80, 80)];
     logoImageView.image = [UIImage imageNamed:@"logo192"];
     logoImageView.layer.cornerRadius = 18;
@@ -112,26 +99,23 @@
     [self createLoginViewWithFrame:CGRectMake(30, scaleLoginBGImage.size.height+45, SCREEN_WIDTH - 60, SCREEN_HEIGHT - (scaleLoginBGImage.size.height+45)) :splitLineColor];
     [self.view setUserInteractionEnabled:YES];
     
-//    if (currentType == 0) {
-//        closeButton.hidden = YES;
-//    }else{
-//        closeButton.hidden = NO;
-//    }
-    
     errLabel = [self createErrorToastViewWithFrame:CGRectMake((SCREEN_WIDTH-150)/2, SafeStatusBarHeight + 44 + 96 + 180, 150, 60)];
 }
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES]; //实现该方法是需要注意view需要是继承UIControl而来的
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-//    WebViewController *parent = (WebViewController *)self.parentViewController;
-//   if ([PFUser currentUser]){
-//       [self willMoveToParentViewController:nil];
-//       [self.view removeFromSuperview];
-//       [self removeFromParentViewController];
-//       [self callBlockWithResult:YES];
-//    }
+-(void)viewWillAppear:(BOOL)animated{
+    [self setStatusBarBackgroundColor:[UIColor clearColor]];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [self setStatusBarBackgroundColor:THEMECOLOR];
+}
+- (void)setStatusBarBackgroundColor:(UIColor *)color {
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+        statusBar.backgroundColor = color;
+    }
 }
 
 #pragma mark - Private Method
