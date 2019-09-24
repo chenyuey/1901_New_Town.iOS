@@ -62,7 +62,7 @@
     [_getValidCodeBtn setFont:[UIFont systemFontOfSize:14]];
     [passwordView addSubview:_getValidCodeBtn];
     
-    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, passwordView.frame.origin.y+passwordView.frame.size.height+75 ,frame.size.width, 40)];
+    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, passwordView.frame.origin.y+passwordView.frame.size.height+55 ,frame.size.width, 40)];
     loginBtn.backgroundColor = THEMECOLOR;
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -73,6 +73,14 @@
     UILabel *tintLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, loginBtn.frame.origin.y+loginBtn.frame.size.height + 10, loginView.frame.size.width, 40) :16 :@"Arial" :[UIColor colorWithRed:170.0/255.0 green:170.0/255.0 blue:170.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     tintLabel.text = @"新用户登录将直接创建账号";
     [loginView addSubview:tintLabel];
+    
+    closeButton = [CustomizeView createButtonWithImage:CGRectMake((loginView.frame.size.width-29)/2, tintLabel.frame.origin.y+tintLabel.frame.size.height+42, 29, 29) :@"close_login_icon" :self :@selector(closeLoginView)];
+    [loginView addSubview:closeButton];
+    if (currentType == 0) {
+        closeButton.hidden = YES;
+    }else{
+        closeButton.hidden = NO;
+    }
 }
 #pragma mark - 系统声明周期
 - (void)viewDidLoad {
@@ -132,7 +140,7 @@
 
 #pragma mark - Action
 
-- (void)close:(id)sender {
+- (void)closeLoginView {
     [self dismissViewControllerAnimated:YES completion:^{
         [self callBlockWithResult:NO];
         if (self->timer != nil) {
