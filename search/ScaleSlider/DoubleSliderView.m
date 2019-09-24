@@ -246,7 +246,7 @@
 - (UIView *)midLineView {
     if (!_midLineView) {
         _midLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 5)];
-        _midLineView.backgroundColor = [[UIColor alloc] initWithRed:90.0/255.0 green:160.0/255.0 blue:135.0/255.0 alpha:1];
+        _midLineView.backgroundColor = THEMECOLOR;
         _midLineView.userInteractionEnabled = NO;
     }
     return _midLineView;

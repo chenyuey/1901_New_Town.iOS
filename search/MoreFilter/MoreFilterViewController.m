@@ -201,7 +201,7 @@
     UIButton *button = sender;
     button.selected = !button.selected;
     if (button.selected == YES) {
-        [button setBackgroundColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0]];
+        [button setBackgroundColor:THEMECOLOR];
     }else{
         [button setBackgroundColor:[UIColor whiteColor]];
     }
@@ -210,7 +210,7 @@
     EquipmentButton *button = sender;
     button.selected = !button.selected;
     if (button.selected == YES) {
-        [button setBackgroundColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0]];
+        [button setBackgroundColor:THEMECOLOR];
     }else{
         [button setBackgroundColor:[UIColor whiteColor]];
     }
@@ -256,7 +256,7 @@
                 noticeTypeViewTmp.checkBoxBtn.selected = YES;
             }
         }
-        UIButton *confirmButton = [self createButtonWithFrame:CGRectMake(12, self->mNoticeView.frame.origin.y+self->mNoticeView.frame.size.height+37, SCREEN_WIDTH - 24, 36) :@"确定" :[UIColor whiteColor] :[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] :@selector(confirmButtonPress)];
+        UIButton *confirmButton = [self createButtonWithFrame:CGRectMake(12, self->mNoticeView.frame.origin.y+self->mNoticeView.frame.size.height+37, SCREEN_WIDTH - 24, 36) :@"确定" :[UIColor whiteColor] :THEMECOLOR :@selector(confirmButtonPress)];
         [self->mShowAllFilterView addSubview:confirmButton];
         self->mShowAllFilterView.contentSize = CGSizeMake(SCREEN_WIDTH, confirmButton.frame.origin.y+confirmButton.frame.size.height + 80);
     }];
@@ -278,7 +278,7 @@
             [self->mHouseTypeView addSubview:houseTypeBtn];
             if ([self->mDicFilterInfo.allKeys containsObject:@"houseType"]&&[[self->mDicFilterInfo objectForKey:@"houseType"]containsObject:@(houseTypeBtn.tag)]) {
                 houseTypeBtn.selected = YES;
-                houseTypeBtn.backgroundColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
+                houseTypeBtn.backgroundColor = THEMECOLOR;
             }
         }
         [self getEquipmentListView];
@@ -314,7 +314,7 @@
                 
                 if ([self->mDicFilterInfo.allKeys containsObject:@"equipmentList"]&&[[[self->mDicFilterInfo objectForKey:@"equipmentList"]allKeys]containsObject:keyType] && [[[self->mDicFilterInfo objectForKey:@"equipmentList"]objectForKey:keyType] containsObject:@(houseTypeBtn.code)]) {
                     houseTypeBtn.selected = YES;
-                    houseTypeBtn.backgroundColor = [UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0];
+                    houseTypeBtn.backgroundColor = THEMECOLOR;
                 }
             }
         }

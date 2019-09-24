@@ -35,12 +35,25 @@
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.tabBarController.tabBar.hidden=YES;
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
-    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10+8, 24, 24) :@"back_btn" :self :@selector(backToSearch)];
-    [self.view addSubview:self.backButton];
-    mSearchBarView = [[UISearchBar alloc]initWithFrame:CGRectMake(35, SafeStatusBarHeight + 10, SCREEN_WIDTH - 35 - 11, 40)];
+    
+    UIView *navView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 60)];
+    navView.backgroundColor = THEMECOLOR;
+    [self.view addSubview:navView];
+    
+    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, 10+8, 24, 24) :@"back_btn" :self :@selector(backToSearch)];
+//    [self.view addSubview:self.backButton];
+    [navView addSubview:self.backButton];
+    
+    mSearchBarView = [[UISearchBar alloc]initWithFrame:CGRectMake(35, 10, SCREEN_WIDTH - 35 - 11, 40)];
     mSearchBarView.placeholder = @"位置/地标/房源名称";
-    [self.view addSubview:mSearchBarView];
-    mSearchBarView.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
+    mSearchBarView.tintColor = [UIColor whiteColor];
+    UITextField * searchField = [mSearchBarView valueForKey:@"_searchField"];
+//    [searchField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [searchField setTextColor:[UIColor whiteColor]];
+    
+//    [self.view addSubview:mSearchBarView];
+    [navView addSubview:mSearchBarView];
+    mSearchBarView.layer.borderColor = [UIColor whiteColor].CGColor;
     mSearchBarView.layer.borderWidth = 1.0;
     mSearchBarView.layer.cornerRadius = 20.0;
     mSearchBarView.delegate = self;

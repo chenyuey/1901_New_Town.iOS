@@ -21,7 +21,7 @@
         [self addSubview:self.hotelNameLabel];
         self.remarksLabel = [CustomizeView createLabelWithFrame:CGRectMake(14, self.hotelNameLabel.frame.size.height+self.hotelNameLabel.frame.origin.y+2, SCREEN_WIDTH-28, 21) :12 :@"Arial" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         [self addSubview:self.remarksLabel];
-        self.priceLabel = [CustomizeView createLabelWithFrame:CGRectMake(14, self.remarksLabel.frame.size.height+self.remarksLabel.frame.origin.y+3, SCREEN_WIDTH-28, 21) :15 :@"PingFangSC-bold" :[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        self.priceLabel = [CustomizeView createLabelWithFrame:CGRectMake(14, self.remarksLabel.frame.size.height+self.remarksLabel.frame.origin.y+3, SCREEN_WIDTH-28, 21) :15 :@"PingFangSC-bold" :THEMECOLOR :NSTextAlignmentLeft];
         [self addSubview:self.priceLabel];
     }
     return self;

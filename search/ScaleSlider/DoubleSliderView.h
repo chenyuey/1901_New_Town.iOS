@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonHeader.h"
 
 @interface DoubleSliderView : UIView
 

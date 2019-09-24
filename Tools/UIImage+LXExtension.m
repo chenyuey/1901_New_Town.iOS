@@ -245,23 +245,7 @@
     
     return img;
 }
-/**
- 等比例缩放图片
- 
- @param image 传入图片 UIImage
- @param scaleSize 缩放大小
- @return 缩放后的图片
- */
-+ (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 
-{
-//    UIGraphicsBeginImageContext(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize));
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize), NO, 0.0);
-    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height * scaleSize)];
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return scaledImage;
-}
 + (UIImage *)scaleImage:(UIImage *)image toScaleWith:(float)scaleSize toScaleHeight:(float)scaleHeight{
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize), YES, 0.0);
 //    UIGraphicsBeginImageContext(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleHeight));
@@ -325,17 +309,36 @@
  @return 截取后的图片
  */
 + (UIImage *)ct_imageFromImage:(UIImage *)image inRect:(CGRect)rect{
-    
+
     //把像 素rect 转化为 点rect（如无转化则按原图像素取部分图片）
     CGFloat scale = [UIScreen mainScreen].scale;
     CGFloat x= rect.origin.x*scale,y=rect.origin.y*scale,w=rect.size.width*scale,h=rect.size.height*scale;
     CGRect dianRect = CGRectMake(x, y, w, h);
-    
+
     //截取部分图片并生成新图片
     CGImageRef sourceImageRef = [image CGImage];
     CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, dianRect);
     UIImage *newImage = [UIImage imageWithCGImage:newImageRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
     return newImage;
 }
+
+/**
+ 等比例缩放图片
+ 
+ @param image 传入图片 UIImage
+ @param scaleSize 缩放大小
+ @return 缩放后的图片
+ */
++ (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+
+{
+    //    UIGraphicsBeginImageContext(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize));
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize), NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height * scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
 
 @end

@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "search/SearchResultViewController.m"
-            timestampString = "590995585.9121"
+            timestampString = "591011832.053761"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
             <Locations>
@@ -68,7 +68,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "search/SearchViewController.m"
-            timestampString = "590995585.91216"
+            timestampString = "591011832.053876"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "119"
@@ -84,7 +84,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "search/SearchViewController.m"
-            timestampString = "590995585.912209"
+            timestampString = "591011832.053926"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "127"
@@ -100,7 +100,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "login/LoginViewController.m"
-            timestampString = "590995585.9122519"
+            timestampString = "591011832.053968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "105"
@@ -116,7 +116,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebView/WebViewController.m"
-            timestampString = "590995585.912306"
+            timestampString = "591011832.054022"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "453"
@@ -132,7 +132,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "login/LoginViewController.m"
-            timestampString = "590995585.9128799"
+            timestampString = "591011832.054672"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
@@ -148,7 +148,7 @@
                   moduleName = "NewTown"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbookpro/2019work/NewTown/login/LoginViewController.m"
-                  timestampString = "590995586.136014"
+                  timestampString = "591011832.300917"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "144"
@@ -163,7 +163,7 @@
                   moduleName = "NewTown"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbookpro/2019work/NewTown/login/LoginViewController.m"
-                  timestampString = "590995586.13907"
+                  timestampString = "591011832.303589"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "144"
@@ -171,6 +171,22 @@
                   offsetFromSymbolStart = "24">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "search/SearchResultViewController.m"
+            timestampString = "591011832.0548"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
+            landmarkName = "-createSelectPriceView"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

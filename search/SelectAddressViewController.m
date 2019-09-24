@@ -17,8 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.backButton = [self createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :@selector(backToSelectVC)];
-    [self.view addSubview:self.backButton];
+    self.backButton = [self createButtonWithImage:CGRectMake(10, 10, 24, 24) :@"back_btn" :@selector(backToSelectVC)];
+    
+    UIView *navView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44)];
+    navView.backgroundColor = THEMECOLOR;
+    [navView addSubview:self.backButton];
+    [self.view addSubview:navView];
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     self.tabBarController.tabBar.hidden=YES;
@@ -28,7 +32,7 @@
     
     [self getCityData];
     // Do any additional setup after loading the view.
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.backButton.frame.origin.y + self.backButton.frame.size.height, SCREEN_WIDTH, SCREEN_HEIGHT-20) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, navView.frame.origin.y + navView.frame.size.height+10, SCREEN_WIDTH, SCREEN_HEIGHT-20) style:UITableViewStylePlain];
     _tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.delegate = self;

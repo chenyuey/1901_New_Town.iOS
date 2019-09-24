@@ -60,9 +60,16 @@
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES; // 隐藏navigationbar
     self.view.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
+    
+    UIView *navView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 54)];
+    navView.backgroundColor = THEMECOLOR;
+    
+    [self.view addSubview:navView];
+    
     self.tabBarController.tabBar.hidden=YES;
-    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10+8, 24, 24) :@"back_btn" :self :@selector(backToSearch)];
-    [self.view addSubview:self.backButton];
+    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, 10+8, 24, 24) :@"back_btn" :self :@selector(backToSearch)];
+//    [self.view addSubview:self.backButton];
+    [navView addSubview:self.backButton];
     mSearchShowView = [self createSearchShowViewWithFrame:CGRectMake(35, SafeStatusBarHeight + 10, SCREEN_WIDTH - 35 - 11, 40) :mStrDate :mStrAddress];
     mAllHotelTableview = [[UITableView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight+109, SCREEN_HEIGHT, SCREEN_HEIGHT - SafeStatusBarHeight - 109) style:UITableViewStylePlain];//274
     mAllHotelTableview.delegate = self;
@@ -222,7 +229,7 @@
             [self->mDicFilter setValuesForKeysWithDictionary:allFilterDic];
             [self updateDataList];
             if (allFilterDic.allKeys.count > 0) {
-                [self->mMoreButton setTitleColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+                [self->mMoreButton setTitleColor:THEMECOLOR forState:UIControlStateNormal];
             }else{
                 [self->mMoreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             }
@@ -253,7 +260,7 @@
         UIView *superView = [selectBtn superview];
         for (int i = 0; i < superView.subviews.count; i ++) {
             UIButton *subview = [superView.subviews objectAtIndex:i];
-            [selectBtn setBackgroundColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0]];
+            [selectBtn setBackgroundColor:THEMECOLOR];
             if ([subview isKindOfClass:[UIButton class]] && ![selectBtn isEqual:subview]) {
                 [subview setBackgroundColor:[UIColor whiteColor]];
                 subview.selected = NO;
@@ -268,7 +275,7 @@
     }
     //修改选中高亮色
     if (mStrSelectPeopleNumber.length > 0) {
-        [peopleNumberButton setTitleColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [peopleNumberButton setTitleColor:THEMECOLOR forState:UIControlStateNormal];
     }else{
         [peopleNumberButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
@@ -307,7 +314,7 @@
     [self.view addSubview:showSearchItemView];
     showSearchItemView.layer.cornerRadius = 20.0;
     showSearchItemView.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
-    mDateView = [[UIView alloc]initWithFrame:CGRectMake(15, 5, 50, 30)];
+    mDateView = [[UIView alloc]initWithFrame:CGRectMake(15, 5, 60, 30)];
     [showSearchItemView addSubview:mDateView];
     UILabel *startDateLabel = [CustomizeView createLabelWithFrame:CGRectMake(0, 0, mDateView.frame.size.width, 15) :14 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
     
@@ -356,10 +363,10 @@
     [self.view addSubview:view];
     self.ageTipsLabel = [CustomizeView createLabelWithFrame:CGRectMake(18, 9, 63, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
     self.ageTipsLabel.text = @"¥0-不限";
-    NSArray *arrPrice = @[@"¥0",@"¥100",@"¥200",@"¥300",@"¥400",@"¥500",@"¥600",@"不限"];
-    float dis = (SCREEN_WIDTH - 18*2 - 30*8)/7;
+    NSArray *arrPrice = @[@"¥0",@"100",@"200",@"300",@"400",@"500",@"600",@"不限"];
+    float dis = (SCREEN_WIDTH - 18*2 - 35*8)/7;
     for (int i = 0; i < 8; i ++) {
-        UILabel *priceLabelTmp = [CustomizeView createLabelWithFrame:CGRectMake(18+30*i+dis*i, self.ageTipsLabel.frame.origin.y+self.ageTipsLabel.frame.size.height + 4, 30, 17) :12 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+        UILabel *priceLabelTmp = [CustomizeView createLabelWithFrame:CGRectMake(18+35*i+dis*i, self.ageTipsLabel.frame.origin.y+self.ageTipsLabel.frame.size.height + 4, 30, 17) :12 :@"Arial" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
         [view addSubview:priceLabelTmp];
         priceLabelTmp.text = [arrPrice objectAtIndex:i];
     }
@@ -377,7 +384,7 @@
     self.doubleSliderView.y = self.ageTipsLabel.frame.origin.y + self.ageTipsLabel.frame.size.height+17+12;
     
     UIButton *confirmBtn = [CustomizeView createButtonWithFrame:CGRectMake(12, view.frame.size.height - 36 - 13, SCREEN_WIDTH - 24, 36) :@"确定" :self :@selector(confirmSelectPrice:)];
-    [confirmBtn setBackgroundColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0]];
+    [confirmBtn setBackgroundColor:THEMECOLOR];
     [confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [view addSubview:confirmBtn];
     return view;
@@ -396,7 +403,7 @@
     [mDicFilter setObject:@[@(min),@(max)] forKey:@"price"];
     [self updateDataList];
     //修改选中高亮色
-    [priceButton setTitleColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [priceButton setTitleColor:THEMECOLOR forState:UIControlStateNormal];
 }
 #pragma mark - 选择价格
 #pragma mark - action
@@ -481,7 +488,7 @@
     mShowSortView.hidden = YES;
     mStrSort = [menuView.titleArray  objectAtIndex:index];
     sortButton.selected = NO;
-    [sortButton setTitleColor:[UIColor colorWithRed:90.0/255.0 green:169.0/255.0 blue:135.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [sortButton setTitleColor:THEMECOLOR forState:UIControlStateNormal];
     switch (index) {
         case 0:
             [mDicFilter removeObjectForKey:@"order"];

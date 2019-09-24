@@ -173,4 +173,6 @@
  */
 + (UIImage *)ct_imageFromImage:(UIImage *)image inRect:(CGRect)rect;
 
++ (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize;
+
 @end

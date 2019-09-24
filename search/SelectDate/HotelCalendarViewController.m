@@ -25,11 +25,18 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.tabBarController.tabBar.hidden=YES;
     //返回按钮
-    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, SafeStatusBarHeight+10, 24, 24) :@"back_btn" :self :@selector(backToSearch)];
-    [self.view addSubview:self.backButton];
+    self.backButton = [CustomizeView createButtonWithImage:CGRectMake(10, 10, 24, 24) :@"back_btn" :self :@selector(backToSearch)];
+   
     //确定按钮
-    self.confirmButton = [CustomizeView createButtonWithFrame:CGRectMake(SCREEN_WIDTH - 20 - 40, SafeStatusBarHeight+10, 40, 24) :@"确定" :self :@selector(selectedCheckDate)];
-    [self.view addSubview:self.confirmButton];
+    self.confirmButton = [CustomizeView createButtonWithFrame:CGRectMake(SCREEN_WIDTH - 20 - 40, 10, 40, 24) :@"确定" :self :@selector(selectedCheckDate)];
+    [self.confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    UIView *navView = [[UIView alloc]initWithFrame:CGRectMake(0, SafeStatusBarHeight, SCREEN_WIDTH, 44)];
+    navView.backgroundColor = THEMECOLOR;
+    [navView addSubview:self.backButton];
+    [navView addSubview:self.confirmButton];
+    [self.view addSubview:navView];
+    
     [self.view addSubview:self.weekView];
     [self.view addSubview:self.tableView];
 
