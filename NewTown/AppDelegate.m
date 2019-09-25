@@ -45,7 +45,9 @@
     }];
     [Parse initializeWithConfiguration:parseConfig];
     //加入微信分享sdk
-    [WXApi registerApp:@"wx185c740b0fdf8b55"];
+    [WXApi registerApp:@"wx884df7ebcbc85a55"];//wx185c740b0fdf8b55
+    
+
     //加入腾讯分享sdk
     self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"101562763" andDelegate:self];
     [WeiboSDK registerApp:@"1090985283"];
