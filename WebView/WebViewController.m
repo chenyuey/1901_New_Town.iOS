@@ -271,34 +271,16 @@
     }
 }
 - (void)addAnimationWithTabbarShow{
-    [UIView animateWithDuration:0.2 animations:^{
-        self.tabBarController.view.hidden = NO;
-        for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
-            UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
-            if ([tmpView isKindOfClass:[UITabBar class]]) {
-                CGRect frame = tmpView.frame;
-                frame.origin.y = SCREEN_HEIGHT - SafeAreaBottomHeight - 49;
-                tmpView.frame = frame;
-                [self.tabBarController.view bringSubviewToFront:tmpView];
-                break;
-            }
-        }
-    }];
+    UIView *transtionView = [self.tabBarController.view.subviews objectAtIndex:0];
+    transtionView.frame = CGRectMake(transtionView.bounds.origin.x,  transtionView.bounds.origin.y,  transtionView.bounds.size.width, transtionView.bounds.size.height - 49);
+    self.tabBarController.tabBar.frame = CGRectMake(0, SCREEN_HEIGHT - SafeAreaBottomHeight - 49, SCREEN_WIDTH, 49);
+    self.tabBarController.tabBar.hidden = NO;
 }
 - (void)addAnimationWithTabbarHidden{
-    [UIView animateWithDuration:0.2 animations:^{
-//        self.tabBarController.view.hidden = YES;
-//        for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
-//            UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
-//            if ([tmpView isKindOfClass:[UITabBar class]]) {
-//                CGRect frame = tmpView.frame;
-//                frame.origin.y = SCREEN_HEIGHT - SafeAreaBottomHeight;
-//                tmpView.frame = frame;
-//            }else{
-//                [self.tabBarController.view bringSubviewToFront:tmpView];
-//            }
-//        }
-    }];
+    UIView *transtionView = [self.tabBarController.view.subviews objectAtIndex:0];
+    transtionView.frame = CGRectMake(transtionView.bounds.origin.x,  transtionView.bounds.origin.y,  transtionView.bounds.size.width, transtionView.bounds.size.height + 49);
+    self.tabBarController.tabBar.frame = CGRectZero;
+    self.tabBarController.tabBar.hidden = YES;
 }
 - (void)updateCollectBtnAndShareBtnHidden:(NSString *)strPathURL{
     //分享按钮显示和隐藏

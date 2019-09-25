@@ -22,6 +22,8 @@
 #import "HouseManageViewController.h"
 #import "TestViewController.h"
 #import "CustomizeView.h"
+
+
 typedef NS_ENUM(NSUInteger, loginTime) {
     kLoginTimeNever = 0,     //演示不登录
     kLoginTimePrior = 1,     //演示先登录
