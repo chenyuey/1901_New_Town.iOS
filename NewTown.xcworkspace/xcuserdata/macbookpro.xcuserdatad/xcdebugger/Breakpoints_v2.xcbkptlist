@@ -20,7 +20,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "search/SearchResultViewController.m"
-            timestampString = "591068104.870445"
+            timestampString = "591085675.45143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "107"
@@ -68,7 +68,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "search/SearchViewController.m"
-            timestampString = "591068104.870524"
+            timestampString = "591085675.451496"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "119"
@@ -84,7 +84,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "search/SearchViewController.m"
-            timestampString = "591068104.870568"
+            timestampString = "591085675.451542"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "127"
@@ -100,7 +100,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "login/LoginViewController.m"
-            timestampString = "591068104.870609"
+            timestampString = "591085675.451583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "105"
@@ -116,11 +116,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WebView/WebViewController.m"
-            timestampString = "591068104.870659"
+            timestampString = "591085675.451634"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
             landmarkName = "-alertShareData:"
             landmarkType = "7">
          </BreakpointContent>
@@ -132,7 +132,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "login/LoginViewController.m"
-            timestampString = "591068104.871048"
+            timestampString = "591085675.4522901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
@@ -148,7 +148,7 @@
                   moduleName = "NewTown"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbookpro/2019work/NewTown/login/LoginViewController.m"
-                  timestampString = "591068105.102047"
+                  timestampString = "591085675.687894"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "144"
@@ -163,7 +163,7 @@
                   moduleName = "NewTown"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbookpro/2019work/NewTown/login/LoginViewController.m"
-                  timestampString = "591068105.104794"
+                  timestampString = "591085675.690091"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "144"
@@ -180,13 +180,157 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "search/SearchResultViewController.m"
-            timestampString = "591068104.87111"
+            timestampString = "591085675.452333"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "368"
             endingLineNumber = "368"
             landmarkName = "-createSelectPriceView"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WebView/WebViewController.m"
+            timestampString = "591085675.452377"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "540"
+            endingLineNumber = "540"
+            landmarkName = "-cancleShare"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[WebViewController cancleShare]"
+                  moduleName = "NewTown"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbookpro/2019work/NewTown/WebView/WebViewController.m"
+                  timestampString = "591075754.012557"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "535"
+                  endingLineNumber = "535"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__32-[WebViewController cancleShare]_block_invoke"
+                  moduleName = "NewTown"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbookpro/2019work/NewTown/WebView/WebViewController.m"
+                  timestampString = "591075754.014855"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "535"
+                  endingLineNumber = "535"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WebView/WebViewController.m"
+            timestampString = "591085675.452794"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "543"
+            endingLineNumber = "543"
+            landmarkName = "-cancleShare"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WebView/WebViewController.m"
+            timestampString = "591085675.453199"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "541"
+            endingLineNumber = "541"
+            landmarkName = "-cancleShare"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WebView/WebViewController.m"
+            timestampString = "591085675.453586"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "539"
+            endingLineNumber = "539"
+            landmarkName = "-cancleShare"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WebView/WebViewController.m"
+            timestampString = "591085675.453969"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
+            landmarkName = "-addAnimationWithTabbarHidden"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[WebViewController addAnimationWithTabbarHidden]"
+                  moduleName = "NewTown"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbookpro/2019work/NewTown/WebView/WebViewController.m"
+                  timestampString = "591085385.6852421"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "288"
+                  endingLineNumber = "288"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__49-[WebViewController addAnimationWithTabbarHidden]_block_invoke"
+                  moduleName = "NewTown"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbookpro/2019work/NewTown/WebView/WebViewController.m"
+                  timestampString = "591085385.6872309"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "289"
+                  endingLineNumber = "289"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

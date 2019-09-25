@@ -49,7 +49,7 @@
     
 
     //加入腾讯分享sdk
-    self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"101562763" andDelegate:self];
+    self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"101794067" andDelegate:self];// 101562763
     [WeiboSDK registerApp:@"1090985283"];
     //设置WeiboSDK的调试模式
     [WeiboSDK enableDebugMode:YES];
@@ -194,7 +194,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    if ([url.scheme isEqualToString:@"101562763"]) {
+    if ([url.scheme isEqualToString:@"101794067"]) {
         return [QQApiInterface handleOpenURL:url delegate:self];
     }else {
         return YES;
@@ -202,7 +202,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    if ([url.scheme isEqualToString:@"tencent101562763"]) {
+    if ([url.scheme isEqualToString:@"tencent101794067"]) {
         return [TencentOAuth HandleOpenURL:url];
     }else if([url.scheme isEqualToString:@"wxba64cb9bbbbea771"]){
         return [WXApi handleOpenURL:url delegate:self];
@@ -213,7 +213,7 @@
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
             options:(NSDictionary<NSString *,id> *)options {
-    if ([url.scheme isEqualToString:@"tencent101562763"]) {
+    if ([url.scheme isEqualToString:@"tencent101794067"]) {
         return [QQApiInterface handleOpenURL:url delegate:self];
     }else if([url.scheme isEqualToString:@"wxba64cb9bbbbea771"]){
         return [WXApi handleOpenURL:url delegate:self];

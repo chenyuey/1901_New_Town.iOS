@@ -253,13 +253,16 @@
 - (void)updateWebviewFrameAndTabbarHidden{
     if ([self.webView canGoBack] || self.navigationController.childViewControllers.count>1) {
         self.backButton.hidden = NO;
+        self.tabBarController.tabBar.hidden = YES;
         [self addAnimationWithTabbarHidden];
         self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeAreaBottomHeight);
+        
         [self.view bringSubviewToFront:self.webView];
     }else{
         self.backButton.hidden = YES;
         self.tabBarController.tabBar.hidden = NO;
         [self addAnimationWithTabbarShow];
+//        self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeAreaBottomHeight - 44);
         self.webView.frame = CGRectMake(0, SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - SafeAreaBottomHeight - 49);
     }
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -269,6 +272,7 @@
 }
 - (void)addAnimationWithTabbarShow{
     [UIView animateWithDuration:0.2 animations:^{
+        self.tabBarController.view.hidden = NO;
         for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
             UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
             if ([tmpView isKindOfClass:[UITabBar class]]) {
@@ -283,16 +287,17 @@
 }
 - (void)addAnimationWithTabbarHidden{
     [UIView animateWithDuration:0.2 animations:^{
-        for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
-            UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
-            if ([tmpView isKindOfClass:[UITabBar class]]) {
-                CGRect frame = tmpView.frame;
-                frame.origin.y = SCREEN_HEIGHT;
-                tmpView.frame = frame;
-            }else{
-                [self.tabBarController.view bringSubviewToFront:tmpView];
-            }
-        }
+//        self.tabBarController.view.hidden = YES;
+//        for (int i = 0; i < self.tabBarController.view.subviews.count; i ++) {
+//            UIView *tmpView = [self.tabBarController.view.subviews objectAtIndex:i];
+//            if ([tmpView isKindOfClass:[UITabBar class]]) {
+//                CGRect frame = tmpView.frame;
+//                frame.origin.y = SCREEN_HEIGHT - SafeAreaBottomHeight;
+//                tmpView.frame = frame;
+//            }else{
+//                [self.tabBarController.view bringSubviewToFront:tmpView];
+//            }
+//        }
     }];
 }
 - (void)updateCollectBtnAndShareBtnHidden:(NSString *)strPathURL{
@@ -565,6 +570,8 @@
     UIView *shadowView = [[UIView alloc]initWithFrame:Screen_Bounds];
     shadowView.hidden = YES;
     shadowView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+    
+    
     [self.view addSubview:shadowView];
     UIView *shareView = [[UIView alloc]initWithFrame:frame];
     [shadowView addSubview:shareView];
@@ -586,11 +593,17 @@
     UIView *splitLine = [[UIView alloc]initWithFrame:CGRectMake(0, 126, SCREEN_WIDTH, 1)];
     splitLine.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
     [shareView addSubview:splitLine];
-    UIButton *cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 122, SCREEN_WIDTH, 44)];
-    [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancleBtn setTitleColor:[UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [cancleBtn addTarget:self action:@selector(cancleShare) forControlEvents:UIControlEventTouchUpInside];
+    UILabel *cancleBtn = [[UILabel alloc]initWithFrame:CGRectMake(0, shareView.frame.size.height - 44, SCREEN_WIDTH, 44)];
+    cancleBtn.text = @"取消";
+    cancleBtn.textAlignment = NSTextAlignmentCenter;
+    cancleBtn.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0];
+    cancleBtn.userInteractionEnabled = YES;
     [shareView addSubview:cancleBtn];
+    shadowView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapShadow = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(cancleShare)];
+    [shadowView addGestureRecognizer:tapShadow];
+    UITapGestureRecognizer *tapCancle = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(cancleShare)];
+    [cancleBtn addGestureRecognizer:tapCancle];
     return shareView;
 }
 - (SendMessageToWXReq *)shareToWechatWithLink:(NSString *)link :(NSString *)msgTitle :(NSString *)name :(NSString*)imageUrl{
@@ -937,11 +950,13 @@
     [request addValue:@"khYEI0xFyAnVCUpO" forHTTPHeaderField:@"X-Parse-Application-Id"];
     NSURLSession *session =[NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        //回到主线程 刷新数据 要是刷新就在这里面
-        dispatch_async(dispatch_get_main_queue(), ^{
-            showDataInView(dic);
-        });
+        if(data != nil){
+            NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            //回到主线程 刷新数据 要是刷新就在这里面
+            dispatch_async(dispatch_get_main_queue(), ^{
+                showDataInView(dic);
+            });
+        }
     }];
     //启动任务
     [dataTask resume];

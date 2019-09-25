@@ -17,33 +17,33 @@
         firstView.layer.cornerRadius = 6;
         firstView.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
         [self addSubview:firstView];
-        self.leaseTypeLabel = [CustomizeView createLabelWithFrame:CGRectMake(13, 13, 56, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        self.leaseTypeLabel = [CustomizeView createLabelWithFrame:CGRectMake(13, 13, 56, 20) :13 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         [firstView addSubview:self.leaseTypeLabel];
-        self.bedLabel = [CustomizeView createLabelWithFrame:CGRectMake(80, 13, 140, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
+        self.bedLabel = [CustomizeView createLabelWithFrame:CGRectMake(80, 13, 140, 20) :13 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentCenter];
         [firstView addSubview:self.bedLabel];
-        self.toiletLabel = [CustomizeView createLabelWithFrame:CGRectMake(220, 13, 70, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        self.toiletLabel = [CustomizeView createLabelWithFrame:CGRectMake(220, 13, 70, 20) :13 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         [firstView addSubview:self.toiletLabel];
         
-        UILabel *equipTextLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 92, 28, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        UILabel *equipTextLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 92, 28, 20) :13 :@"PingFangSC-regular" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         equipTextLabel.text = @"设备";
         [self addSubview:equipTextLabel];
         
         self.equipmengListView = [[UIView alloc]initWithFrame:CGRectMake(16, equipTextLabel.frame.origin.y + equipTextLabel.frame.size.height + 6, 322, 145)];
         [self addSubview:self.equipmengListView];
         
-        UILabel *noticeTextLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 282, 28, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        UILabel *noticeTextLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 282, 28, 20) :13 :@"PingFangSC-regular" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         noticeTextLabel.text = @"须知";
         [self addSubview:noticeTextLabel];
         
-        self.noticeLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 308, 306, 65) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        self.noticeLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 308, 306, 65) :13 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         self.noticeLabel.numberOfLines = 0;
         [self addSubview:self.noticeLabel];
         
-        UILabel *posTextLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 382, 28, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        UILabel *posTextLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 382, 28, 20) :13 :@"PingFangSC-regular" :[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         posTextLabel.text = @"位置";
         [self addSubview:posTextLabel];
         
-        self.positionLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 401, 306, 20) :14 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
+        self.positionLabel = [CustomizeView createLabelWithFrame:CGRectMake(16, 401, 306, 20) :13 :@"PingFangSC-regular" :[UIColor colorWithRed:16.0/255.0 green:16.0/255.0 blue:16.0/255.0 alpha:1.0] :NSTextAlignmentLeft];
         [self addSubview:self.positionLabel];
         
         self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 423, self.frame.size.width, 170)];
